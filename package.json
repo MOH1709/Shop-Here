@@ -6,9 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MOH1709/cleancity.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MOH1709/cleancity/issues"
+  },
+  "homepage": "https://github.com/MOH1709/cleancity#readme",
   "dependencies": {
     "express": "^4.17.2"
   }
