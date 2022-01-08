@@ -1,0 +1,13 @@
+{
+  "short_name": "clean city",
+  "name": "Clean City",
+  "icons": [{
+    "src": "logo.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#032e45",
+  "background_color": "#ffffff"
+}
