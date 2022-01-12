@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI";
+  /* For removing Blue Screen Effect on Mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  background-color: #D9DBD4;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #aaa8a8;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #032e45;
+}
