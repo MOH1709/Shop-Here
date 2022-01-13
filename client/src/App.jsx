@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core";
 import { MainScreenHeader, ExtraScreenHeader } from "./components";
 import { Context } from "./contexts/WidthProvider";
+import Router from "./Router";
 
 export default function App() {
   const styles = useStyles();
@@ -11,6 +12,7 @@ export default function App() {
     <div className={styles.container}>
       <div className={styles.mainScreen}>
         <MainScreenHeader />
+        <Router />
       </div>
       <div
         className={styles.extraScreen}

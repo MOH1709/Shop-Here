@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { COLOR, FLEX_CENTER } from "../constants";
 import { Context } from "../contexts/WidthProvider";
+import { NavLink } from "react-router-dom";
 
 export default function MainScreenHeader() {
   const styles = useStyles();
@@ -21,9 +22,18 @@ export default function MainScreenHeader() {
         </span>
       </div>
       <nav className={styles.nav}>
-        <Button>home</Button>
-        <Button>messages</Button>
-        <Button style={{ display: width < 600 ? "block" : "none" }}>
+        <Button component={NavLink} to="/home" className={styles.navBtn}>
+          home
+        </Button>
+        <Button component={NavLink} to="/messages" className={styles.navBtn}>
+          messages
+        </Button>
+        <Button
+          component={NavLink}
+          to="/cart"
+          style={{ display: width < 600 ? "flex" : "none" }}
+          className={styles.navBtn}
+        >
           cart
         </Button>
       </nav>
@@ -58,15 +68,18 @@ const useStyles = makeStyles({
     width: "100%",
   },
   nav: {
-    "& Button": {
-      "&:hover": {
-        backgroundColor: "rgba(0,0,0,0.3)",
-      },
-      color: "white",
-      width: "100%",
-    },
     marginTop: 10,
     display: "flex",
     justifyContent: "space-evenly",
+  },
+  navBtn: {
+    "&:hover": {
+      backgroundColor: "rgba(0,0,0,0.3)",
+    },
+    color: "white",
+    width: "100%",
+  },
+  active: {
+    backgroundColor: "red",
   },
 });
