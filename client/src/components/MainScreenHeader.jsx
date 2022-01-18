@@ -12,7 +12,7 @@ export default function MainScreenHeader() {
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.logoDiv}>
-          <img src="./logo.png" alt="logo" width="45" height="45" />
+          <img src="logo.png" alt="logo" height="50" width="50" />
         </div>
         <span>
           <img src="./icons/search.svg" alt="search icon" />
@@ -22,17 +22,37 @@ export default function MainScreenHeader() {
         </span>
       </div>
       <nav className={styles.nav}>
-        <Button component={NavLink} to="/home" className={styles.navBtn}>
+        <Button
+          component={NavLink}
+          to="/home"
+          className={styles.navBtn}
+          style={({ isActive }) => ({
+            color: isActive && COLOR.SECONDARY,
+            borderBottom: isActive && `3px solid ${COLOR.SECONDARY}`,
+          })}
+        >
           home
         </Button>
-        <Button component={NavLink} to="/messages" className={styles.navBtn}>
+        <Button
+          component={NavLink}
+          to="/messages"
+          className={styles.navBtn}
+          style={({ isActive }) => ({
+            color: isActive && COLOR.SECONDARY,
+            borderBottom: isActive && `3px solid ${COLOR.SECONDARY}`,
+          })}
+        >
           messages
         </Button>
         <Button
           component={NavLink}
           to="/cart"
-          style={{ display: width < 600 ? "flex" : "none" }}
           className={styles.navBtn}
+          style={({ isActive }) => ({
+            display: width < 600 ? "flex" : "none",
+            color: isActive && COLOR.SECONDARY,
+            borderBottom: isActive && `3px solid ${COLOR.SECONDARY}`,
+          })}
         >
           cart
         </Button>
@@ -47,7 +67,7 @@ const useStyles = makeStyles({
     position: "relative",
     width: "100%",
     backgroundColor: COLOR.PRIMARY,
-    height: 90,
+    height: 95,
   },
   top: {
     "& div": {
@@ -77,9 +97,6 @@ const useStyles = makeStyles({
       backgroundColor: "rgba(0,0,0,0.3)",
     },
     color: "white",
-    width: "100%",
-  },
-  active: {
-    backgroundColor: "red",
+    width: 130,
   },
 });
