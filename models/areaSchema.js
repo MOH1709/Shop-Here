@@ -5,15 +5,14 @@ const areaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+  },
+  img: {
+    type: String,
+  },
   shops: {
     type: Array,
-    default: [],
-    // [{
-    //   id: "shopId",
-    //   name: "shop1",
-    //   img: "",
-    //   color: "#898989",
-    // }]
   },
 });
 

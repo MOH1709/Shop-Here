@@ -1,26 +1,23 @@
-import "dotenv/config";
-import express from "express";
 import mongoose from "mongoose";
-import { cleancities, cleanareas, cleanshops } from "./routes/index.js";
+import express from "express";
+import "dotenv/config";
 
-//-----------------------------------------------> connect to database
-mongoose
-  .connect(process.env.LOCAL_DB)
-  .then(() => {
-    console.log("db connected sucessfully");
-  })
-  .catch((e) => {
-    console.log("error in connecting db");
-  });
+import Router from "./Router.js";
 
 //-----------------------------------------------> using imports
 const app = express();
 app.use(express.json()); // to convert all post request into json format
 
-app.use(cleancities);
-app.use(cleanareas);
-app.use(cleanshops);
-
+//-----------------------------------------------> connect to database
+mongoose
+  .connect(process.env.LOCAL_DB)
+  .then(() => {
+    app.use(Router); // using custom routes
+    console.log("database connection successful");
+  })
+  .catch((e) => {
+    console.log("error in connecting to database !!\n", e);
+  });
 
 //-----------------------------------------------> adding listener
 app.listen(process.env.PORT, () => {
