@@ -26,27 +26,29 @@ router.get("/cleancities/areas", async(req, res) => {
   }
 });
 
-router.put("/cleancities/areas", async(req, res) => {
+router.post("/cleancities/areas", async(req, res) => {
   try {
     const { cityName, areaName, address } = req.body;
     const { areas } = await City.findOne({ name: cityName }, { _id: 0, areas: 1 });
 
     const isExist = areas.find((data) => {
-      return data.name === areaName && data.address === address;
+      return (
+        data.name === areaName &&
+        (data.address === address || data.address === cityName)
+      );
     });
 
     if (isExist) {
       return res.status(400).send("this area already exist");
     }
 
-    const area = await Area.insertMany([{
-      shops: [],
-    }, ]);
+    const area = new Area({ shops: [] });
+    area.save();
 
     await City.updateOne({ name: cityName }, {
       $push: {
         areas: {
-          id: area[0]["_id"],
+          id: area["_id"],
           address: address || cityName,
           name: areaName,
         },
@@ -71,34 +73,42 @@ router.get("/cleancities/areas/shops", async(req, res) => {
   }
 });
 
-router.put("/cleancities/areas/shops", async(req, res) => {
+router.post("/cleancities/areas/shops", async(req, res) => {
   try {
-    const { areaId, shopName, address, img } = req.body;
+    const { areaId, userId, address, img, shopName } = req.body;
     const { shops } = await Area.findOne({ _id: areaId }, { _id: 0 });
 
     const isExist = shops.find((data) => {
-      return data.name === shopName && data.address === address;
+      return data.id === userId;
     });
 
     if (isExist) {
-      return res.status(400).send("this shop already exist");
+      await Area.updateOne({ _id: areaId }, {
+        $pull: {
+          shops: {
+            id: userId,
+          },
+        },
+      });
+    } else {
+      const shop = new Shop({
+        _id: userId,
+        products: [],
+        isOpen: true,
+        urgentDeliveryStatus: true,
+        tempBan: false,
+        urgentDeliveredCount: 0,
+        dayJoined: new Date(),
+        daysLeft: 0,
+      });
+      await shop.save();
     }
-
-    const shop = await Shop.insertMany([{
-      products: [],
-      isOpen: true,
-      urgentDeliveryStatus: true,
-      tempBan: false,
-      urgentDeliveredCount: 0,
-      dayJoined: new Date(),
-      daysLeft: 0,
-    }, ]);
 
     await Area.updateOne({ _id: areaId }, {
       $push: {
         shops: {
+          id: userId,
           name: shopName,
-          id: shop[0]["_id"],
           img,
           address: address,
         },
@@ -107,6 +117,8 @@ router.put("/cleancities/areas/shops", async(req, res) => {
 
     res.status(200).send(`${shopName} added successfully`);
   } catch (e) {
+    console.log(e);
+
     res.status(500).send("error in adding new shop \n");
   }
 });
