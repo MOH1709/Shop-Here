@@ -5,9 +5,12 @@ const FLEX_CENTER = {
 };
 
 const COLOR = {
-  PRIMARY: "#002a43",
+  PRIMARY: "#032e45",
   SECONDARY: "#7DD893",
   GREEN: "#12CD3F",
+  RED: "#FF0C0C",
+  BLACK: "#222327",
+  WHITE: "#ffffff",
 };
 const SHADOW = "0px 3px 6px rgb(0,0,0,0.3)";
 

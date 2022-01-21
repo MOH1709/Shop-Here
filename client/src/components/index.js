@@ -1,4 +1,4 @@
-import MainScreenHeader from "./MainScreenHeader";
-import ExtraScreenHeader from "./ExtraScreenHeader";
+import PrimaryHeader from "./PrimaryHeader";
+import SecondaryHeader from "./SecondaryHeader";
 
-export { MainScreenHeader, ExtraScreenHeader };
+export { PrimaryHeader, SecondaryHeader };

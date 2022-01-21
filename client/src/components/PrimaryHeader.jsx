@@ -4,7 +4,7 @@ import { COLOR, FLEX_CENTER } from "../constants";
 import { Context } from "../contexts/WidthProvider";
 import { NavLink } from "react-router-dom";
 
-export default function MainScreenHeader() {
+export default function PrimaryHeader() {
   const styles = useStyles();
   const { width } = useContext(Context);
 
@@ -12,7 +12,7 @@ export default function MainScreenHeader() {
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.logoDiv}>
-          <img src="logo.png" alt="logo" height="50" width="50" />
+          <img src="logo.png" alt="logo" height="50" />
         </div>
         <span>
           <img src="./icons/search.svg" alt="search icon" />
@@ -24,7 +24,7 @@ export default function MainScreenHeader() {
       <nav className={styles.nav}>
         <Button
           component={NavLink}
-          to="/home"
+          to="/cc/home"
           className={styles.navBtn}
           style={({ isActive }) => ({
             color: isActive && COLOR.SECONDARY,
@@ -35,7 +35,7 @@ export default function MainScreenHeader() {
         </Button>
         <Button
           component={NavLink}
-          to="/messages"
+          to="/cc/messages"
           className={styles.navBtn}
           style={({ isActive }) => ({
             color: isActive && COLOR.SECONDARY,
@@ -46,7 +46,7 @@ export default function MainScreenHeader() {
         </Button>
         <Button
           component={NavLink}
-          to="/cart"
+          to="/cc/cart"
           className={styles.navBtn}
           style={({ isActive }) => ({
             display: width < 600 ? "flex" : "none",

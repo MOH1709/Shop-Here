@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
 import "dotenv/config";
 
 import Router from "./Router.js";
 
 //-----------------------------------------------> using imports
 const app = express();
+const http = createServer(app);
+const io = new Server(http);
 app.use(express.json()); // to convert all post request into json format
 
 //-----------------------------------------------> connect to database
@@ -20,6 +24,13 @@ mongoose
   });
 
 //-----------------------------------------------> adding listener
-app.listen(process.env.PORT, () => {
-  console.log(`connection successful at port ${process.env.PORT}`);
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`connection successful at port ${port}`);
 });
+
+//-----------------------------------------------> socket.io
+
+// io.on("connection", (socket) => {
+//   console.log("socket connected");
+// });

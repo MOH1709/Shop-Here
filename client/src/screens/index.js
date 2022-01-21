@@ -1,5 +1,4 @@
-import Home from "./Home";
-import Messages from "./Messages";
-import Cart from "./Cart";
+import PrimaryScreen from "./PrimaryScreen";
+import SettingScreen from "./SettingScreen";
 
-export { Home, Messages, Cart };
+export { PrimaryScreen, SettingScreen };
