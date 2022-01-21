@@ -242,8 +242,4 @@ router.put("/:userId/update", async(req, res) => {
   }
 });
 
-router.get("/test", (req, res) => {
-  res.status(200).send("hii my self mohit");
-});
-
 export default router;

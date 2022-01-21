@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 import express from "express";
-import { createServer } from "http";
-import { Server } from "socket.io";
 import "dotenv/config";
+// import { createServer } from "http";
+// import { Server } from "socket.io";
 
 import Router from "./Router.js";
 
 //-----------------------------------------------> using imports
 const app = express();
-const http = createServer(app);
-const io = new Server(http);
 app.use(express.json()); // to convert all post request into json format
+// const http = createServer(app);
+// const io = new Server(http);
 
 //-----------------------------------------------> connect to database
 mongoose
