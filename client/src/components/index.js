@@ -1,4 +1,5 @@
-import PrimaryHeader from "./PrimaryHeader";
+import CartCard from "./CartCard";
 import SecondaryHeader from "./SecondaryHeader";
+import InputBox from "./InputBox";
 
-export { PrimaryHeader, SecondaryHeader };
+export { CartCard, SecondaryHeader, InputBox };

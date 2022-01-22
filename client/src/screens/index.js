@@ -1,4 +1,3 @@
-import PrimaryScreen from "./PrimaryScreen";
-import SettingScreen from "./SettingScreen";
+import Cart from "./Cart";
 
-export { PrimaryScreen, SettingScreen };
+export { Cart };

@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-
 import { COLOR } from "../constants";
 
 export default function SecondaryHeader() {
@@ -12,9 +11,12 @@ export default function SecondaryHeader() {
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
-    position: "relative",
-    width: "100%",
+    position: "fixed",
     backgroundColor: COLOR.PRIMARY,
-    height: 95,
+    width: 1338,
+    height: 100,
+    top: 0,
+    left: "auto",
+    zIndex: 999,
   },
 });
