@@ -50,6 +50,20 @@ export default function Cart() {
         name="fanta drink 200ml"
         img="./test.jpg"
       />
+      <CartCard
+        price="10"
+        q="1"
+        shopName="Mahavir general store, sb nagar pavagadh road halol"
+        name="fanta drink 200ml"
+        img="./test.jpg"
+      />
+      <CartCard
+        price="10"
+        q="1"
+        shopName="Mahavir general store, sb nagar pavagadh road halol"
+        name="fanta drink 200ml"
+        img="./test.jpg"
+      />
       <div className={styles.order}>
         <InputBox
           title="Total Prize"
@@ -72,5 +86,6 @@ export default function Cart() {
 const useStyles = makeStyles({
   container: {
     paddingTop: 100,
+    overflowY: "auto",
   },
 });

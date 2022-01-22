@@ -11,9 +11,9 @@ export default function SecondaryHeader() {
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
-    position: "fixed",
-    backgroundColor: COLOR.PRIMARY,
-    width: 1338,
+    position: "absolute",
+    backgroundColor: COLOR.SECONDARY,
+    width: "100%",
     height: 100,
     top: 0,
     left: "auto",

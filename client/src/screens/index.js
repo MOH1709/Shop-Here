@@ -1,3 +1,3 @@
 import Cart from "./Cart";
-
-export { Cart };
+import Shop from "./Shop";
+export { Cart, Shop };
