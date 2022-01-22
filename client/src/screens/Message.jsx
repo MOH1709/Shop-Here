@@ -1,20 +1,15 @@
+import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { PrimaryHeader } from "../components";
 
-export default function Shop() {
+export default function Message() {
   const styles = useStyles();
 
-  return (
-    <div className={styles.container}>
-      <PrimaryHeader />
-    </div>
-  );
+  return <div className={styles.container}>Message</div>;
 }
 
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
     position: "relative",
-    width: "inherit",
   },
 });

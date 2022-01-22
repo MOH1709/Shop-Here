@@ -1,3 +1,6 @@
 import Cart from "./Cart";
-import Shop from "./Shop";
-export { Cart, Shop };
+import Main from "./Main";
+import Home from "./Home";
+import Message from "./Message";
+
+export { Cart, Main, Home, Message };

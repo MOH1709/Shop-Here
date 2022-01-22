@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { useState } from "react";
 
-import { CartCard, SecondaryHeader, InputBox } from "../components";
+import { CartCard, InputBox } from "../components";
 
 export default function Cart() {
   const styles = useStyles();
@@ -21,7 +21,6 @@ export default function Cart() {
 
   return (
     <div className={styles.container}>
-      <SecondaryHeader />
       <CartCard
         price="10"
         q="1"
@@ -85,7 +84,8 @@ export default function Cart() {
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
-    paddingTop: 100,
-    overflowY: "auto",
+    flex: 1,
+    position: "relative",
+    overflow: "auto",
   },
 });
