@@ -1,55 +1,24 @@
 import { makeStyles, Button } from "@material-ui/core";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
-import { BTN_STYLE, COLOR, SHADOW } from "../constants";
+import { BTN_STYLE, COLOR } from "../constants";
 import { Context } from "../contexts/WidthProvider";
 
 export default function PrimaryHeader() {
   const styles = useStyles();
-  const [showSetting, setShowSetting] = useState(false);
   const { width } = useContext(Context);
-
-  const hideSetting = () => {
-    setShowSetting(false);
-
-    return document.removeEventListener("mouseup", hideSetting);
-  };
-
-  if (showSetting) {
-    document.addEventListener("mouseup", hideSetting);
-  }
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        {/* //------------------------------------------------- */}
-
-        <div
-          className={styles.setting}
-          style={{ display: showSetting ? "flex" : "none" }}
-        >
-          <Button>My Profile</Button>
-          <Button>Be Seller</Button>
-          <Button>My Bills</Button>
-          <Button>Updates & Info</Button>
-          <Button>Want a product</Button>
-          <Button>Report a Bug</Button>
-          <Button>Log Out</Button>
-        </div>
-
-        {/* //------------------------------------------------- */}
         <img src="./logo.png" alt="logo" height="50" />
         <div className={styles.right}>
           <Button>
             <img src="./icons/search.svg" alt="search" />
           </Button>
-          <Button
-            onClick={() => {
-              setShowSetting(true);
-            }}
-          >
-            <img src="./icons/list.svg" alt="list" />
+          <Button>
+            <img src="./icons/setting.svg" alt="list" />
           </Button>
         </div>
       </div>
@@ -130,27 +99,6 @@ const useStyles = makeStyles({
     flex: 1,
     display: "flex",
     justifyContent: "flex-end",
-  },
-  setting: {
-    "& Button": {
-      borderBottom: "1px solid rgba(0,0,0,0.5)",
-      marginBlock: 10,
-      borderRadius: 0,
-      width: 200,
-      justifyContent: "flex-start",
-      color: COLOR.PRIMARY,
-      fontWeight: "bold",
-    },
-    position: "absolute",
-    top: 30,
-    right: 30,
-    display: "flex",
-    flexDirection: "column",
-    paddingLeft: 10,
-    backgroundColor: "white",
-    boxShadow: SHADOW,
-    borderRadius: 2,
-    zIndex: 13,
   },
   bottom: {
     height: 50,

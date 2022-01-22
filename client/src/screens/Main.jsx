@@ -3,10 +3,10 @@ import { useContext } from "react";
 
 import { PrimaryHeader, SecondaryHeader } from "../components";
 import { Context } from "../contexts/WidthProvider";
-import { Cart } from ".";
+import { Cart } from "./mainScreens";
 import { PrimaryRouter } from "../routes";
 
-export default function Main() {
+export default function MainScreen() {
   const styles = useStyles();
   const { width } = useContext(Context);
 

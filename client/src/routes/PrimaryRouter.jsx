@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Cart, Home, Message } from "../screens";
+import { Cart, Home, Messages } from "../screens/mainScreens";
 
 function PrimaryRouter() {
   return (
     <Routes>
       <Route exact path="/home" element={<Home />} />
-      <Route exact path="/messages" element={<Message />} />
+      <Route exact path="/messages" element={<Messages />} />
       <Route exact path="/cart" element={<Cart />} />
     </Routes>
   );

@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { useState } from "react";
 
-import { CartCard, InputBox } from "../components";
+import { CartCard, InputBox } from "../../components";
 
 export default function Cart() {
   const styles = useStyles();

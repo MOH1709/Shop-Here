@@ -1,5 +1,5 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core";
+
 import { COLOR } from "../constants";
 
 export default function SecondaryHeader({ shops }) {

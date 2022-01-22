@@ -1,7 +1,6 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core";
 
-export default function Message() {
+export default function Messages() {
   const styles = useStyles();
 
   return <div className={styles.container}>Message</div>;
@@ -10,6 +9,7 @@ export default function Message() {
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
+    flex: 1,
     position: "relative",
   },
 });
