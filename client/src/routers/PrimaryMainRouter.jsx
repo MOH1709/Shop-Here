@@ -1,4 +1,4 @@
-import { Home, Cart, Messages } from "../screens/mainScreen";
+import { Home, Cart, Messages } from "../screens/primary";
 
 export default function PrimaryMainRouter({ location }) {
   let component = <Home />;
