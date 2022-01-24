@@ -1,71 +1,69 @@
 import { makeStyles, Button } from "@material-ui/core";
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
 
 import { BTN_STYLE, COLOR } from "../constants";
 import { Context } from "../contexts/WidthProvider";
 
-export default function PrimaryHeader() {
+export default function PrimaryHeader({ setLocation, location }) {
   const styles = useStyles();
-  const { width } = useContext(Context);
+  const { width } = useContext(Context); // getting windows width dynamically
+
+  // chnaging primary screen route if width changes
+  if (width > 700 && location === "/cart") {
+    setLocation("/home");
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <img src="./logo.png" alt="logo" height="50" />
         <div className={styles.right}>
-          <Button>
+          <Button onClick={() => setLocation("/search")}>
             <img src="./icons/search.svg" alt="search" />
           </Button>
-          <Button>
-            <img src="./icons/setting.svg" alt="list" />
+          <Button onClick={() => setLocation("/setting")}>
+            <img src="./icons/setting.svg" alt="setting" />
           </Button>
         </div>
       </div>
       <div className={styles.bottom}>
         <Button
-          className={styles.navBtn}
-          component={NavLink}
-          to="/home"
-          style={({ isActive }) => {
-            return isActive
+          onClick={() => setLocation("/home")}
+          style={
+            location === "/home"
               ? {
                   color: COLOR.SECONDARY,
                   borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                 }
-              : { color: "white" };
-          }}
+              : { color: "white" }
+          }
         >
           Home
         </Button>
         <Button
-          className={styles.navBtn}
-          component={NavLink}
-          to="/messages"
-          style={({ isActive }) => {
-            return isActive
+          onClick={() => setLocation("/messages")}
+          style={
+            location === "/messages"
               ? {
                   color: COLOR.SECONDARY,
                   borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                 }
-              : { color: "white" };
-          }}
+              : { color: "white" }
+          }
         >
           Messages
         </Button>
         <Button
-          className={styles.navBtn}
-          component={NavLink}
-          to="/cart"
-          style={({ isActive }) => {
-            return isActive
+          onClick={() => setLocation("/cart")}
+          style={
+            location === "/cart"
               ? {
                   display: width <= 700 ? "flex" : "none",
                   color: COLOR.SECONDARY,
                   borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                 }
-              : { color: "white", display: width <= 700 ? "flex" : "none" };
-          }}
+              : { color: "white", display: width <= 700 ? "flex" : "none" }
+          }
         >
           Cart
         </Button>
@@ -93,7 +91,7 @@ const useStyles = makeStyles({
     // border: "1px solid yellow",
   },
   right: {
-    "& Button": {
+    "& NavLink": {
       height: 50,
     },
     flex: 1,
@@ -101,16 +99,16 @@ const useStyles = makeStyles({
     justifyContent: "flex-end",
   },
   bottom: {
+    "& Button": {
+      ...BTN_STYLE,
+      flex: 1,
+      height: 40,
+      marginInline: 5,
+      fontSize: 13,
+    },
     height: 50,
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
-  },
-  navBtn: {
-    ...BTN_STYLE,
-    flex: 1,
-    height: 40,
-    marginInline: 5,
-    fontSize: 13,
   },
 });

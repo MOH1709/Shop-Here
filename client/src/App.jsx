@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 
-import { Main } from "./screens";
+import Router from "./Router";
 
 export default function App() {
   const styles = useStyles();
 
   return (
     <div className={styles.container}>
-      <Main />
+      <Router />
     </div>
   );
 }
