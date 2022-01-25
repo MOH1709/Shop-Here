@@ -13,7 +13,7 @@ export default function PrimaryHeader({ setLocation, location }) {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <img src="./logo.png" alt="logo" height="50" />
+        <img src="./logo.png" alt="logo" height="50" className={styles.logo} />
         <div className={styles.right}>
           <Button component={NavLink} to={`/${cityid}/search`}>
             <img src="./icons/search.svg" alt="search" />
@@ -25,6 +25,7 @@ export default function PrimaryHeader({ setLocation, location }) {
       </div>
       <div className={styles.bottom}>
         <Button
+          className={styles.navBtn}
           component={NavLink}
           to={`/${cityid}/home`}
           style={({ isActive }) => {
@@ -39,6 +40,7 @@ export default function PrimaryHeader({ setLocation, location }) {
           Home
         </Button>
         <Button
+          className={styles.navBtn}
           component={NavLink}
           to={`/${cityid}/messages`}
           style={({ isActive }) => {
@@ -54,6 +56,7 @@ export default function PrimaryHeader({ setLocation, location }) {
         </Button>
         {width <= 700 && (
           <Button
+            className={styles.navBtn}
             component={NavLink}
             to={`/${cityid}/cart`}
             style={({ isActive }) => {
@@ -89,7 +92,9 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     height: 50,
-    // border: "1px solid yellow",
+  },
+  logo: {
+    marginTop: 10,
   },
   right: {
     "& NavLink": {
@@ -100,16 +105,16 @@ const useStyles = makeStyles({
     justifyContent: "flex-end",
   },
   bottom: {
-    "& Button": {
-      ...BTN_STYLE,
-      flex: 1,
-      height: 40,
-      marginInline: 5,
-      fontSize: 13,
-    },
     height: 50,
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
+  },
+  navBtn: {
+    ...BTN_STYLE,
+    flex: 1,
+    height: 40,
+    marginInline: 5,
+    fontSize: 13,
   },
 });

@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import { PrimaryHeader, SecondaryHeader } from "../components";
 import { Context } from "../contexts/WidthProvider";
-// import { Cart } from "./primary";
+import { Cart } from "./primary";
 
 export default function MainScreen() {
   const styles = useStyles();
@@ -21,7 +21,7 @@ export default function MainScreen() {
         style={{ display: width > 700 ? "flex" : "none" }}
       >
         <SecondaryHeader />
-        {/* <Cart /> */}
+        <Cart />
       </div>
     </>
   );
