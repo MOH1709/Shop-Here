@@ -1,21 +1,20 @@
 import { makeStyles } from "@material-ui/core";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { Outlet } from "react-router-dom";
 
-import { SecondaryHeader, PrimaryHeader } from "../components";
+import { PrimaryHeader, SecondaryHeader } from "../components";
 import { Context } from "../contexts/WidthProvider";
-import { PrimaryMainRouter } from "../routers";
 // import { Cart } from "./primary";
 
 export default function MainScreen() {
   const styles = useStyles();
   const { width } = useContext(Context);
-  const [location, setLocation] = useState("/home");
 
   return (
     <>
       <div className={styles.primary}>
-        <PrimaryHeader setLocation={setLocation} location={location} />
-        <PrimaryMainRouter location={location} />
+        <PrimaryHeader />
+        <Outlet />
       </div>
       <div
         className={styles.secondary}

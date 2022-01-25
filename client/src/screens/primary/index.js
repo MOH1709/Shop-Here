@@ -1,7 +1,7 @@
-import Settings from "./Settings";
+import Setting from "./Setting";
 import Search from "./Search";
 import Cart from "./Cart";
 import Home from "./Home";
 import Messages from "./Messages";
 
-export { Settings, Search, Messages, Home, Cart };
+export { Setting, Search, Messages, Home, Cart };

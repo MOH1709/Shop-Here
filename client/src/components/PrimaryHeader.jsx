@@ -1,5 +1,6 @@
 import { makeStyles, Button } from "@material-ui/core";
 import { useContext } from "react";
+import { NavLink, useParams } from "react-router-dom";
 
 import { BTN_STYLE, COLOR } from "../constants";
 import { Context } from "../contexts/WidthProvider";
@@ -7,66 +8,66 @@ import { Context } from "../contexts/WidthProvider";
 export default function PrimaryHeader({ setLocation, location }) {
   const styles = useStyles();
   const { width } = useContext(Context); // getting windows width dynamically
-
-  // chnaging primary screen route if width changes
-  if (width > 700 && location === "/cart") {
-    setLocation("/home");
-  }
+  const { cityid } = useParams();
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <img src="./logo.png" alt="logo" height="50" />
         <div className={styles.right}>
-          <Button onClick={() => setLocation("/search")}>
+          <Button component={NavLink} to={`/${cityid}/search`}>
             <img src="./icons/search.svg" alt="search" />
           </Button>
-          <Button onClick={() => setLocation("/setting")}>
+          <Button component={NavLink} to={`/${cityid}/setting`}>
             <img src="./icons/setting.svg" alt="setting" />
           </Button>
         </div>
       </div>
       <div className={styles.bottom}>
         <Button
-          onClick={() => setLocation("/home")}
-          style={
-            location === "/home"
+          component={NavLink}
+          to={`/${cityid}/home`}
+          style={({ isActive }) => {
+            return isActive
               ? {
                   color: COLOR.SECONDARY,
                   borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                 }
-              : { color: "white" }
-          }
+              : { color: "white" };
+          }}
         >
           Home
         </Button>
         <Button
-          onClick={() => setLocation("/messages")}
-          style={
-            location === "/messages"
+          component={NavLink}
+          to={`/${cityid}/messages`}
+          style={({ isActive }) => {
+            return isActive
               ? {
                   color: COLOR.SECONDARY,
                   borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                 }
-              : { color: "white" }
-          }
+              : { color: "white" };
+          }}
         >
           Messages
         </Button>
-        <Button
-          onClick={() => setLocation("/cart")}
-          style={
-            location === "/cart"
-              ? {
-                  display: width <= 700 ? "flex" : "none",
-                  color: COLOR.SECONDARY,
-                  borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
-                }
-              : { color: "white", display: width <= 700 ? "flex" : "none" }
-          }
-        >
-          Cart
-        </Button>
+        {width <= 700 && (
+          <Button
+            component={NavLink}
+            to={`/${cityid}/cart`}
+            style={({ isActive }) => {
+              return isActive
+                ? {
+                    color: COLOR.SECONDARY,
+                    borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
+                  }
+                : { color: "white" };
+            }}
+          >
+            Cart
+          </Button>
+        )}
       </div>
     </div>
   );

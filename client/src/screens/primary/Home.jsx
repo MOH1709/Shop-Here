@@ -9,6 +9,6 @@ export default function Home() {
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
-    flex: 1,
+    position: "relative",
   },
 });
