@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import { LogIn, SignIn, Main, Owner } from "./screens";
+import { LogIn, SignIn, Main, Owner, Start } from "./screens";
 import { Setting, Search, Home, Messages, Cart } from "./screens/primary";
 import {
   Bills,
@@ -26,6 +26,7 @@ export default function Router() {
           <Route path="report" element={<ReportBug />} />
         </Route>
       </Route>
+      <Route path="/" element={<Start />} />
       <Route path="login" element={<LogIn />} />
       <Route path="signin" element={<SignIn />} />
       <Route path="owner" element={<Owner />}></Route>

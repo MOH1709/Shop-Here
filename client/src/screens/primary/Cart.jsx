@@ -1,7 +1,8 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import { useState } from "react";
 
-import { CartCard, InputBox } from "../../components";
+import { CartCard, InputBox, ToggleBtn } from "../../components";
+import { BTN_STYLE, COLOR } from "../../constants";
 
 export default function Cart() {
   const styles = useStyles();
@@ -65,17 +66,18 @@ export default function Cart() {
       />
       <div className={styles.order}>
         <InputBox
-          title="Total Prize"
-          Style={{ width: "80%" }}
-          name="total"
-          onChangeHandler={onChangeHandler}
-        />
-        <InputBox
           title="Full Address"
           name="address"
-          Style={{ width: "80%", marginBlock: 30 }}
+          Style={{ width: "80%", marginBlock: 30, marginInline: "auto" }}
           onChangeHandler={onChangeHandler}
         />
+        <div className={styles.total}>
+          <p>
+            TOTAL : <span>₹30</span>
+          </p>
+          <ToggleBtn />
+        </div>
+        <Button>order</Button>
       </div>
     </div>
   );
@@ -87,5 +89,31 @@ const useStyles = makeStyles({
     flex: 1,
     position: "relative",
     overflow: "auto",
+  },
+  order: {
+    "& Button": {
+      ...BTN_STYLE,
+      width: 100,
+      margin: 20,
+    },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    paddingBottom: 50,
+  },
+  total: {
+    "& p": {
+      "& span": {
+        color: COLOR.GREEN,
+      },
+      color: COLOR.PRIMARY,
+      fontWeight: "bold",
+      margin: 10,
+    },
+    width: "80%",
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

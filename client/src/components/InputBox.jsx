@@ -7,8 +7,8 @@ export default function InputBox({ title, onChangeHandler, Style, name }) {
 
   return (
     <div className={styles.container} style={Style}>
-      <input type="text" name={name} onChange={onChangeHandler} />
       <p>{title}</p>
+      <input type="text" name={name} onChange={onChangeHandler} required />
     </div>
   );
 }
@@ -17,31 +17,16 @@ export default function InputBox({ title, onChangeHandler, Style, name }) {
 const useStyles = makeStyles({
   container: {
     "& input": {
-      outline: "none",
-      borderRadius: 4,
-      height: "100%",
       width: "100%",
-      paddingInline: 5,
-      border: `2px solid ${COLOR.SECONDARY}`,
-      borderLeft: `15px solid ${COLOR.SECONDARY}`,
-      color: COLOR.PRIMARY,
-      fontWeight: "lighter",
-      fontSize: 15,
+      border: "none",
+      outline: "none",
+      letterSpacing: 1,
+      borderBottom: "2px solid rgba(0,0,0,0.5)",
     },
     "& p": {
-      position: "absolute",
-      top: -12,
-      left: 15,
-      fontSize: 15,
+      marginBottom: 5,
       fontWeight: "bold",
-      letterSpacing: 1,
-      paddingInline: 5,
       color: COLOR.PRIMARY,
-      backgroundColor: "white",
     },
-    position: "relative",
-    marginInline: "auto",
-    width: "100%",
-    height: 50,
   },
 });

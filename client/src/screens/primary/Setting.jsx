@@ -9,7 +9,7 @@ export default function Setting() {
   const { cityid } = useParams();
 
   const logOut = () => {
-    navigate(`/${cityid}/home`);
+    navigate(`/`);
   };
 
   return (
