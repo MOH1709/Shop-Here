@@ -13,7 +13,7 @@ export default function Card({ img, title, mrp, price }) {
   return (
     <div className={styles.container} onClick={clickHandler}>
       <div className={styles.img}>
-        <img src={img ?? "./logo.png"} alt="img" />
+        <img src={img || "./logo.png"} alt="img" />
       </div>
       <div className={styles.contentDiv}>
         <p>{title}</p>

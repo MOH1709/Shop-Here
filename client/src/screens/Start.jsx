@@ -30,6 +30,10 @@ export default function Start() {
     setCities([{ name: "halol", _id: "389350" }]);
   };
   useEffect(() => {
+    //check for ui and jt in in cookie
+    // save ai, cname
+    // if navigate to `/${cname}/home/businesses`
+
     getCities();
   }, []);
   //-----------------------------------------------> store input text
@@ -45,11 +49,11 @@ export default function Start() {
   };
 
   //-----------------------------------------------> store city
-  const selectOption = (e) => {
+  const selectOption = (name, id) => {
     setData({
       ...data,
-      city: e.target.outerText,
-      cityid: e.currentTarget.value,
+      city: name,
+      cityid: id,
     });
 
     setShowOption(false);
@@ -110,7 +114,10 @@ export default function Start() {
             style={{ display: showOption ? "flex" : "none" }}
           >
             {cities.map((data, index) => (
-              <Button key={index} value={data._id} onClick={selectOption}>
+              <Button
+                key={index}
+                onClick={() => selectOption(data.name, data._id)}
+              >
                 {data.name}
               </Button>
             ))}

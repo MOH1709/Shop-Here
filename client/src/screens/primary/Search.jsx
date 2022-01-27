@@ -20,6 +20,7 @@ export default function Search() {
           onClick={() => {
             navigate(-1);
           }}
+          className={styles.backBtn}
         >
           <img src="./icons/backArrow.svg" alt="back" />
         </span>
@@ -41,16 +42,8 @@ const useStyles = makeStyles({
     zIndex: 999,
   },
   header: {
-    "& span": {
-      ...FLEX_CENTER,
-      padding: 5,
-      borderRadius: "50%",
-      border: "2px solid white",
-      cursor: "pointer",
-    },
-
     display: "flex",
-    justifyContent: "space-between",
+    alignItems: "center",
     width: "100%",
     padding: 20,
     paddingLeft: 10,
@@ -60,22 +53,31 @@ const useStyles = makeStyles({
   inputDiv: {
     "& input": {
       flex: 1,
-      letterSpacing: 1,
-      paddingInline: 10,
-      borderRadius: 5,
+      width: 50,
+      paddingInline: 5,
       border: "none",
       outline: "none",
     },
     "& span": {
-      marginBlock: "auto",
-      height: "100%",
+      ...FLEX_CENTER,
+      width: 40,
       borderRadius: 5,
       backgroundColor: COLOR.PRIMARY,
+      cursor: "pointer",
     },
     flex: 1,
-
     display: "flex",
+    padding: 2,
+    height: 46,
     backgroundColor: "white",
     marginRight: 10,
+  },
+  backBtn: {
+    ...FLEX_CENTER,
+    minWidth: 40,
+    minHeight: 40,
+    borderRadius: "50%",
+    border: "2px solid white",
+    cursor: "pointer",
   },
 });

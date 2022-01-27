@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 import { FLEX_CENTER } from "../constants";
 
-export default function Card({ img, title, content }) {
+export default function Card({ img, title, content, onClickHandler }) {
   const styles = useStyles();
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={onClickHandler}>
       <div className={styles.img}>
-        <img src={img ?? "./logo.png"} alt="img" />
+        <img src={img || "./logo.png"} alt="img" />
       </div>
       <div className={styles.contentDiv}>
         <p>{title}</p>

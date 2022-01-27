@@ -26,8 +26,8 @@ export default function Router() {
       <Route path=":cname" element={<Main />}>
         <Route path="home" element={<Home />}>
           <Route path="areas" element={<Area />} />
-          <Route path="products" element={<Product />} />
-          <Route path="business" element={<Business />} />
+          <Route path=":bid" element={<Product />} />
+          <Route path="businesses" element={<Business />} />
         </Route>
         <Route path="messages" element={<Messages />} />
         <Route path="cart" element={<Cart />} />

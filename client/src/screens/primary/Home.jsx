@@ -1,17 +1,26 @@
 import { makeStyles } from "@material-ui/core";
-import { Card, ProductCard } from "../../components";
+import { useEffect } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 export default function Home() {
   const styles = useStyles();
+  const navigate = useNavigate();
+  const { cname } = useParams();
+
+  //-----------------------------------------------> check for ai in cookie
+  const checkAi = () => {
+    //if found nav to bussiness page
+    // else in areas
+    navigate(`/${cname}/home/areas`);
+  };
+
+  useEffect(() => {
+    checkAi();
+  }, []);
 
   return (
     <div className={styles.container}>
-      <Card
-        img="./test.jpg"
-        title={"Mahavir Kiraana Store dsajdans"}
-        content={"Atmiyavilla Society, godhra road, halol"}
-      />
-      <ProductCard title={"Coco cola 80ml"} mrp="12" price="10" />
+      <Outlet />
     </div>
   );
 }

@@ -13,6 +13,7 @@ export default function MiddleWare() {
     // if (ci === undefined) {
     // navigate("/");
     // }
+    console.log("hi i am middleware");
   };
 
   useEffect(() => {
