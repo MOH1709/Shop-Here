@@ -1,16 +1,19 @@
 import { makeStyles, Button } from "@material-ui/core";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { CartCard, InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 
 export default function Cart() {
   const styles = useStyles();
+  const navigate = useNavigate();
+  const { cityid } = useParams();
+  const [isUrgent, setIsUrgent] = useState(false);
   const [input, setInput] = useState({
     total: 0,
     address: "",
   });
-
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
@@ -18,6 +21,11 @@ export default function Cart() {
       ...input,
       [name]: value,
     });
+  };
+
+  const order = () => {
+    // navigate(`/${cityid}/home`);
+    navigate(`/SignIn`);
   };
 
   return (
@@ -72,12 +80,13 @@ export default function Cart() {
           onChangeHandler={onChangeHandler}
         />
         <div className={styles.total}>
-          <p>
-            TOTAL : <span>₹30</span>
+          <p className={styles.price}>
+            TOTAL :<span style={{ marginInline: 5 }}> ₹30 </span>
+            <span style={{ display: isUrgent ? "block" : "none" }}> + ₹10</span>
           </p>
-          <ToggleBtn />
+          <ToggleBtn onClickHandler={() => setIsUrgent(!isUrgent)} />
         </div>
-        <Button>order</Button>
+        <Button onClick={order}>order</Button>
       </div>
     </div>
   );
@@ -93,7 +102,9 @@ const useStyles = makeStyles({
   order: {
     "& Button": {
       ...BTN_STYLE,
-      width: 100,
+      width: "80%",
+      height: 40,
+      marginTop: 30,
       margin: 20,
     },
     display: "flex",
@@ -108,12 +119,18 @@ const useStyles = makeStyles({
       },
       color: COLOR.PRIMARY,
       fontWeight: "bold",
-      margin: 10,
     },
+    whiteSpace: "nowrap",
+
     width: "80%",
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
+  },
+  price: {
+    marginInline: 30,
+    marginBlock: 20,
+    display: "flex",
   },
 });

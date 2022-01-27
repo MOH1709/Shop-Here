@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 import { COLOR } from "../constants";
 
@@ -8,7 +8,7 @@ export default function ToggleBtn({ onClickHandler }) {
   const [isClicked, setIsClicked] = useState(false);
 
   const clickHandler = () => {
-    // onClickHandler();
+    onClickHandler();
     setIsClicked(!isClicked);
   };
 
@@ -18,7 +18,10 @@ export default function ToggleBtn({ onClickHandler }) {
       <div
         className={styles.btnDiv}
         onClick={clickHandler}
-        style={{ justifyContent: isClicked ? "flex-end" : "flex-start" }}
+        style={{
+          justifyContent: isClicked ? "flex-end" : "flex-start",
+          backgroundColor: isClicked ? COLOR.SECONDARY : COLOR.PRIMARY,
+        }}
       >
         <div className={styles.btn}></div>
       </div>
@@ -30,22 +33,23 @@ export default function ToggleBtn({ onClickHandler }) {
 const useStyles = makeStyles({
   container: {
     "& p": {
-      marginInline: 5,
+      marginInline: 20,
     },
     display: "flex",
     alignItems: "center",
     height: 35,
-    width: 180,
     border: `2px solid ${COLOR.PRIMARY}`,
+    borderRight: "none",
+    borderRadius: 5,
   },
   btnDiv: {
+    width: 90,
+    height: 35,
     display: "flex",
+    cursor: "pointer",
     alignItems: "center",
     paddingInline: 8,
-    backgroundColor: COLOR.PRIMARY,
     borderRadius: 5,
-    width: 100,
-    height: 35,
   },
   btn: {
     width: 22,
