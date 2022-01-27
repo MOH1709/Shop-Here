@@ -61,7 +61,7 @@ export default function LogIn() {
       </div>
       <p className={styles.title}>Log In</p>
       <p className={styles.link}>
-        Don't have an account ?<NavLink to="/signin">Create</NavLink>
+        Don't have an account ?<NavLink to="/">Create</NavLink>
       </p>
       <div className={styles.form}>
         <InputBox

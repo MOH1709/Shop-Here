@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
 //-----------------------------------------------> custom component
-import { InputBox } from "../components";
+import { InputBox, MiddleWare } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const styles = useStyles();
+  const [isEmail, setIsEmail] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState({
     phoneNumber: "",
@@ -22,6 +23,7 @@ export default function SignIn() {
     }
 
     //get data from cookies
+    // otp alert box if isEmail is false
     //save data to database
 
     navigate(`/{none}/home`);
@@ -37,9 +39,20 @@ export default function SignIn() {
     });
   };
 
+  //-----------------------------------------------> onLcick google Btn
+  const googleLogin = () => {
+    // check for confirmation of google
+    // autofill email input
+    // alert set password for your gmail
+    // save pasword and email to database
+    // add a new use in db
+    setIsEmail(!isEmail);
+  };
+
   //-----------------------------------------------> return component
   return (
-    <form className={styles.container}>
+    <div className={styles.container}>
+      <MiddleWare />
       <div className={styles.logoDiv}>
         <img src="./logo.png" alt="logo" height="50" />
         <p>Clean City</p>
@@ -48,7 +61,7 @@ export default function SignIn() {
       <p className={styles.link}>
         already have an account ?<NavLink to="/login">Log In</NavLink>
       </p>
-      <div className={styles.form}>
+      <form className={styles.form}>
         <InputBox
           title={"Mobile Number"}
           onChangeHandler={onChangeHandler}
@@ -65,13 +78,13 @@ export default function SignIn() {
         </Button>
         <div className={styles.api}>
           <p> OR </p>
-          <Button>
+          <Button onClick={googleLogin}>
             <img src="./google.png" alt="logo" height="30" />
             Sign In with Google
           </Button>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 
@@ -139,6 +152,8 @@ const useStyles = makeStyles({
         marginInline: 10,
       },
       color: COLOR.PRIMARY,
+      fontSize: 12,
+      fontWeight: "bold",
       width: "100%",
       border: `2px solid ${COLOR.PRIMARY}`,
     },

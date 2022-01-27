@@ -8,8 +8,10 @@ import ProductCard from "./ProductCard";
 import OwnerMessage from "./OwnerMessage";
 import ConsumerMessage from "./ConsumerMessage";
 import ToggleBtn from "./ToggleBtn";
+import MiddleWare from "./MiddleWare";
 
 export {
+  MiddleWare,
   ToggleBtn,
   CartCard,
   SecondaryHeader,

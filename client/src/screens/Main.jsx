@@ -2,7 +2,8 @@ import { makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 
-import { PrimaryHeader, SecondaryHeader } from "../components";
+//-----------------------------------------------> custom components
+import { PrimaryHeader, SecondaryHeader, MiddleWare } from "../components";
 import { Context } from "../contexts/WidthProvider";
 import { Cart } from "./primary";
 
@@ -12,6 +13,7 @@ export default function MainScreen() {
 
   return (
     <>
+      <MiddleWare />
       <div className={styles.primary}>
         <PrimaryHeader />
         <Outlet />

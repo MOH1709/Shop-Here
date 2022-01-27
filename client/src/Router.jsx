@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import { LogIn, SignIn, Main, Owner, Start } from "./screens";
+import { LogIn, SignIn, Main, Owner, Start, Error } from "./screens";
 import { Setting, Search, Home, Messages, Cart } from "./screens/primary";
 import {
   Bills,
@@ -17,7 +17,12 @@ export default function Router() {
       <Route path="/" element={<Start />} />
       <Route path="login" element={<LogIn />} />
       <Route path=":cname/signin" element={<SignIn />} />
+      <Route path="404" element={<Error />} />
+
+      {/* Owner Screen Routes */}
       <Route path=":cname/owner" element={<Owner />}></Route>
+
+      {/* User Screen Routes */}
       <Route path=":cname" element={<Main />}>
         <Route path="home" element={<Home />}>
           <Route path="areas" element={<Area />} />

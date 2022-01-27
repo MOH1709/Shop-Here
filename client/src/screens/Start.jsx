@@ -14,25 +14,23 @@ export default function Start() {
     fname: "",
     lname: "",
     city: "halol",
-    cname: "389350",
+    cityid: "389350",
   });
   const [cities, setCities] = useState([]);
 
   //-----------------------------------------------> on load
-  useEffect(() => {
-    fetch("/cities", {
+  const getCities = async () => {
+    const res = await fetch("/cities", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => {
-        //-----------------------------------------------> edit this
-        setCities([{ id: "389350", name: "halol" }]);
-      })
-      .catch((e) => {
-        alert("error in obtaining cities");
-      });
+    });
+
+    setCities([{ name: "halol", _id: "389350" }]);
+  };
+  useEffect(() => {
+    getCities();
   }, []);
   //-----------------------------------------------> store input text
   const onChangeHandler = (e) => {
@@ -51,7 +49,7 @@ export default function Start() {
     setData({
       ...data,
       city: e.target.outerText,
-      cname: e.currentTarget.value,
+      cityid: e.currentTarget.value,
     });
 
     setShowOption(false);
@@ -59,26 +57,16 @@ export default function Start() {
 
   //-----------------------------------------------> onClick start Button
   const start = () => {
-    const { fname, lname, city, cname } = data;
+    const { fname, lname, city, cityid } = data;
 
     // checking if all fields are field
-    if (fname && lname) {
-      //save data in cookie
-      fetch("/cookie", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          un: `${fname}+${lname}`,
-          [city]: cname,
-        }),
-      });
-
-      navigate(`/${city}/home`);
-    } else {
+    if (!(fname || lname)) {
       alert("please enter your full name");
+      return;
     }
+    //save data in cookie
+
+    navigate(`/${city}/home`);
   };
 
   //-----------------------------------------------> Return Component
@@ -122,7 +110,7 @@ export default function Start() {
             style={{ display: showOption ? "flex" : "none" }}
           >
             {cities.map((data, index) => (
-              <Button key={index} value={data.id} onClick={selectOption}>
+              <Button key={index} value={data._id} onClick={selectOption}>
                 {data.name}
               </Button>
             ))}
