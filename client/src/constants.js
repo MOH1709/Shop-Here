@@ -22,7 +22,7 @@ const BTN_STYLE = {
   position: "relative",
   ...FLEX_CENTER,
 
-  color: COLOR.SECONDARY,
+  color: "white",
   backgroundColor: COLOR.PRIMARY,
 };
 

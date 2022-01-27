@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
+//-----------------------------------------------> custom Components
 import { InputBox } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -13,6 +14,7 @@ export default function LogIn() {
     password: "",
   });
 
+  //-----------------------------------------------> store input data
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
@@ -22,6 +24,35 @@ export default function LogIn() {
     });
   };
 
+  //-----------------------------------------------> onClick login
+  const login = async () => {
+    if (data.phoneNumber && data.password) {
+      const userData = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // fetch("/cookie", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     un: `${fname}+${lname}`,
+      //     [city]: cityId,
+      //   }),
+      // });
+
+      navigate(`/${userData.city}/home`);
+    } else {
+      alert("please fill all input field");
+    }
+  };
+
+  //-----------------------------------------------> return component
   return (
     <form className={styles.container}>
       <div className={styles.logoDiv}>
@@ -34,7 +65,7 @@ export default function LogIn() {
       </p>
       <div className={styles.form}>
         <InputBox
-          title={"Mobile Number"}
+          title={"Mobile Number / Email"}
           onChangeHandler={onChangeHandler}
           name="phoneNumber"
         />
@@ -44,7 +75,9 @@ export default function LogIn() {
           name="password"
           type="password"
         />
-        <Button className={styles.login}>Log in</Button>
+        <Button onClick={login} className={styles.login}>
+          Log in
+        </Button>
       </div>
     </form>
   );
@@ -57,9 +90,11 @@ const useStyles = makeStyles({
     overflowY: "auto",
     display: "flex",
     flexDirection: "column",
-    padding: 15,
+    padding: 20,
     maxWidth: 600,
-    marginInline: "auto",
+    maxHeight: 750,
+    height: "100%",
+    margin: "auto",
     backgroundColor: "white",
     boxShadow: "0px 3px 6px rgba(0,0,0,0.5)",
   },

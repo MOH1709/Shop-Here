@@ -9,12 +9,17 @@ import {
   Updates,
   ReportBug,
 } from "./screens/settings";
+import { Business, Area, Product } from "./screens/home";
 
 export default function Router() {
   return (
     <Routes>
       <Route path=":cityid" element={<Main />}>
-        <Route path="home" element={<Home />} />
+        <Route path="home" element={<Home />}>
+          <Route path="areas" element={<Area />} />
+          <Route path="products" element={<Product />} />
+          <Route path="business" element={<Business />} />
+        </Route>
         <Route path="messages" element={<Messages />} />
         <Route path="cart" element={<Cart />} />
         <Route path="search" element={<Search />} />

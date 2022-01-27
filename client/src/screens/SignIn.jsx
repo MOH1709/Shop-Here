@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
+//-----------------------------------------------> custom component
 import { InputBox } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -13,10 +14,20 @@ export default function SignIn() {
     password: "",
   });
 
+  //-----------------------------------------------> onClick Signin
   const signIn = () => {
-    navigate(`/{cityId}/home`);
+    if (!(data.phoneNumber || data.password)) {
+      alert("please fill all field");
+      return;
+    }
+
+    //get data from cookies
+    //save data to database
+
+    navigate(`/{none}/home`);
   };
 
+  //-----------------------------------------------> Storing inputs
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
@@ -26,6 +37,7 @@ export default function SignIn() {
     });
   };
 
+  //-----------------------------------------------> return component
   return (
     <form className={styles.container}>
       <div className={styles.logoDiv}>
@@ -70,9 +82,11 @@ const useStyles = makeStyles({
     overflowY: "auto",
     display: "flex",
     flexDirection: "column",
-    padding: 15,
+    padding: 20,
     maxWidth: 600,
-    marginInline: "auto",
+    maxHeight: 750,
+    height: "100%",
+    margin: "auto",
     backgroundColor: "white",
     boxShadow: "0px 3px 6px rgba(0,0,0,0.5)",
   },

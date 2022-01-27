@@ -8,15 +8,18 @@ export default function InputBox({
   Style,
   name,
   type,
+  value,
 }) {
   const styles = useStyles();
 
   return (
     <div className={styles.container} style={Style}>
-      <p>{title}</p>
+      <label htmlFor={title}>{title}</label>
       <input
+        id={title}
         type={type ?? "text"}
         name={name}
+        value={value}
         onChange={onChangeHandler}
         required
       />
@@ -33,7 +36,7 @@ const useStyles = makeStyles({
       outline: "none",
       letterSpacing: 1,
     },
-    "& p": {
+    "& label": {
       marginBottom: 5,
       fontWeight: "bold",
       color: COLOR.PRIMARY,
