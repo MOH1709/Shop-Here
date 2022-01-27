@@ -42,7 +42,7 @@ export default function LogIn() {
       //   },
       //   body: JSON.stringify({
       //     un: `${fname}+${lname}`,
-      //     [city]: cityId,
+      //     [city]: cname,
       //   }),
       // });
 

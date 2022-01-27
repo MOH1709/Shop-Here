@@ -6,7 +6,7 @@ import { COLOR } from "../../constants";
 export default function Setting() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const { cityid } = useParams();
+  const { cname } = useParams();
 
   const logOut = () => {
     navigate(`/`);
@@ -28,42 +28,42 @@ export default function Setting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/setting/userprofile`}
+          to={`/${cname}/setting/userprofile`}
         >
           My Profile
         </Button>
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/setting/userbills`}
+          to={`/${cname}/setting/userbills`}
         >
           My Orders
         </Button>
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/setting/ownersignin`}
+          to={`/${cname}/setting/ownersignin`}
         >
           Be Seller
         </Button>
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/setting/updates`}
+          to={`/${cname}/setting/updates`}
         >
           Update & Info
         </Button>
         {/* <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/setting/`}
+          to={`/${cname}/setting/`}
         >
           Want A Product
         </Button> */}
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/setting/report`}
+          to={`/${cname}/setting/report`}
         >
           Report An Issue
         </Button>

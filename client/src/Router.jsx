@@ -14,7 +14,11 @@ import { Business, Area, Product } from "./screens/home";
 export default function Router() {
   return (
     <Routes>
-      <Route path=":cityid" element={<Main />}>
+      <Route path="/" element={<Start />} />
+      <Route path="login" element={<LogIn />} />
+      <Route path=":cname/signin" element={<SignIn />} />
+      <Route path=":cname/owner" element={<Owner />}></Route>
+      <Route path=":cname" element={<Main />}>
         <Route path="home" element={<Home />}>
           <Route path="areas" element={<Area />} />
           <Route path="products" element={<Product />} />
@@ -31,10 +35,6 @@ export default function Router() {
           <Route path="report" element={<ReportBug />} />
         </Route>
       </Route>
-      <Route path="/" element={<Start />} />
-      <Route path="login" element={<LogIn />} />
-      <Route path="signin" element={<SignIn />} />
-      <Route path="owner" element={<Owner />}></Route>
     </Routes>
   );
 }

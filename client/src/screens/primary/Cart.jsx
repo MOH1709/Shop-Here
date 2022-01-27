@@ -8,7 +8,7 @@ import { BTN_STYLE, COLOR } from "../../constants";
 export default function Cart() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const { cityid } = useParams();
+  const { cname } = useParams();
   const [isUrgent, setIsUrgent] = useState(false);
   const [input, setInput] = useState({
     total: 0,
@@ -24,7 +24,7 @@ export default function Cart() {
   };
 
   const order = () => {
-    // navigate(`/${cityid}/home`);
+    // navigate(`/${cname}/home`);
     navigate(`/SignIn`);
   };
 

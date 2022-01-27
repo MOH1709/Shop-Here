@@ -14,7 +14,7 @@ export default function Start() {
     fname: "",
     lname: "",
     city: "halol",
-    cityId: "389350",
+    cname: "389350",
   });
   const [cities, setCities] = useState([]);
 
@@ -51,7 +51,7 @@ export default function Start() {
     setData({
       ...data,
       city: e.target.outerText,
-      cityId: e.currentTarget.value,
+      cname: e.currentTarget.value,
     });
 
     setShowOption(false);
@@ -59,7 +59,7 @@ export default function Start() {
 
   //-----------------------------------------------> onClick start Button
   const start = () => {
-    const { fname, lname, city, cityId } = data;
+    const { fname, lname, city, cname } = data;
 
     // checking if all fields are field
     if (fname && lname) {
@@ -71,7 +71,7 @@ export default function Start() {
         },
         body: JSON.stringify({
           un: `${fname}+${lname}`,
-          [city]: cityId,
+          [city]: cname,
         }),
       });
 

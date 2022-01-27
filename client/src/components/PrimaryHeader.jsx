@@ -8,17 +8,17 @@ import { Context } from "../contexts/WidthProvider";
 export default function PrimaryHeader({ setLocation, location }) {
   const styles = useStyles();
   const { width } = useContext(Context); // getting windows width dynamically
-  const { cityid } = useParams();
+  const { cname } = useParams();
 
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <img src="./logo.png" alt="logo" height="50" className={styles.logo} />
         <div className={styles.right}>
-          <Button component={NavLink} to={`/${cityid}/search`}>
+          <Button component={NavLink} to={`/${cname}/search`}>
             <img src="./icons/search.svg" alt="search" />
           </Button>
-          <Button component={NavLink} to={`/${cityid}/setting`}>
+          <Button component={NavLink} to={`/${cname}/setting`}>
             <img src="./icons/setting.svg" alt="setting" />
           </Button>
         </div>
@@ -27,7 +27,7 @@ export default function PrimaryHeader({ setLocation, location }) {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/home`}
+          to={`/${cname}/home`}
           style={({ isActive }) => {
             return isActive
               ? {
@@ -42,7 +42,7 @@ export default function PrimaryHeader({ setLocation, location }) {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cityid}/messages`}
+          to={`/${cname}/messages`}
           style={({ isActive }) => {
             return isActive
               ? {
@@ -58,7 +58,7 @@ export default function PrimaryHeader({ setLocation, location }) {
           <Button
             className={styles.navBtn}
             component={NavLink}
-            to={`/${cityid}/cart`}
+            to={`/${cname}/cart`}
             style={({ isActive }) => {
               return isActive
                 ? {
