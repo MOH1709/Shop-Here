@@ -1,5 +1,7 @@
 import { makeStyles, Button } from "@material-ui/core";
-import { COLOR, FLEX_CENTER } from "../constants";
+
+//-----------------------------------------------> custom components
+import { COLOR, FLEX_CENTER } from "../../constants";
 
 export default function Card({
   img,

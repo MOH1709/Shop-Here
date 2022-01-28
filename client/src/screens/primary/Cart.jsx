@@ -3,7 +3,8 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 //-----------------------------------------------> custom components
-import { CartCard, InputBox, ToggleBtn } from "../../components";
+import { CartCard } from "../../components/user";
+import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 import { Context } from "../../contexts/CartProvider";
 

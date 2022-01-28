@@ -3,11 +3,13 @@ import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 
 //-----------------------------------------------> custom components
-import { PrimaryHeader, SecondaryHeader, MiddleWare } from "../components";
+import { PrimaryHeader, SecondaryHeader } from "../components/user";
+import { MiddleWare } from "../components";
 import { CartProvider } from "../contexts";
 import { Context } from "../contexts/WidthProvider";
 import { Cart } from "./primary";
 
+//----------------------------------------------->
 export default function MainScreen() {
   const styles = useStyles();
   const { width } = useContext(Context);

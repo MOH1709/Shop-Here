@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ProductCard } from "../../components";
 
 //-----------------------------------------------> custom components
+import { ProductCard } from "../../components/user";
 import { Context } from "../../contexts/CartProvider";
 
 export default function Area() {

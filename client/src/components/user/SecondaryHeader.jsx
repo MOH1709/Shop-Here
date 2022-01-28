@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
-import { COLOR } from "../constants";
+//-----------------------------------------------> custom components
+import { COLOR } from "../../constants";
 
 export default function SecondaryHeader({ shops }) {
   const styles = useStyles();

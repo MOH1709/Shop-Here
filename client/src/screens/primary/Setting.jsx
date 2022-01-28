@@ -1,6 +1,7 @@
 import { makeStyles, Button } from "@material-ui/core";
 import { NavLink, useNavigate, Outlet, useParams } from "react-router-dom";
 
+//-----------------------------------------------> custom components
 import { COLOR } from "../../constants";
 
 export default function Setting() {

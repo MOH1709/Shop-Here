@@ -1,5 +1,7 @@
 import { makeStyles, Button } from "@material-ui/core";
-import { BTN_STYLE, COLOR } from "../constants";
+
+//-----------------------------------------------> custom Componenets
+import { BTN_STYLE, COLOR } from "../../constants";
 
 export default function OwnerMessage({ name, address }) {
   const styles = useStyles();

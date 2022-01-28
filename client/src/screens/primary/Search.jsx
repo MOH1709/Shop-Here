@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 
+//-----------------------------------------------> custom components
 import { COLOR, FLEX_CENTER } from "../../constants";
 
 export default function Search() {

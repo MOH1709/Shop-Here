@@ -1,6 +1,8 @@
 import { makeStyles } from "@material-ui/core";
 
-import { OwnerMessage, ConsumerMessage } from "../../components";
+//-----------------------------------------------> custom components
+import { OwnerMessage } from "../../components/owner";
+import { ConsumerMessage } from "../../components";
 import { COLOR } from "../../constants";
 
 export default function Messages() {
