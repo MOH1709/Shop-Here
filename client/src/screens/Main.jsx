@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { PrimaryHeader, SecondaryHeader, MiddleWare } from "../components";
+import { CartProvider } from "../contexts";
 import { Context } from "../contexts/WidthProvider";
 import { Cart } from "./primary";
 
@@ -13,18 +14,20 @@ export default function MainScreen() {
 
   return (
     <>
-      <MiddleWare />
-      <div className={styles.primary}>
-        <PrimaryHeader />
-        <Outlet />
-      </div>
-      <div
-        className={styles.secondary}
-        style={{ display: width > 700 ? "flex" : "none" }}
-      >
-        <SecondaryHeader />
-        <Cart />
-      </div>
+      <CartProvider>
+        <MiddleWare />
+        <div className={styles.primary}>
+          <PrimaryHeader />
+          <Outlet />
+        </div>
+        <div
+          className={styles.secondary}
+          style={{ display: width > 700 ? "flex" : "none" }}
+        >
+          <SecondaryHeader />
+          <Cart />
+        </div>
+      </CartProvider>
     </>
   );
 }

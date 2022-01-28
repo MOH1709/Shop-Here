@@ -1,12 +1,15 @@
 import { makeStyles, Button } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+//-----------------------------------------------> custom components
 import { CartCard, InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
+import { Context } from "../../contexts/CartProvider";
 
 export default function Cart() {
   const styles = useStyles();
+  const { cart, setCart } = useContext(Context);
   const navigate = useNavigate();
   const { cname } = useParams();
   const [isUrgent, setIsUrgent] = useState(false);
@@ -30,49 +33,17 @@ export default function Cart() {
 
   return (
     <div className={styles.container}>
-      <CartCard
-        price="10"
-        q="1"
-        shopName="Mahavir general store, sb nagar pavagadh road halol"
-        name="fanta drink 200ml"
-        img="./test.jpg"
-      />
-      <CartCard
-        price="10"
-        q="1"
-        shopName="Mahavir general store, sb nagar pavagadh road halol"
-        name="fanta drink 200ml"
-        img="./test.jpg"
-      />
-      <CartCard
-        price="10"
-        q="1"
-        shopName="Mahavir general store, sb nagar pavagadh road halol"
-        name="fanta drink 200ml"
-        img="./test.jpg"
-      />
-      <CartCard
-        price="10"
-        q="1"
-        shopName="Mahavir general store, sb nagar pavagadh road halol"
-        name="fanta drink 200ml"
-        img="./test.jpg"
-      />
-      <CartCard
-        price="10"
-        q="1"
-        shopName="Mahavir general store, sb nagar pavagadh road halol"
-        name="fanta drink 200ml"
-        img="./test.jpg"
-      />
-      <CartCard
-        price="10"
-        q="1"
-        shopName="Mahavir general store, sb nagar pavagadh road halol"
-        name="fanta drink 200ml"
-        img="./test.jpg"
-      />
-      <div className={styles.order}>
+      {cart.map((data, i) => (
+        <CartCard
+          key={i}
+          price={data.price}
+          q="1"
+          shopName="Mahavir general store, sb nagar pavagadh road halol"
+          name={data.name}
+          img={data.img}
+        />
+      ))}
+      <div className={styles.order} style={{ display: "none" }}>
         <InputBox
           title="Full Address"
           name="address"

@@ -14,8 +14,23 @@ export default function Area() {
     // navigate("/404");
     setProducts([
       {
+        _id: "1",
         img: "",
         name: "Coco cola 80ml",
+        price: "10",
+        mrp: "12",
+      },
+      {
+        _id: "2",
+        img: "",
+        name: "limka 80ml",
+        price: "10",
+        mrp: "12",
+      },
+      {
+        _id: "3",
+        img: "",
+        name: "pepsi 80ml",
         price: "10",
         mrp: "12",
       },
@@ -27,11 +42,13 @@ export default function Area() {
     getproducts();
   }, []);
 
+  //-----------------------------------------------> returning component
   return (
     <>
-      {products.map((data, index) => (
+      {products.map((data) => (
         <ProductCard
-          key={index}
+          key={data._id}
+          id={data._id}
           title={data.name}
           price={data.price}
           mrp={data.mrp}
