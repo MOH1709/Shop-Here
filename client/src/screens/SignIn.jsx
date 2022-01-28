@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 //-----------------------------------------------> custom component
 import { InputBox, MiddleWare } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
-import { NavLink, useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const styles = useStyles();
   const [isEmail, setIsEmail] = useState(false);
   const navigate = useNavigate();
+  const { cname } = useParams();
   const [data, setData] = useState({
     phoneNumber: "",
     password: "",
@@ -26,7 +27,7 @@ export default function SignIn() {
     // otp alert box if isEmail is false
     //save data to database
 
-    navigate(`/{none}/home`);
+    navigate(`/${cname}/home`);
   };
 
   //-----------------------------------------------> Storing inputs

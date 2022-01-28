@@ -1,29 +1,24 @@
-import { useState, useContext } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import { COLOR, FLEX_CENTER } from "../constants";
 
-//-----------------------------------------------> custom components
-import { Context } from "../contexts/CartProvider";
-
-export default function Card({ img, title, mrp, price, id }) {
+export default function Card({
+  img,
+  title,
+  mrp,
+  price,
+  _id,
+  isAdded,
+  onClickHandler,
+}) {
   const styles = useStyles();
-  const { cart, setCart } = useContext(Context);
-  const [isAdded, setIsAdded] = useState(false);
-
-  const editCart = () => {
-    // As it it set state dependent,
-    // state will update after calling component, thus condition are set opposite
-    if (isAdded) {
-      setCart(cart.filter((data) => data.name !== title));
-    } else {
-      setCart([...cart, { img, name: title, mrp, price, quantity: 1, id }]);
-    }
-
-    setIsAdded(!isAdded);
-  };
 
   return (
-    <div className={styles.container} onClick={editCart}>
+    <div
+      className={styles.container}
+      onClick={() => {
+        onClickHandler({ img, name: title, mrp, price, _id }, !isAdded);
+      }}
+    >
       <div className={styles.img}>
         <img src={img || "./logo.png"} alt="img" />
       </div>

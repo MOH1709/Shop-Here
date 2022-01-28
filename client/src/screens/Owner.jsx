@@ -1,10 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import { useContext } from "react";
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 
-import { PrimaryHeader, SecondaryHeader } from "../components";
+import { SecondaryHeader } from "../components";
 import { Context } from "../contexts/WidthProvider";
-import { Cart } from "./primary";
 
 export default function Owner() {
   const styles = useStyles();
@@ -12,16 +11,12 @@ export default function Owner() {
 
   return (
     <>
-      <div className={styles.primary}>
-        <PrimaryHeader />
-        <Outlet />
-      </div>
+      <div className={styles.primary}>{/* <Outlet /> */}</div>
       <div
         className={styles.secondary}
         style={{ display: width > 700 ? "flex" : "none" }}
       >
         <SecondaryHeader />
-        <Cart />
       </div>
     </>
   );

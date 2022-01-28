@@ -1,37 +1,65 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
-
 import { BTN_STYLE, COLOR } from "../constants";
 
-export default function CartCard({ img, name, q, price, shopName }) {
+//-----------------------------------------------> custom components
+import { Context } from "../contexts/CartProvider";
+
+export default function CartCard({ img, name, q, price, shopName, _id }) {
   const styles = useStyles();
-  const [quantity, setQuantity] = useState(parseInt(q) || 1);
   const [total, setTotal] = useState(parseInt(price));
+  const { cart, setCart } = useContext(Context);
 
   return (
     <div
       className={styles.container}
-      style={{ display: quantity > 0 ? "flex" : "none" }}
+      style={{ display: q > 0 ? "flex" : "none" }}
     >
       <div className={styles.left}>
         <img src={img || "./logo.png"} alt="product" className={styles.img} />
         <div className={styles.qDiv}>
           <Button
             onClick={() => {
-              setQuantity(quantity + 1);
-              setTotal(total + parseInt(price));
+              if (q < 10) {
+                setCart(
+                  cart.map((data) => {
+                    if (data._id === _id) {
+                      return { ...data, quantity: q + 1 };
+                    }
+                    return data;
+                  })
+                );
+                setTotal(total + parseInt(price));
+              }
             }}
+            style={{ fontSize: q < 10 ? 20 : 12 }}
           >
-            +
+            {q < 10 ? "+" : "MAX"}
           </Button>
-          <span>{quantity}</span>
+          <span>{q}</span>
           <Button
             onClick={() => {
-              setQuantity(quantity - 1);
+              setCart(
+                cart.map((data) => {
+                  if (data._id === _id) {
+                    return { ...data, quantity: q - 1 };
+                  }
+                  return data;
+                })
+              );
+
               setTotal(total - parseInt(price));
+
+              if (q === 1) {
+                setCart(
+                  cart.filter((data) => {
+                    return data._id !== _id;
+                  })
+                );
+              }
             }}
           >
-            {quantity === 1 ? (
+            {q === 1 ? (
               <img src="./icons/delete.svg" alt="delete" height="20" />
             ) : (
               "-"

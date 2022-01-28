@@ -1,5 +1,5 @@
 import { makeStyles, Button } from "@material-ui/core";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 //-----------------------------------------------> custom components
@@ -9,50 +9,63 @@ import { Context } from "../../contexts/CartProvider";
 
 export default function Cart() {
   const styles = useStyles();
-  const { cart, setCart } = useContext(Context);
+  const { cart } = useContext(Context);
   const navigate = useNavigate();
   const { cname } = useParams();
   const [isUrgent, setIsUrgent] = useState(false);
-  const [input, setInput] = useState({
-    total: 0,
-    address: "",
-  });
+  const [address, setAddress] = useState("");
+  const [total, setTotal] = useState(0);
+
+  //----------------------------------------------->
+  useEffect(() => {
+    setTotal(
+      cart.reduce((pv, cv) => {
+        return pv + parseInt(cv.price) * cv.quantity;
+      }, 0)
+    );
+  }, [cart]);
+
+  //-----------------------------------------------> store text input
   const onChangeHandler = (e) => {
-    const { value, name } = e.target;
-
-    setInput({
-      ...input,
-      [name]: value,
-    });
+    setAddress(e.target.value);
   };
 
+  //-----------------------------------------------> on order
   const order = () => {
+    if (isUrgent) {
+      setTotal(total + 10);
+    }
+
     // navigate(`/${cname}/home`);
-    navigate(`/SignIn`);
+    navigate(`/${cname}/SignIn`);
   };
 
+  //-----------------------------------------------> returning component
   return (
     <div className={styles.container}>
-      {cart.map((data, i) => (
+      {cart.map((data) => (
         <CartCard
-          key={i}
+          key={data._id}
+          _id={data._id}
           price={data.price}
-          q="1"
+          q={data.quantity}
           shopName="Mahavir general store, sb nagar pavagadh road halol"
           name={data.name}
           img={data.img}
         />
       ))}
-      <div className={styles.order} style={{ display: "none" }}>
+      <div
+        className={styles.order}
+        style={{ display: cart.length ? "flex" : "none" }}
+      >
         <InputBox
           title="Full Address"
-          name="address"
           Style={{ width: "80%", marginBlock: 30, marginInline: "auto" }}
           onChangeHandler={onChangeHandler}
         />
         <div className={styles.total}>
           <p className={styles.price}>
-            TOTAL :<span style={{ marginInline: 5 }}> ₹30 </span>
+            TOTAL :<span style={{ marginInline: 5 }}> ₹{total} </span>
             <span style={{ display: isUrgent ? "block" : "none" }}> + ₹10</span>
           </p>
           <ToggleBtn onClickHandler={() => setIsUrgent(!isUrgent)} />
@@ -78,7 +91,6 @@ const useStyles = makeStyles({
       marginTop: 30,
       margin: 20,
     },
-    display: "flex",
     flexDirection: "column",
     alignItems: "center",
     paddingBottom: 50,
