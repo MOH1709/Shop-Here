@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
@@ -14,21 +15,17 @@ export default function Start() {
     fname: "",
     lname: "",
     city: "halol",
-    cityid: "389350",
+    cityid: "61da77bdc8276a19e9a07504",
   });
   const [cities, setCities] = useState([]);
 
-  //-----------------------------------------------> on load
+  //-----------------------------------------------> on load function
   const getCities = async () => {
-    const res = await fetch("/cities", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    setCities([{ name: "halol", _id: "389350" }]);
+    const cleanCities = await axios.get("/cleancities");
+    setCities(cleanCities.data);
   };
+
+  //-----------------------------------------------> on load
   useEffect(() => {
     //check for ui and jt in in cookie
     // save ai, cname
@@ -36,6 +33,7 @@ export default function Start() {
 
     getCities();
   }, []);
+
   //-----------------------------------------------> store input text
   const onChangeHandler = (e) => {
     const { value, name } = e.target;

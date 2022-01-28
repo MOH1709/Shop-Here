@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
+//-----------------------------------------------> custom components
 import Router from "./Router";
 
 export default function App() {

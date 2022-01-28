@@ -4,6 +4,11 @@ import { City, Area, Shop, User } from "./models/index.js";
 
 const router = Router();
 
+//-----------------------------------------------> test
+router.get("/test", (req, res) => {
+  res.status(200).send("hii my self mohit");
+});
+
 //-----------------------------------------------> Clean Cities
 router.get("/cleancities", async(req, res) => {
   try {

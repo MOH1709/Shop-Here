@@ -2,7 +2,7 @@
   "name": "cleancity",
   "version": "1.0.0",
   "description": "app for online business",
-  "main": "app.js",
+  "main": "./src/app.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
