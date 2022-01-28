@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
-import { BTN_STYLE, COLOR } from "../constants";
+
+//-----------------------------------------------> custom Components
+import { BTN_STYLE, COLOR } from "../../constants";
 
 //-----------------------------------------------> custom components
-import { Context } from "../contexts/CartProvider";
+import { Context } from "../../contexts/CartProvider";
 
 export default function CartCard({ img, name, q, price, shopName, _id }) {
   const styles = useStyles();

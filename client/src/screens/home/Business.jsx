@@ -1,9 +1,11 @@
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
+//-----------------------------------------------> custom components
 import { Card } from "../../components";
 
-export default function Area() {
+export default function Business() {
   const navigate = useNavigate();
   const { cname } = useParams();
   const [businesses, setBusinesses] = useState([]);

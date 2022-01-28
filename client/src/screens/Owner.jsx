@@ -2,7 +2,8 @@ import { makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 // import { Outlet } from "react-router-dom";
 
-import { SecondaryHeader } from "../components";
+//-----------------------------------------------> custom components
+import { SecondaryHeader } from "../components/user";
 import { Context } from "../contexts/WidthProvider";
 
 export default function Owner() {

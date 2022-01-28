@@ -2,8 +2,9 @@ import { makeStyles, Button } from "@material-ui/core";
 import { useContext } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
-import { BTN_STYLE, COLOR } from "../constants";
-import { Context } from "../contexts/WidthProvider";
+//-----------------------------------------------> custom Componenets
+import { BTN_STYLE, COLOR } from "../../constants";
+import { Context } from "../../contexts/WidthProvider";
 
 export default function PrimaryHeader({ setLocation, location }) {
   const styles = useStyles();
