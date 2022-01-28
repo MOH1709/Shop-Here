@@ -43,7 +43,7 @@ export default function Setting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/ownersignin`}
+          to={`/${cname}/owner`}
         >
           Be Seller
         </Button>

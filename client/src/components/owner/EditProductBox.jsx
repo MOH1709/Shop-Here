@@ -3,14 +3,13 @@ import { makeStyles, Button } from "@material-ui/core";
 //-----------------------------------------------> custom components
 import { COLOR, FLEX_CENTER } from "../../constants";
 
-export default function Card({
+export default function EditProductBox({
   img,
   title,
   mrp,
   price,
-  _id,
-  isAdded,
   onClickHandler,
+  quantity,
 }) {
   const styles = useStyles();
 
@@ -18,7 +17,7 @@ export default function Card({
     <div
       className={styles.container}
       onClick={() => {
-        onClickHandler({ img, name: title, mrp, price, _id }, !isAdded);
+        onClickHandler();
       }}
     >
       <div className={styles.img}>
@@ -28,15 +27,11 @@ export default function Card({
         <p>{title}</p>
         <p>{price} ₹</p>
         <p>
-          {mrp} {!mrp || "₹"}
+          {mrp || ""} {!mrp || "₹"}
         </p>
+        <p>{quantity ? "quantity : " + quantity : "out of stock"}</p>
       </div>
-      <Button
-        className={styles.btn}
-        style={{ color: isAdded ? COLOR.RED : COLOR.GREEN }}
-      >
-        {isAdded ? "Remove" : "Add To Cart"}
-      </Button>
+      <Button className={styles.btn}>click to edit</Button>
     </div>
   );
 }

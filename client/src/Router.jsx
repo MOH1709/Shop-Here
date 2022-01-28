@@ -10,6 +10,7 @@ import {
   ReportBug,
 } from "./screens/settings";
 import { Business, Area, Product } from "./screens/home";
+import { Inventory, OwnerHome } from "./screens/owners";
 
 export default function Router() {
   return (
@@ -20,7 +21,11 @@ export default function Router() {
       <Route path="404" element={<Error />} />
 
       {/* Owner Screen Routes */}
-      <Route path=":cname/owner" element={<Owner />}></Route>
+      <Route path=":cname/owner" element={<Owner />}>
+        <Route path="messages" element={<Messages />} />
+        <Route path="inventory" element={<Inventory />} />
+        <Route path="profile" element={<OwnerHome />} />
+      </Route>
 
       {/* User Screen Routes */}
       <Route path=":cname" element={<Main />}>
