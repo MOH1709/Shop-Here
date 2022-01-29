@@ -1,56 +1,60 @@
 import axios from "axios";
 import cookie from "js-cookie";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom Components
 import { Card } from "../../components";
 
 export default function Area() {
   const navigate = useNavigate();
-  const { cname } = useParams();
   const [areas, setAreas] = useState([]);
 
   //-----------------------------------------------> onLoad
   useEffect(() => {
+    let isMounted = true;
     // fetch area
     const getAreas = async () => {
       try {
         // fetch areas from cname in cookie
-        const ci = cookie.get(cname);
+        const ci = cookie.get("ci");
         const cleanAreas = await axios.get(`/${ci}/areas`);
 
         if (cleanAreas.status === 200) {
-          setAreas(cleanAreas.data);
+          isMounted && setAreas(cleanAreas.data);
         } else {
           navigate("/");
         }
       } catch (e) {
+        cookie.remove("ci");
         console.log("error in areas");
       }
     };
-
     getAreas();
-  }, [cname, navigate]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate]);
 
   //-----------------------------------------------> onClick area
-  const saveArea = (_id) => {
+  const saveArea = (id) => {
     // save area id in cookie as ai
-    cookie.set("ai", _id);
+    cookie.set("ai", id);
 
-    navigate(`/${cname}/home/businesses`);
+    navigate(`/city/home/businesses`);
   };
 
   return (
     <>
-      {areas.map((data, index) => (
+      {areas.map((data) => (
         <Card
-          key={index}
+          key={data.id}
           title={data.name}
           content={data.address}
           img={data.img}
           onClickHandler={() => {
-            saveArea(data._id);
+            saveArea(data.id);
           }}
         />
       ))}

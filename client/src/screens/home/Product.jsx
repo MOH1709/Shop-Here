@@ -1,53 +1,36 @@
 import { makeStyles } from "@material-ui/core";
+import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { ProductCard } from "../../components/user";
 import { Context } from "../../contexts/CartProvider";
 
-export default function Area() {
-  const { bid } = useParams();
-  const navigate = useNavigate();
+export default function Product() {
+  const { id } = useLocation().state;
   const { cart, setCart } = useContext(Context);
   const [products, setProducts] = useState([]);
 
   //-----------------------------------------------> onLoad
   useEffect(() => {
-    getproducts();
-  }, []);
+    let isMounted = true;
 
-  //-----------------------------------------------> fetch area
-  function getproducts() {
-    // fetch products from bid in db
-    // navigate("/404");
-    setProducts([
-      {
-        _id: "1",
-        img: "",
-        name: "Coco cola 80ml",
-        price: "10",
-        mrp: "12",
-        isAdded: false,
-      },
-      {
-        _id: "2",
-        img: "",
-        name: "limka 80ml",
-        price: "10",
-        mrp: "12",
-        isAdded: false,
-      },
-      {
-        _id: "3",
-        img: "",
-        name: "pepsi 80ml",
-        price: "10",
-        mrp: "12",
-        isAdded: false,
-      },
-    ]);
-  }
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(`/${id}/products`);
+        isMounted && setProducts(res.data);
+      } catch (e) {
+        console.log("error in products");
+      }
+    };
+
+    getProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
 
   //-----------------------------------------------> edit Products according to cart
   const editProduct = (obj, isAdded) => {
@@ -71,10 +54,9 @@ export default function Area() {
   //-----------------------------------------------> returning component
   return (
     <>
-      {products.map((data) => (
+      {products.map((data, index) => (
         <ProductCard
-          key={data._id}
-          _id={data._id}
+          key={index}
           title={data.name}
           price={data.price}
           mrp={data.mrp}

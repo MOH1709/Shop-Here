@@ -119,10 +119,10 @@ router.post("/:cityId/:areaId/shops", async(req, res) => {
 });
 
 //-----------------------------------------------> products
-router.get("/:userId/shop/products", async(req, res) => {
+router.get("/:shopId/products", async(req, res) => {
   try {
-    const { userId } = req.params;
-    const { products } = await Shop.findOne({ _id: userId }, { _id: 0, products: 1 });
+    const { shopId } = req.params;
+    const { products } = await Shop.findOne({ _id: shopId }, { _id: 0, products: 1 });
 
     res.status(200).send(products);
   } catch (e) {

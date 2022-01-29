@@ -1,44 +1,54 @@
+import cookie from "js-cookie";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { Card } from "../../components";
 
 export default function Business() {
   const navigate = useNavigate();
-  const { cname } = useParams();
   const [businesses, setBusinesses] = useState([]);
-
-  //-----------------------------------------------> fetch area
-  const getbusinesses = () => {
-    // fetch businesses from ai in cookie
-    //
-    setBusinesses([
-      {
-        img: "",
-        name: "Mahavir General store",
-        address: "AtmiyaVilla Society, godhra road, halol",
-        _id: "asd2as31d",
-      },
-    ]);
-  };
 
   //-----------------------------------------------> onLoad
   useEffect(() => {
+    let isMounted = true;
+
+    //-----------------------------------------------> fetch businesse in areas
+    const getbusinesses = async () => {
+      try {
+        const ai = cookie.get("ai");
+        const ci = cookie.get("ci");
+        const cleanBusiness = await axios.get(`/${ci}/${ai}/shops`);
+
+        isMounted && setBusinesses(cleanBusiness.data);
+      } catch (e) {
+        cookie.remove("ai");
+        navigate("/");
+
+        console.log("error in business");
+      }
+    };
+
     getbusinesses();
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate]);
 
   return (
     <>
-      {businesses.map((data, index) => (
+      {businesses.map((data) => (
         <Card
-          key={index}
+          key={data.id}
           title={data.name}
           content={data.address}
           img={data.img}
           onClickHandler={() => {
-            navigate(`/${cname}/home/${data._id}`);
+            console.log("b", data.id);
+            navigate(`/city/home/${data.name}`, { state: { id: data.id } });
           }}
         />
       ))}

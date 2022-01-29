@@ -20,20 +20,29 @@ export default function Start() {
   });
   const [cities, setCities] = useState([]);
 
-  //-----------------------------------------------> on load function
-  const getCities = async () => {
-    const cleanCities = await axios.get("/cleancities");
-    setCities(cleanCities.data);
-  };
-
   //-----------------------------------------------> on load
   useEffect(() => {
-    //check for ui and jt in in cookie
-    // save ai, cname
-    // if navigate to `/${cname}/home/businesses`
+    let isMouted = true;
 
+    //-----------------------------------------------> on load function
+    const getCities = async () => {
+      try {
+        if (cookie.get("ci")) {
+          navigate(`/city/home`);
+        }
+
+        const cleanCities = await axios.get("/cleancities");
+        isMouted && setCities(cleanCities.data);
+      } catch (e) {
+        console.log("error in start");
+      }
+    };
     getCities();
-  }, []);
+
+    return () => {
+      isMouted = false;
+    };
+  }, [navigate]);
 
   //-----------------------------------------------> store input text
   const onChangeHandler = (e) => {
@@ -60,18 +69,22 @@ export default function Start() {
 
   //-----------------------------------------------> onClick start Button
   const start = async () => {
-    const { fname, lname, city, cityid } = data;
+    try {
+      const { fname, lname, city, cityid } = data;
 
-    // checking if all fields are field
-    if (!(fname || lname)) {
-      alert("please enter your full name");
-      return;
+      // checking if all fields are field
+      if (!(fname || lname)) {
+        alert("please enter your full name");
+        return;
+      }
+      //save data in cookie
+      cookie.set("ci", cityid);
+      cookie.set("un", `${fname}+${lname}`);
+
+      navigate(`/${city}/home/areas`);
+    } catch (e) {
+      console.log("error in start");
     }
-    //save data in cookie
-    cookie.set(city, cityid);
-    cookie.set("un", `${fname}+${lname}`);
-
-    navigate(`/${city}/home/areas`);
   };
 
   //-----------------------------------------------> Return Component
