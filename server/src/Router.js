@@ -4,11 +4,6 @@ import { City, Area, Shop, User } from "./models/index.js";
 
 const router = Router();
 
-//-----------------------------------------------> test
-router.get("/test", (req, res) => {
-  res.status(200).send("hii my self mohit");
-});
-
 //-----------------------------------------------> Clean Cities
 router.get("/cleancities", async(req, res) => {
   try {
@@ -28,9 +23,7 @@ router.get("/:cityId/areas", async(req, res) => {
 
     res.status(200).send(areas);
   } catch (e) {
-    console.log(e);
-
-    res.status(500).send("error in getting area names");
+    res.status(501).send("error in getting area names");
   }
 });
 

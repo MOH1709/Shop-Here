@@ -1,3 +1,5 @@
+import axios from "axios";
+import cookie from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -9,28 +11,33 @@ export default function Area() {
   const { cname } = useParams();
   const [areas, setAreas] = useState([]);
 
-  //-----------------------------------------------> fetch area
-  const getAreas = () => {
-    // fetch areas from cname in cookie
-    //
-    setAreas([
-      {
-        img: "",
-        name: "AtmiyaVilla Society",
-        address: "godhra road, halol",
-        _id: "asd2as31d",
-      },
-    ]);
-  };
-
   //-----------------------------------------------> onLoad
   useEffect(() => {
+    // fetch area
+    const getAreas = async () => {
+      try {
+        // fetch areas from cname in cookie
+        const ci = cookie.get(cname);
+        const cleanAreas = await axios.get(`/${ci}/areas`);
+
+        if (cleanAreas.status === 200) {
+          setAreas(cleanAreas.data);
+        } else {
+          navigate("/");
+        }
+      } catch (e) {
+        console.log("error in areas");
+      }
+    };
+
     getAreas();
-  }, []);
+  }, [cname, navigate]);
 
   //-----------------------------------------------> onClick area
-  const saveArea = (id) => {
+  const saveArea = (_id) => {
     // save area id in cookie as ai
+    cookie.set("ai", _id);
+
     navigate(`/${cname}/home/businesses`);
   };
 

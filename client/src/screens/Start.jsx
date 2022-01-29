@@ -1,4 +1,5 @@
 import axios from "axios";
+import cookie from "js-cookie";
 import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
@@ -58,7 +59,7 @@ export default function Start() {
   };
 
   //-----------------------------------------------> onClick start Button
-  const start = () => {
+  const start = async () => {
     const { fname, lname, city, cityid } = data;
 
     // checking if all fields are field
@@ -67,8 +68,10 @@ export default function Start() {
       return;
     }
     //save data in cookie
+    cookie.set(city, cityid);
+    cookie.set("un", `${fname}+${lname}`);
 
-    navigate(`/${city}/home`);
+    navigate(`/${city}/home/areas`);
   };
 
   //-----------------------------------------------> Return Component

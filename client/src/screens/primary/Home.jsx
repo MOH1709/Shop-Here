@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import { useEffect } from "react";
+import cookie from "js-cookie";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 export default function Home() {
@@ -7,16 +8,30 @@ export default function Home() {
   const navigate = useNavigate();
   const { cname } = useParams();
 
-  //-----------------------------------------------> check for ai in cookie
-  const checkAi = () => {
-    //if found nav to bussiness page
-    // else in areas
-    navigate(`/${cname}/home/areas`);
-  };
-
+  //-----------------------------------------------> on load
   useEffect(() => {
-    checkAi();
-  }, []);
+    // decide default page to navigate
+    const defaultPage = async () => {
+      try {
+        //if found nav to bussiness page
+        // else in areas
+        const city = cookie.get(cname);
+        const ai = cookie.get("ai");
+
+        if (ai) {
+          navigate(`/${cname}/home/business`);
+        } else if (city) {
+          navigate(`/${cname}/home/areas`);
+        } else {
+          navigate(`/`);
+        }
+      } catch (e) {
+        console.log("error at home");
+      }
+    };
+
+    defaultPage();
+  }, [cname, navigate]);
 
   return (
     <div className={styles.container}>
