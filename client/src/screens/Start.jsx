@@ -28,7 +28,7 @@ export default function Start() {
     const getCities = async () => {
       try {
         if (cookie.get("ci")) {
-          navigate(`/city/home`);
+          navigate(`/city/home/areas`);
         }
 
         const cleanCities = await axios.get("/cleancities");
@@ -80,7 +80,7 @@ export default function Start() {
     cookie.set("ci", cityid);
     cookie.set("un", `${fname}+${lname}`);
 
-    navigate(`/${city}/home/areas`);
+    navigate(`/city/home/areas`);
   };
 
   //-----------------------------------------------> Return Component

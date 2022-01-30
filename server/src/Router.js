@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Router } from "express";
-import { City, Area, Shop, User } from "./models/index.js";
+import { City, Area, Shop, User, Order } from "./models/index.js";
 
 const router = Router();
 
@@ -36,6 +36,7 @@ router.get("/:cityId/areas", async(req, res) => {
   }
 });
 
+//-----------------------------------------------> clean areas
 router.post("/:cityId/areas", async(req, res) => {
   try {
     const { cityId } = req.params;
@@ -187,10 +188,6 @@ router.get("/login/:userId/:password", async(req, res) => {
   try {
     const { userId, password } = req.params;
     const user = await User.findOne({ userId });
-    if (!user) {
-      res.status(400).send("Invalid Credentials");
-      return;
-    }
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
@@ -206,8 +203,6 @@ router.get("/login/:userId/:password", async(req, res) => {
       res.status(400).send("Invalid Credentials");
     }
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in logging in");
   }
 });
@@ -238,7 +233,6 @@ router.post("/:cityId/:areaId/signin", async(req, res) => {
     const token = await user.generateAuthToken();
     res.cookie("ux", token);
 
-    // res.cookie(user._id, "test");
     res.status(200).send("user added successfully");
   } catch (e) {
     res.status(400).send("error in user route");
@@ -265,6 +259,39 @@ router.put("/:uxt/update", async(req, res) => {
     res.status(200).send("user updated");
   } catch (e) {
     res.status(400).send("error in updating user details");
+  }
+});
+
+//-----------------------------------------------> orders
+router.post("/:uxt/orders", async(req, res) => {
+  try {
+    const { uxt } = req.params;
+    const { products, owner, ownerId, recievedAddress } = req.body;
+
+    const recieverId = await User.findOne({ tokens: { $in: uxt } }, { _id: 1 });
+
+    const order = new Order({
+      products,
+      ownerId,
+      recieverId: recieverId._id,
+      recievedAddress,
+    });
+    const { _id } = await order.save();
+
+    await User.updateOne({ tokens: { $in: uxt } }, {
+      $push: {
+        orders: {
+          orderId: _id,
+          owner,
+        },
+      },
+    });
+
+    res.status(200).send("order placed successfully");
+  } catch (e) {
+    console.log(e);
+
+    res.status(400).send("error in placing order backend");
   }
 });
 

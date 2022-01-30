@@ -46,7 +46,7 @@ export default function Business() {
           content={data.address}
           img={data.img}
           onClickHandler={() => {
-            navigate(`/city/home/${data.id}`);
+            navigate(`/city/home/${data.name}, ${data.address}+${data.id}`);
           }}
         />
       ))}

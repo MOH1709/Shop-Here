@@ -1,5 +1,5 @@
-import { makeStyles } from "@material-ui/core";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import { Context } from "../../contexts/CartProvider";
 
 export default function Product() {
   const { bid } = useParams();
+  const [shop] = useState(bid.split("+"));
   const { cart, setCart } = useContext(Context);
   const [products, setProducts] = useState([]);
 
@@ -18,7 +19,7 @@ export default function Product() {
 
     const getProducts = async () => {
       try {
-        const res = await axios.get(`/${bid}/products`);
+        const res = await axios.get(`/${shop[1]}/products`);
 
         isMounted && setProducts(res.data);
       } catch (e) {
@@ -31,7 +32,7 @@ export default function Product() {
     return () => {
       isMounted = false;
     };
-  }, [bid]);
+  }, [shop]);
 
   //-----------------------------------------------> edit Products according to cart
   const editProduct = (obj, isAdded) => {
@@ -45,7 +46,10 @@ export default function Product() {
       const inCart = cart.some((val) => val._id === obj._id);
 
       if (inCart === false) {
-        setCart([...cart, { ...obj, quantity: 1 }]);
+        setCart([
+          ...cart,
+          { ...obj, quantity: 1, address: shop[0], shopId: shop[1] },
+        ]);
       }
     } else {
       setCart(cart.filter((val) => val._id !== obj._id));

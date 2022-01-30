@@ -12,6 +12,10 @@ export default function Area() {
 
   //-----------------------------------------------> onLoad
   useEffect(() => {
+    if (cookie.get("ai")) {
+      navigate("/city/home/businesses");
+    }
+
     let isMounted = true;
     // fetch area
     const getAreas = async () => {

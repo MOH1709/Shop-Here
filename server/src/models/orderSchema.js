@@ -7,7 +7,6 @@ const orderSchema = new mongoose.Schema({
   },
   recievedTime: {
     type: String,
-    default: new Date().toString(),
   },
   ownerId: {
     type: String,
@@ -21,6 +20,20 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  products: [{
+    name: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
+  }, ],
   isSucessful: {
     type: Boolean,
     default: false,

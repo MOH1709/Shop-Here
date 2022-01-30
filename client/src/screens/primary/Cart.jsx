@@ -1,7 +1,8 @@
+import axios from "axios";
 import cookie from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 import { useState, useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { CartCard } from "../../components/user";
@@ -11,11 +12,10 @@ import { Context } from "../../contexts/CartProvider";
 
 export default function Cart() {
   const styles = useStyles();
-  const { cart } = useContext(Context);
+  const { cart, setCart } = useContext(Context);
   const navigate = useNavigate();
-  const { cname } = useParams();
   const [isUrgent, setIsUrgent] = useState(false);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(cookie.get("fa") || "");
   const [total, setTotal] = useState(0);
 
   //----------------------------------------------->
@@ -25,7 +25,19 @@ export default function Cart() {
         return pv + parseInt(cv.price) * cv.quantity;
       }, 0)
     );
-  }, [cart]);
+
+    const compareShopId = (a, b) => {
+      if (a.shopId < b.shopId) {
+        return -1;
+      }
+      if (a.shopId > b.shopId) {
+        return 1;
+      }
+      return 0;
+    };
+
+    setCart(cart.sort(compareShopId));
+  }, [cart, setCart]);
 
   //-----------------------------------------------> store text input
   const onChangeHandler = (e) => {
@@ -34,14 +46,57 @@ export default function Cart() {
 
   //-----------------------------------------------> on order
   const order = () => {
-    if (isUrgent) {
-      setTotal(total + 10);
+    try {
+      if (!address) {
+        alert("please enter your full address, to deliver correctly");
+        return;
+      }
+
+      if (isUrgent) {
+        setTotal(total + 10);
+      }
+      cookie.set("fa", address);
+
+      const ux = cookie.get("ux");
+      !ux && navigate(`/city/SignIn`);
+
+      let tempArr = [[]];
+      cart.forEach((data, index) => {
+        tempArr[tempArr.length - 1].push(data);
+
+        if (cart[index].shopId !== cart[index + 1]?.shopId) {
+          tempArr.push([]);
+        }
+      });
+
+      tempArr.pop();
+      tempArr.forEach(async (data) => {
+        const res = await axios.post(`/${ux}/orders`, {
+          products: data.map((product) => {
+            return {
+              name: product.name,
+              price: product.price,
+              quantity: product.quantity,
+            };
+          }),
+          owner: data[0].address,
+          ownerId: data[0].shopId,
+          recievedAddress: address,
+        });
+
+        if (res.status === 200) {
+          alert(
+            `hurray, your order placed successfully to ${data[0].address} 🥳 `
+          );
+        } else {
+          alert(
+            `something wrong while placing order with ${data[0].address} ☹`
+          );
+        }
+      });
+    } catch (e) {
+      console.log("error in cart");
     }
-
-    cookie.set("fa", address);
-
-    // navigate(`/${cname}/home`);
-    navigate(`/${cname}/SignIn`);
   };
 
   //-----------------------------------------------> returning component
@@ -53,7 +108,7 @@ export default function Cart() {
           _id={data._id}
           price={data.price}
           q={data.quantity}
-          shopName="Mahavir general store, sb nagar pavagadh road halol"
+          shopName={data.address}
           name={data.name}
           img={data.img}
         />
@@ -64,6 +119,7 @@ export default function Cart() {
       >
         <InputBox
           title="Full Address"
+          value={address}
           Style={{ width: "80%", marginBlock: 30, marginInline: "auto" }}
           onChangeHandler={onChangeHandler}
         />

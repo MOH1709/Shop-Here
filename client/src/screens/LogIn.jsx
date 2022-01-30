@@ -38,7 +38,11 @@ export default function LogIn() {
 
         const res = await axios.get(`/login/${phoneNumber}/${password}`);
 
-        res.status === 200 && navigate(`/city/home`);
+        if (res.status === 200) {
+          navigate(`/city/home`);
+        } else {
+          alert("Wrong Inputs");
+        }
       } else {
         alert("please fill all input field");
       }
