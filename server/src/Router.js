@@ -235,6 +235,8 @@ router.post("/:cityId/:areaId/signin", async(req, res) => {
 
     res.status(200).send("user added successfully");
   } catch (e) {
+    console.log(e);
+
     res.status(400).send("error in user route");
   }
 });

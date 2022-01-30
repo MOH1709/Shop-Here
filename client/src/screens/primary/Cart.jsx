@@ -58,7 +58,10 @@ export default function Cart() {
       cookie.set("fa", address);
 
       const ux = cookie.get("ux");
-      !ux && navigate(`/city/SignIn`);
+      if (!ux) {
+        navigate(`/city/SignIn`);
+        return;
+      }
 
       let tempArr = [[]];
       cart.forEach((data, index) => {

@@ -18,16 +18,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 8,
   },
-  orders: {
+  orders: [{
     orderId: {
       type: String,
       required: true,
     },
-    owner: [{
+    owner: {
       type: String,
       required: true,
-    }, ],
-  },
+    },
+  }, ],
   currentLocation: {
     type: Array,
   },

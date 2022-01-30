@@ -66,7 +66,7 @@ export default function SignIn() {
         address: fa,
       });
 
-      navigate(`/${cname}/home`);
+      navigate(-1);
     } catch (e) {
       console.log("error in signin");
     }
