@@ -1,14 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { ProductCard } from "../../components/user";
 import { Context } from "../../contexts/CartProvider";
 
 export default function Product() {
-  const { id } = useLocation().state;
+  const { bid } = useParams();
   const { cart, setCart } = useContext(Context);
   const [products, setProducts] = useState([]);
 
@@ -18,7 +18,8 @@ export default function Product() {
 
     const getProducts = async () => {
       try {
-        const res = await axios.get(`/${id}/products`);
+        const res = await axios.get(`/${bid}/products`);
+
         isMounted && setProducts(res.data);
       } catch (e) {
         console.log("error in products");
@@ -30,7 +31,7 @@ export default function Product() {
     return () => {
       isMounted = false;
     };
-  }, [id]);
+  }, [bid]);
 
   //-----------------------------------------------> edit Products according to cart
   const editProduct = (obj, isAdded) => {
@@ -47,16 +48,17 @@ export default function Product() {
         setCart([...cart, { ...obj, quantity: 1 }]);
       }
     } else {
-      setCart(cart.filter((data) => data._id !== obj._id));
+      setCart(cart.filter((val) => val._id !== obj._id));
     }
   };
 
   //-----------------------------------------------> returning component
   return (
     <>
-      {products.map((data, index) => (
+      {products.map((data) => (
         <ProductCard
-          key={index}
+          key={data._id}
+          _id={data._id}
           title={data.name}
           price={data.price}
           mrp={data.mrp}

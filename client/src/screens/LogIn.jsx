@@ -5,50 +5,45 @@ import { Button, makeStyles } from "@material-ui/core";
 import { InputBox } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LogIn() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const [data, setData] = useState({
+  const [input, setInput] = useState({
     phoneNumber: "",
     password: "",
   });
 
-  //-----------------------------------------------> store input data
+  //-----------------------------------------------> store inputs
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
-    setData({
-      ...data,
+    setInput({
+      ...input,
       [name]: value,
     });
   };
 
   //-----------------------------------------------> onClick login
   const login = async () => {
-    if (data.phoneNumber && data.password) {
-      const userData = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    try {
+      const { phoneNumber, password } = input;
 
-      // fetch("/cookie", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     un: `${fname}+${lname}`,
-      //     [city]: cname,
-      //   }),
-      // });
+      if (phoneNumber && password) {
+        if (phoneNumber.length < 10) {
+          alert("please, enter a valid phone number :)");
+          return;
+        }
 
-      navigate(`/${userData.city}/home`);
-    } else {
-      alert("please fill all input field");
+        const res = await axios.get(`/login/${phoneNumber}/${password}`);
+
+        res.status === 200 && navigate(`/city/home`);
+      } else {
+        alert("please fill all input field");
+      }
+    } catch (e) {
+      console.log("error in login");
     }
   };
 
@@ -68,6 +63,7 @@ export default function LogIn() {
           title={"Mobile Number / Email"}
           onChangeHandler={onChangeHandler}
           name="phoneNumber"
+          value={input.phoneNumber}
         />
         <InputBox
           title={"Password"}

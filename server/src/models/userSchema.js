@@ -6,11 +6,7 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     min: 3,
-  },
-  type: {
-    type: String,
-    default: "user",
-    enum: ["user", "provider", "owner"],
+    required: true,
   },
   userId: {
     type: String,
@@ -22,10 +18,12 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 8,
   },
-  areaId: {
+  currentLocation: {
+    type: Array,
+  },
+  address: {
     type: String,
-    required: true,
-    default: "halol",
+    default: "",
   },
   tokens: {
     type: Array,
@@ -34,10 +32,14 @@ const userSchema = new mongoose.Schema({
 
 //----------------------------------------> Hashing password before saving
 userSchema.pre("save", async function(next) {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 12);
+  try {
+    if (this.isModified("password")) {
+      this.password = await bcrypt.hash(this.password, 12);
+    }
+    next();
+  } catch (e) {
+    console.log("error in hashing password");
   }
-  next();
 });
 
 //-----------------------------------------------> generating jsonwebtoken
@@ -48,7 +50,7 @@ userSchema.methods.generateAuthToken = async function() {
     await this.save();
     return token;
   } catch (e) {
-    return e;
+    console.log("error in generating tokens");
   }
 };
 

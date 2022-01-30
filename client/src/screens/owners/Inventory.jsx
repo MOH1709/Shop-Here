@@ -1,15 +1,37 @@
 import { useState } from "react";
+import axios from "axios";
+import cookie from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom components
 import { ProductCard, AddProductBox } from "../../components/owner";
 import { BTN_STYLE } from "../../constants";
 import { AlertBox } from "../../components";
+import { useEffect } from "react";
 
 export default function Inventory() {
   const styles = useStyles();
   const [showBox, setShowBox] = useState(false);
   const [products, setProducts] = useState([]);
+
+  //-----------------------------------------------> on load
+  useEffect(() => {
+    let isMounted = true;
+
+    const getProducts = async () => {
+      try {
+        const bx = cookie.get("bx");
+        isMounted && setProducts([]);
+      } catch (e) {
+        console.log("error in inventory");
+      }
+    };
+
+    getProducts();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   //-----------------------------------------------> addProduct
   const addProduct = (data) => {

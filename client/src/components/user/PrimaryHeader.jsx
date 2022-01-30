@@ -16,9 +16,9 @@ export default function PrimaryHeader({ setLocation, location }) {
       <div className={styles.top}>
         <img src="./logo.png" alt="logo" height="50" className={styles.logo} />
         <div className={styles.right}>
-          <Button component={NavLink} to={`/${cname}/search`}>
+          {/* <Button component={NavLink} to={`/${cname}/search`}>
             <img src="./icons/search.svg" alt="search" />
-          </Button>
+          </Button> */}
           <Button component={NavLink} to={`/${cname}/setting`}>
             <img src="./icons/setting.svg" alt="setting" />
           </Button>

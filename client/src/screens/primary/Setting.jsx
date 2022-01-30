@@ -1,3 +1,4 @@
+import cookie from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 import { NavLink, useNavigate, Outlet, useParams } from "react-router-dom";
 
@@ -10,7 +11,12 @@ export default function Setting() {
   const { cname } = useParams();
 
   const logOut = () => {
-    navigate(`/`);
+    const cookies = document.cookie.split("; ");
+    cookies.forEach((data) => {
+      cookie.remove(data.split("=")[0]);
+    });
+
+    window.location.reload();
   };
 
   return (
@@ -45,7 +51,7 @@ export default function Setting() {
           component={NavLink}
           to={`/${cname}/owner`}
         >
-          Be Seller
+          Use For Bussiness
         </Button>
         <Button
           className={styles.navBtn}

@@ -25,8 +25,7 @@ export default function Business() {
         isMounted && setBusinesses(cleanBusiness.data);
       } catch (e) {
         cookie.remove("ai");
-        navigate("/");
-
+        navigate("/city/home");
         console.log("error in business");
       }
     };
@@ -47,8 +46,7 @@ export default function Business() {
           content={data.address}
           img={data.img}
           onClickHandler={() => {
-            console.log("b", data.id);
-            navigate(`/city/home/${data.name}`, { state: { id: data.id } });
+            navigate(`/city/home/${data.id}`);
           }}
         />
       ))}

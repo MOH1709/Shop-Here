@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import { LogIn, SignIn, Main, Owner, Start, Error } from "./screens";
-import { Setting, Search, Home, Messages, Cart } from "./screens/primary";
+import { Setting, Home, Messages, Cart } from "./screens/primary";
 import {
   Bills,
   Profile,
@@ -36,7 +36,7 @@ export default function Router() {
         </Route>
         <Route path="messages" element={<Messages />} />
         <Route path="cart" element={<Cart />} />
-        <Route path="search" element={<Search />} />
+        {/* <Route path="search" element={<Search />} /> */}
         <Route path="setting" element={<Setting />}>
           <Route path="userbills" element={<Bills />} />
           <Route path="userprofile" element={<Profile />} />

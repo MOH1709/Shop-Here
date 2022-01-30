@@ -1,16 +1,30 @@
 import mongoose from "mongoose";
 
 const shopSchema = new mongoose.Schema({
-  products: {
-    type: Array,
-    // {
-    //   name: "",
-    //   price: 0,
-    //   MRP: 0,
-    //   img || des: "",
-    //   cateogory: "",
-    // },
-  },
+  products: [{
+    name: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    MRP: {
+      type: Number,
+    },
+    img: {
+      type: String,
+    },
+    des: {
+      type: String,
+      default: "",
+    },
+    isAdded: {
+      type: Boolean,
+      default: false,
+    },
+  }, ],
   isOpen: {
     type: Boolean,
     default: true,

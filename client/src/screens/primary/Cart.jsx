@@ -1,3 +1,4 @@
+import cookie from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -36,6 +37,8 @@ export default function Cart() {
     if (isUrgent) {
       setTotal(total + 10);
     }
+
+    cookie.set("fa", address);
 
     // navigate(`/${cname}/home`);
     navigate(`/${cname}/SignIn`);

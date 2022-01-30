@@ -68,23 +68,19 @@ export default function Start() {
   };
 
   //-----------------------------------------------> onClick start Button
-  const start = async () => {
-    try {
-      const { fname, lname, city, cityid } = data;
+  const start = () => {
+    const { fname, lname, city, cityid } = data;
 
-      // checking if all fields are field
-      if (!(fname || lname)) {
-        alert("please enter your full name");
-        return;
-      }
-      //save data in cookie
-      cookie.set("ci", cityid);
-      cookie.set("un", `${fname}+${lname}`);
-
-      navigate(`/${city}/home/areas`);
-    } catch (e) {
-      console.log("error in start");
+    // checking if all fields are field
+    if (!(fname || lname)) {
+      alert("please enter your full name");
+      return;
     }
+    //save data in cookie
+    cookie.set("ci", cityid);
+    cookie.set("un", `${fname}+${lname}`);
+
+    navigate(`/${city}/home/areas`);
   };
 
   //-----------------------------------------------> Return Component

@@ -1,3 +1,5 @@
+import axios from "axios";
+import cookie from "js-cookie";
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -5,39 +7,69 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 //-----------------------------------------------> custom component
 import { InputBox, MiddleWare } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
+import { useEffect } from "react";
 
 export default function SignIn() {
   const styles = useStyles();
-  const [isEmail, setIsEmail] = useState(false);
   const navigate = useNavigate();
   const { cname } = useParams();
+  const [isEmail, setIsEmail] = useState(false);
   const [data, setData] = useState({
     phoneNumber: "",
     password: "",
   });
 
-  //-----------------------------------------------> onClick Signin
-  const signIn = () => {
-    if (!(data.phoneNumber || data.password)) {
-      alert("please fill all field");
-      return;
+  //-----------------------------------------------> on load
+  useEffect(() => {
+    if (cookie.get("ux")) {
+      navigate(-1);
     }
-
-    //get data from cookies
-    // otp alert box if isEmail is false
-    //save data to database
-
-    navigate(`/${cname}/home`);
-  };
+  }, [navigate]);
 
   //-----------------------------------------------> Storing inputs
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
+    if (name === "phoneNumber" && value.length > 10) {
+      return;
+    }
+
     setData({
       ...data,
       [name]: value,
     });
+  };
+
+  //-----------------------------------------------> onClick Signin
+  const signIn = async () => {
+    try {
+      if (!(data.phoneNumber || data.password)) {
+        alert("please fill all field");
+        return;
+      }
+
+      if (data.password.length < 8) {
+        alert("password should be minimum 8 character long");
+        return;
+      }
+
+      const ci = cookie.get("ci");
+      const ai = cookie.get("ai");
+      const fa = cookie.get("fa");
+      const un = cookie.get("un");
+
+      await axios.post(`/${ci}/${ai}/signin`, {
+        name: un,
+        userId: data.phoneNumber,
+        password: data.password,
+        phoneNumber: data.phoneNumber,
+        address: fa,
+      });
+
+      navigate(`/${cname}/home`);
+    } catch (e) {
+      console.log("error in signin");
+    }
   };
 
   //-----------------------------------------------> onLcick google Btn
@@ -65,6 +97,8 @@ export default function SignIn() {
       <form className={styles.form}>
         <InputBox
           title={"Mobile Number"}
+          type={"number"}
+          value={data.phoneNumber}
           onChangeHandler={onChangeHandler}
           name="phoneNumber"
         />

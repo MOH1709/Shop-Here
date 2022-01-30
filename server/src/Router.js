@@ -4,6 +4,15 @@ import { City, Area, Shop, User } from "./models/index.js";
 
 const router = Router();
 
+//-----------------------------------------------> test router
+router.get("/test", async(req, res) => {
+  try {
+    res.status(200).send("ok");
+  } catch (e) {
+    res.status(500).send("error in testing");
+  }
+});
+
 //-----------------------------------------------> Clean Cities
 router.get("/cleancities", async(req, res) => {
   try {
@@ -112,8 +121,6 @@ router.post("/:cityId/:areaId/shops", async(req, res) => {
 
     res.status(200).send(`${shopName} added successfully`);
   } catch (e) {
-    console.log(e);
-
     res.status(500).send("error in adding new shop \n");
   }
 });
@@ -130,12 +137,13 @@ router.get("/:shopId/products", async(req, res) => {
   }
 });
 
-router.put("/:userId/shop/products", async(req, res) => {
+router.post("/:cityId/:userId/products", async(req, res) => {
   try {
     const { userId } = req.params;
-    const { newProducts } = req.body;
+    const newProducts = req.body;
+
     await Shop.updateOne({ _id: userId }, {
-      $set: {
+      $push: {
         products: newProducts,
       },
     });
@@ -146,48 +154,68 @@ router.put("/:userId/shop/products", async(req, res) => {
   }
 });
 
-//-----------------------------------------------> Clean city Contributor
-router.get("/:cityId/login", async(req, res) => {
+router.delete("/:cityId/:userId/products", async(req, res) => {
   try {
-    const { userId, password } = req.body;
+    const { userId } = req.params;
+    const { productId } = req.body;
+
+    await Shop.updateOne({ _id: userId }, {
+      $pull: {
+        products: { _id: productId },
+      },
+    });
+
+    res.status(200).send(`product deleted successfully`);
+  } catch (e) {
+    res.status(500).send("error in adding products");
+  }
+});
+
+//-----------------------------------------------> Clean city Contributor
+router.get("/city/:uxt/user", async(req, res) => {
+  try {
+    const { uxt } = req.params;
+    const user = await User.findOne({ tokens: { $in: uxt } }, { _id: 0, tokens: 0 });
+
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(500).send("error in getting user data");
+  }
+});
+
+router.get("/login/:userId/:password", async(req, res) => {
+  try {
+    const { userId, password } = req.params;
     const user = await User.findOne({ userId });
+    if (!user) {
+      res.status(400).send("Invalid Credentials");
+      return;
+    }
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
       const token = await user.generateAuthToken();
-      res.cookie("jwt", token);
+      res.cookie("ux", token);
+      res.cookie("ci", user.currentLocation[0]);
+      res.cookie("ai", user.currentLocation[1]);
+      res.cookie("fn", user.name);
+      res.cookie("fa", user.address);
+
       return res.status(200).send(user);
     } else {
-      res.status(400).send("Invalid Credentials for login");
+      res.status(400).send("Invalid Credentials");
     }
-  } catch (e) {
-    res.status(400).send("error in logging in");
-  }
-});
-
-router.put("/:userId/logout", async(req, res) => {
-  try {
-    const { userId } = req.params;
-    const { token } = req.body;
-
-    await User.updateOne({ userId }, {
-      $set: {
-        tokens: [token],
-      },
-    });
-
-    res.status(200).send("logout successfull");
   } catch (e) {
     console.log(e);
 
-    res.status(400).send("error while loggin out");
+    res.status(400).send("error in logging in");
   }
 });
 
 router.post("/:cityId/:areaId/signin", async(req, res) => {
   try {
-    const { areaId } = req.params;
-    const { userId, name, type, phoneNumber, address, password } = req.body;
+    const { areaId, cityId } = req.params;
+    const { name, phoneNumber, address, password, userId } = req.body;
 
     const isExist = await User.findOne({ userId }, { _id: 1 });
 
@@ -197,16 +225,18 @@ router.post("/:cityId/:areaId/signin", async(req, res) => {
 
     const user = new User({
       userId,
-      password,
       name,
-      type,
+      password,
       phoneNumber,
-      areaId,
+      currentLocation: [cityId, areaId],
       address,
     });
     // info: schema.pre is used to deal with password hashing
     //   before save in userSchema module
     await user.save();
+
+    const token = await user.generateAuthToken();
+    res.cookie("ux", token);
 
     // res.cookie(user._id, "test");
     res.status(200).send("user added successfully");
@@ -215,22 +245,20 @@ router.post("/:cityId/:areaId/signin", async(req, res) => {
   }
 });
 
-router.put("/:userId/update", async(req, res) => {
+router.put("/:uxt/update", async(req, res) => {
   try {
-    const { userId, name, password, type, phoneNumber, areaId, address } =
-    req.body;
-    const user = await User.findOne({ userId });
+    const { update } = req.body;
+    const { uxt } = req.params;
+    const user = await User.findOne({ tokens: { $in: uxt } });
 
-    const hashedPass = await bcrypt.hash(password, 12);
+    if (update.name === "password") {
+      update.value = await bcrypt.hash(update.password, 12);
+    }
 
-    await User.updateOne({ userId }, {
+    await User.updateOne({ _id: user._id }, {
       $set: {
-        name: name || user.name,
-        password: hashedPass,
-        type: type || user.type,
-        phoneNumber: phoneNumber || user.phoneNumber,
-        areaId: areaId || user.areaName,
-        address: address || user.address,
+        ...user,
+        [update.name]: update.value,
       },
     });
 
