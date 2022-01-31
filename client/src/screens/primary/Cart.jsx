@@ -133,7 +133,9 @@ export default function Cart() {
           </p>
           <ToggleBtn onClickHandler={() => setIsUrgent(!isUrgent)} />
         </div>
-        <Button onClick={order}>order</Button>
+        <Button onClick={order}>
+          {cookie.get("ux") ? "" : "sign in to "} order
+        </Button>
       </div>
     </div>
   );

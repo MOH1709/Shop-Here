@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Router } from "express";
+import mailTranspoter from "./MailText.js";
 import { City, Area, Shop, User, Order } from "./models/index.js";
 
 const router = Router();
@@ -294,6 +295,25 @@ router.post("/:uxt/orders", async(req, res) => {
     console.log(e);
 
     res.status(400).send("error in placing order backend");
+  }
+});
+
+//-----------------------------------------------> send email
+router.post("/mail", async(req, res) => {
+  try {
+    const { text, to, subject } = req.body;
+    const response = await mailTranspoter.sendMail({
+      from: "cleancity1507@gmail.com",
+      to,
+      subject,
+      text,
+    });
+
+    res.status(200).send("message send succesfully");
+  } catch (e) {
+    console.log(e);
+
+    res.status(400).send("error in updating user details");
   }
 });
 

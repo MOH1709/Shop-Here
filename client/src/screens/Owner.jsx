@@ -1,6 +1,9 @@
 import { makeStyles } from "@material-ui/core";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { useContext } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { MiddleWare } from "../components";
@@ -10,7 +13,33 @@ import { OwnerHome } from "./owners";
 
 export default function Owner() {
   const styles = useStyles();
+  const navigate = useNavigate();
+
   const { width } = useContext(Context);
+
+  useEffect(() => {
+    const ux = Cookies.get("ux");
+    if (!ux) {
+      navigate("/city/signin");
+      return;
+    }
+
+    const sendRequest = async () => {
+      try {
+        const { data } = await axios.get(`/city/${ux}/user`);
+        if (data?.bussinessId) {
+          Cookies.set("bx", data.bussinessId);
+        } else {
+          //send request
+
+          navigate("/city/messages");
+        }
+      } catch (e) {
+        console.log("error in owner login");
+      }
+    };
+    sendRequest();
+  }, []);
 
   return (
     <>

@@ -20,6 +20,7 @@ export default function InputBox({
         type={type ?? "text"}
         name={name}
         value={value}
+        placeholder="type here"
         onChange={onChangeHandler}
         required
       />
@@ -34,6 +35,7 @@ const useStyles = makeStyles({
       width: "100%",
       border: "none",
       outline: "none",
+      backgroundColor: "rgba(0,255,0,0.2)",
       letterSpacing: 1,
     },
     "& label": {

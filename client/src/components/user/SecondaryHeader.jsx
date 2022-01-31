@@ -1,16 +1,21 @@
 import { makeStyles } from "@material-ui/core";
+import { useContext } from "react";
 
 //-----------------------------------------------> custom components
 import { COLOR } from "../../constants";
+import { Context } from "../../contexts/CartProvider";
 
-export default function SecondaryHeader({ shops }) {
+export default function SecondaryHeader() {
   const styles = useStyles();
+  const { cart } = useContext(Context);
 
   return (
     <div className={styles.container}>
       <p className={styles.title}>Cart</p>
       <p className={styles.shops}>
-        {shops ? shops.join(", ") : "Cart is Empty !!"}
+        {cart.length
+          ? cart.map((data) => data.address).join(", ")
+          : "Cart is Empty !!"}
       </p>
     </div>
   );
