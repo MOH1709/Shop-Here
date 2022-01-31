@@ -340,8 +340,8 @@ router.post("/:uxt/orders", async(req, res) => {
 router.post("/mail", async(req, res) => {
   try {
     const { text, to, subject } = req.body;
-    const response = await mailTranspoter.sendMail({
-      from: "cleancity1507@gmail.com",
+    await mailTranspoter.sendMail({
+      from: process.env.EMAIL,
       to,
       subject,
       text,
