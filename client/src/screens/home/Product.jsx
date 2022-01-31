@@ -63,9 +63,10 @@ export default function Product() {
         <ProductCard
           key={data._id}
           _id={data._id}
+          quantity={data.quantity}
           title={data.name}
           price={data.price}
-          mrp={data.mrp}
+          mrp={data.MRP}
           img={data.img}
           isAdded={data.isAdded}
           onClickHandler={editProduct}

@@ -1,19 +1,19 @@
+import axios from "axios";
+import cookie from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
-import { useState } from "react";
 
 //-----------------------------------------------> custom components
 import { InputBox } from "..";
 import { BTN_STYLE, COLOR } from "../../constants";
 
-export default function AddProductBox({ Style, onSave }) {
+export default function AddProductBox({
+  Style,
+  onSave,
+  input,
+  setInput,
+  showDelete,
+}) {
   const styles = useStyles();
-  const [input, setInput] = useState({
-    name: "",
-    mrp: 0,
-    price: 0,
-    img: "",
-    quantity: 0,
-  });
 
   //-----------------------------------------------> storing inputs
   const changeHandler = (e) => {
@@ -28,6 +28,16 @@ export default function AddProductBox({ Style, onSave }) {
   //-----------------------------------------------> add Image of Product
   const addImage = () => {};
 
+  //----------------------------------------------->
+  const deleteProduct = async () => {
+    try {
+      await axios.delete(`/${cookie.get("bx")}/products/${input._id}`);
+      window.location.reload();
+    } catch (e) {
+      alert("error in editing products");
+    }
+  };
+
   return (
     <div className={styles.container} style={Style}>
       <div className={styles.imgDiv} onClick={addImage}>
@@ -37,31 +47,41 @@ export default function AddProductBox({ Style, onSave }) {
         <p>Add Image</p>
       </div>
       <InputBox
+        Style={{ marginBlock: 30 }}
         title="Product Name"
         name="name"
+        value={input.name}
         onChangeHandler={changeHandler}
       />
       <InputBox
+        Style={{ marginBlock: 30 }}
+        title="category"
+        name="category"
+        value={input.category}
+        onChangeHandler={changeHandler}
+      />
+      <InputBox
+        Style={{ marginBlock: 30 }}
         title="Price"
         name="price"
+        value={input.price}
         onChangeHandler={changeHandler}
         type={"number"}
       />
+
       <InputBox
-        title="category"
-        name="price"
-        onChangeHandler={changeHandler}
-        type={"number"}
-      />
-      <InputBox
+        Style={{ marginBlock: 30 }}
         title="MRP"
-        name="mrp"
+        name="MRP"
+        value={input.MRP}
         onChangeHandler={changeHandler}
         type={"number"}
       />
       <InputBox
+        Style={{ marginBlock: 30 }}
         title="Quantity"
         name="quantity"
+        value={input.quantity}
         onChangeHandler={changeHandler}
         type={"number"}
       />
@@ -73,6 +93,11 @@ export default function AddProductBox({ Style, onSave }) {
       >
         save
       </Button>
+      {showDelete && (
+        <Button className={styles.save} onClick={deleteProduct}>
+          delete
+        </Button>
+      )}
     </div>
   );
 }
@@ -80,17 +105,15 @@ export default function AddProductBox({ Style, onSave }) {
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-evenly",
     width: "100%",
     maxWidth: 500,
     height: "100%",
     maxHeight: 700,
-    paddingInline: 30,
+    padding: 30,
     borderRadius: 10,
     boxShadow: "0px 3px 6px rgba(0,0,0,0.6)",
     backgroundColor: "white",
+    overflow: "auto",
   },
   imgDiv: {
     "& p": {
@@ -112,6 +135,7 @@ const useStyles = makeStyles({
   save: {
     ...BTN_STYLE,
     width: "90%",
+    marginTop: 50,
     marginInline: "auto",
   },
 });

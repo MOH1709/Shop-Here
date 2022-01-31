@@ -19,7 +19,7 @@ export default function InputBox({
         id={title}
         type={type ?? "text"}
         name={name}
-        value={value}
+        value={value || ""}
         // placeholder="type here"
         onChange={onChangeHandler}
         required

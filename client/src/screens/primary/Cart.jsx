@@ -135,6 +135,7 @@ export default function Cart() {
             <span style={{ display: isUrgent ? "block" : "none" }}> + ₹10</span>
           </p>
           <ToggleBtn
+            Style={{ width: 180 }}
             title={"Urgent"}
             onClickHandler={() => setIsUrgent(!isUrgent)}
           />

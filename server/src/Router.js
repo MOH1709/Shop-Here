@@ -107,7 +107,7 @@ router.get("/:shopId/products", async(req, res) => {
 });
 
 // add products of shop
-router.put("/:bid/products", async(req, res) => {
+router.post("/:bid/products", async(req, res) => {
   try {
     const { bid } = req.params;
     const newProducts = req.body;
@@ -123,21 +123,39 @@ router.put("/:bid/products", async(req, res) => {
     res.status(500).send("error in adding products");
   }
 });
-
-router.delete("/:cityId/:userId/products", async(req, res) => {
+//edit product
+router.put("/:bid/products", async(req, res) => {
   try {
-    const { userId } = req.params;
-    const { productId } = req.body;
+    const { bid } = req.params;
+    const product = req.body;
 
-    await Shop.updateOne({ _id: userId }, {
+    await Shop.updateOne({ _id: bid, "products._id": product._id }, {
+      $set: {
+        "products.$": product,
+      },
+    });
+
+    res.status(200).send(`product edited successfully`);
+  } catch (e) {
+    console.log(e);
+
+    res.status(500).send("error in edited products");
+  }
+});
+//delete product
+router.delete("/:bid/products/:_id", async(req, res) => {
+  try {
+    const { bid, _id } = req.params;
+
+    await Shop.updateOne({ _id: bid }, {
       $pull: {
-        products: { _id: productId },
+        products: { _id },
       },
     });
 
     res.status(200).send(`product deleted successfully`);
   } catch (e) {
-    res.status(500).send("error in adding products");
+    res.status(500).send("error in deleted products");
   }
 });
 

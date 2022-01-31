@@ -1,5 +1,5 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import cookie from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 
@@ -13,6 +13,7 @@ export default function Inventory() {
   const styles = useStyles();
   const [showBox, setShowBox] = useState(false);
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState({});
 
   //-----------------------------------------------> on load
   useEffect(() => {
@@ -21,7 +22,9 @@ export default function Inventory() {
     const getProducts = async () => {
       try {
         const bx = cookie.get("bx");
-        isMounted && setProducts([]);
+        const res = await axios.get(`/${bx}/products`);
+
+        isMounted && setProducts(res.data);
       } catch (e) {
         alert("error in loading inventory");
       }
@@ -34,47 +37,70 @@ export default function Inventory() {
   }, []);
 
   //-----------------------------------------------> addProduct
-  const addProduct = (data) => {
-    setShowBox(false);
+  const addProduct = async (data) => {
+    try {
+      setShowBox(false);
 
-    if (!(data.name || data.price)) {
-      alert("sorry to add new product, name and price required must!!");
-    } else {
-      setProducts([...products, data]);
+      if (!(data.name || data.price)) {
+        alert("sorry to add new product, name and price required must!!");
+      } else {
+        await axios.post(`/${cookie.get("bx")}/products`, data);
+        window.location.reload();
+      }
+    } catch (e) {
+      alert("error in adding products");
     }
   };
 
   //-----------------------------------------------> edit added product
-  const editProduct = (data) => {
-    setShowBox(false);
+  const editProduct = async (data) => {
+    try {
+      setShowBox(false);
+
+      await axios.put(`/${cookie.get("bx")}/products`, data);
+      window.location.reload();
+    } catch (e) {
+      alert("error in editing products");
+    }
   };
 
   return (
     <div className={styles.container}>
-      {products.map((data, index) => (
+      {products.map((data) => (
         <ProductCard
-          key={index}
+          key={data._id}
           img={data.img}
-          mrp={data.mrp}
+          mrp={data.MRP}
           price={data.price}
+          quantity={data.quantity}
           title={data.name}
-          onClickHandler={editProduct}
+          onClickHandler={() => {
+            setProduct(data);
+            setShowBox(true);
+          }}
         />
       ))}
       <AlertBox
         Style={{ display: showBox ? "flex" : "none" }}
-        box={<AddProductBox onSave={addProduct} />}
+        box={
+          <AddProductBox
+            onSave={product._id ? editProduct : addProduct}
+            input={product}
+            setInput={setProduct}
+            showDelete={product._id ? true : false}
+          />
+        }
       />
 
       <Button
         className={styles.btn}
         onClick={() => {
+          setProduct({});
           setShowBox(true);
         }}
       >
         ADD
       </Button>
-      <Button className={styles.btn}>UPLOAD</Button>
     </div>
   );
 }

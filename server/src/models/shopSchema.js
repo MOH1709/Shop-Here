@@ -27,8 +27,15 @@ const shopSchema = new mongoose.Schema({
     MRP: {
       type: Number,
     },
+    category: {
+      type: String,
+    },
     img: {
       type: String,
+    },
+    quantity: {
+      type: String,
+      default: "",
     },
     des: {
       type: String,

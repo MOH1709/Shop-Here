@@ -7,6 +7,7 @@ export default function Card({
   img,
   title,
   mrp,
+  quantity,
   price,
   _id,
   isAdded,
@@ -16,9 +17,13 @@ export default function Card({
 
   return (
     <div
+      style={{ display: quantity ? "flex" : "none" }}
       className={styles.container}
       onClick={() => {
-        onClickHandler({ img, name: title, mrp, price, _id }, !isAdded);
+        onClickHandler(
+          { img, name: title, MRP: mrp, price, _id, quantity },
+          !isAdded
+        );
       }}
     >
       <div className={styles.img}>
@@ -45,7 +50,6 @@ export default function Card({
 const useStyles = makeStyles({
   container: {
     position: "relative",
-    display: "flex",
     padding: 10,
     paddingLeft: 0,
     marginBlock: 10,
