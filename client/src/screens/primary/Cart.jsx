@@ -134,9 +134,12 @@ export default function Cart() {
             TOTAL :<span style={{ marginInline: 5 }}> ₹{total} </span>
             <span style={{ display: isUrgent ? "block" : "none" }}> + ₹10</span>
           </p>
-          <ToggleBtn onClickHandler={() => setIsUrgent(!isUrgent)} />
+          <ToggleBtn
+            title={"Urgent"}
+            onClickHandler={() => setIsUrgent(!isUrgent)}
+          />
         </div>
-        <Button onClick={order}>
+        <Button onClick={order} className={styles.orderBtn}>
           {cookie.get("ux") ? "" : "sign in to "} order
         </Button>
       </div>
@@ -152,13 +155,6 @@ const useStyles = makeStyles({
     overflow: "auto",
   },
   order: {
-    "& Button": {
-      ...BTN_STYLE,
-      width: "80%",
-      height: 40,
-      marginTop: 30,
-      margin: 20,
-    },
     flexDirection: "column",
     alignItems: "center",
     paddingBottom: 50,
@@ -183,5 +179,12 @@ const useStyles = makeStyles({
     marginInline: 30,
     marginBlock: 20,
     display: "flex",
+  },
+  orderBtn: {
+    ...BTN_STYLE,
+    width: "80%",
+    height: 40,
+    marginTop: 30,
+    margin: 20,
   },
 });

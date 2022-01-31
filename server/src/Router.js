@@ -25,6 +25,7 @@ router.get("/cleancities", async(req, res) => {
   }
 });
 
+//-----------------------------------------------> clean areas
 router.get("/:cityId/areas", async(req, res) => {
   try {
     const { cityId } = req.params;
@@ -36,7 +37,7 @@ router.get("/:cityId/areas", async(req, res) => {
   }
 });
 
-//-----------------------------------------------> clean areas
+// add new areas
 router.post("/:cityId/areas", async(req, res) => {
   try {
     const { cityId } = req.params;
@@ -84,7 +85,7 @@ router.get("/:cityId/:areaId/shops", async(req, res) => {
   }
 });
 
-//-----------------------------------------------> shops
+// add new Shop
 router.post("/:cityId/:areaId/shops", async(req, res) => {
   try {
     res.status(200).send(`added successfully`);
@@ -105,12 +106,13 @@ router.get("/:shopId/products", async(req, res) => {
   }
 });
 
-router.post("/:cityId/:userId/products", async(req, res) => {
+// add products of shop
+router.put("/:bid/products", async(req, res) => {
   try {
-    const { userId } = req.params;
+    const { bid } = req.params;
     const newProducts = req.body;
 
-    await Shop.updateOne({ _id: userId }, {
+    await Shop.updateOne({ _id: bid }, {
       $push: {
         products: newProducts,
       },
@@ -164,6 +166,7 @@ router.get("/login/:userId/:password", async(req, res) => {
       res.cookie("ai", user.currentLocation[1]);
       res.cookie("un", user.name);
       res.cookie("fa", user.address);
+      res.cookie("bx", user.bussinessId);
 
       return res.status(200).send(user);
     } else {
@@ -171,6 +174,21 @@ router.get("/login/:userId/:password", async(req, res) => {
     }
   } catch (e) {
     res.status(400).send("error in logging in");
+  }
+});
+
+router.delete("/:uxt/deleteToken", async(req, res) => {
+  try {
+    const { uxt } = req.params;
+    const user = await User.updateOne({ tokens: { $in: uxt } }, {
+      $pull: {
+        tokens: uxt,
+      },
+    });
+
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(500).send("error in getting user data");
   }
 });
 
@@ -264,12 +282,12 @@ router.post("/:uxt/orders", async(req, res) => {
     const { uxt } = req.params;
     const { products, owner, ownerId, recievedAddress } = req.body;
 
-    const recieverId = await User.findOne({ tokens: { $in: uxt } }, { _id: 1 });
+    const reciever = await User.findOne({ tokens: { $in: uxt } }, { _id: 1, name: 1 });
 
     const order = new Order({
       products,
       ownerId,
-      recieverId: recieverId._id,
+      recieverId: reciever._id,
       recievedAddress,
     });
     const { _id } = await order.save();
@@ -279,6 +297,15 @@ router.post("/:uxt/orders", async(req, res) => {
         orders: {
           orderId: _id,
           owner,
+        },
+      },
+    });
+
+    await Shop.updateOne({ _id: ownerId }, {
+      $push: {
+        orders: {
+          orderId: _id,
+          reciever: reciever.name,
         },
       },
     });

@@ -2,14 +2,14 @@ import { createContext, useState } from "react";
 
 const Context = createContext(null);
 
-export default function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+export default function InventoryProvider({ children }) {
+  const [inventory, setInventory] = useState([]);
 
   return (
     <Context.Provider
       value={{
-        cart,
-        setCart,
+        inventory,
+        setInventory,
       }}
     >
       {children}

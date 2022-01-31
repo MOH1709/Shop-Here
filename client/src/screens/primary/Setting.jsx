@@ -1,3 +1,4 @@
+import axios from "axios";
 import cookie from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 import { NavLink, useNavigate, Outlet, useParams } from "react-router-dom";
@@ -10,13 +11,22 @@ export default function Setting() {
   const navigate = useNavigate();
   const { cname } = useParams();
 
-  const logOut = () => {
-    const cookies = document.cookie.split("; ");
-    cookies.forEach((data) => {
-      cookie.remove(data.split("=")[0]);
-    });
+  const logOut = async () => {
+    try {
+      const cookies = document.cookie.split("; ");
+      const ux = cookie.get("ux");
+      if (ux) {
+        await axios.delete(`/${ux}/deleteToken`);
+      }
 
-    window.location.reload();
+      cookies.forEach((data) => {
+        cookie.remove(data.split("=")[0]);
+      });
+
+      window.location.reload();
+    } catch (e) {
+      alert("error in logging out");
+    }
   };
 
   return (

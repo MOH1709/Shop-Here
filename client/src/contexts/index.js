@@ -1,4 +1,5 @@
 import WidthProvider from "./WidthProvider";
 import CartProvider from "./CartProvider";
+import InventoryProvider from "./InventoryProvider";
 
-export { WidthProvider, CartProvider };
+export { WidthProvider, CartProvider, InventoryProvider };

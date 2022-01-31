@@ -1,6 +1,20 @@
 import mongoose from "mongoose";
 
 const shopSchema = new mongoose.Schema({
+  name: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  extras: [{
+    email: {
+      type: String,
+    },
+    phoneNumber: {
+      type: Number,
+    },
+  }, ],
   products: [{
     name: {
       type: String,
@@ -25,31 +39,42 @@ const shopSchema = new mongoose.Schema({
       default: false,
     },
   }, ],
+  orders: [{
+    orderId: {
+      type: String,
+      required: true,
+    },
+    reciever: {
+      type: String,
+      required: true,
+    },
+  }, ],
   isOpen: {
     type: Boolean,
     default: true,
   },
-  urgentDeliveryStatus: {
+  canUrgent: {
     type: Boolean,
     default: false,
   },
-  tempBan: {
+  isBanned: {
     type: Boolean,
     default: false,
   },
-  urgentDeliveredCount: {
-    type: Number,
-    default: 0,
-  },
-  dayJoined: {
+  token: {
     type: String,
-    // default: new Date().toDateString(),
-  },
-  daysLeft: {
-    type: Number,
-    default: 28,
   },
 });
+
+shopSchema.methods.generateAuthToken = async function() {
+  try {
+    this.token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
+    await this.save();
+    return token;
+  } catch (e) {
+    console.log("error in generating tokens");
+  }
+};
 
 const Shop = mongoose.model("shops", shopSchema);
 

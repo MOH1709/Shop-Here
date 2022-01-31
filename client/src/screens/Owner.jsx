@@ -66,9 +66,11 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     minWidth: 280,
+    overflowY: "auto",
   },
   secondary: {
     flex: 2,
+    overflowY: "auto",
     position: "relative",
     display: "flex",
     flexDirection: "column",

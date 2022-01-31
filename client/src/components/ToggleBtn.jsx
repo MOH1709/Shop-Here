@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 
 import { COLOR } from "../constants";
 
-export default function ToggleBtn({ onClickHandler }) {
+export default function ToggleBtn({ onClickHandler, title, Style }) {
   const styles = useStyles();
   const [isClicked, setIsClicked] = useState(false);
 
@@ -13,9 +13,9 @@ export default function ToggleBtn({ onClickHandler }) {
   };
 
   return (
-    <div className={styles.container}>
-      <p>Urgent</p>
-      <div
+    <div className={styles.container} style={Style}>
+      <p>{title}</p>
+      <Button
         className={styles.btnDiv}
         onClick={clickHandler}
         style={{
@@ -24,7 +24,7 @@ export default function ToggleBtn({ onClickHandler }) {
         }}
       >
         <div className={styles.btn}></div>
-      </div>
+      </Button>
     </div>
   );
 }
@@ -33,12 +33,15 @@ export default function ToggleBtn({ onClickHandler }) {
 const useStyles = makeStyles({
   container: {
     "& p": {
-      marginInline: 20,
+      marginInline: "auto",
+      fontWeight: "bold",
+      fontSize: 13,
     },
     display: "flex",
     alignItems: "center",
-    height: 35,
+    justifyContent: "space-between",
     border: `2px solid ${COLOR.PRIMARY}`,
+    height: 35,
     borderRight: "none",
     borderRadius: 5,
   },

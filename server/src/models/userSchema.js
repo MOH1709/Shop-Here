@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     min: 8,
   },
   orders: [{
+    orderPin: {
+      type: Number,
+      default: Math.floor(Math.random() * 8500 + 1000),
+    },
     orderId: {
       type: String,
       required: true,
@@ -34,6 +38,9 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
     default: "",
+  },
+  bussinessId: {
+    type: String,
   },
   tokens: {
     type: Array,

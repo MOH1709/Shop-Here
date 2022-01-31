@@ -1,42 +1,85 @@
 import { makeStyles, Button } from "@material-ui/core";
+import { useState } from "react";
 
 //-----------------------------------------------> custom component
-import { InputBox } from "../../components";
+import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 
 export default function OwnerHome() {
   const styles = useStyles();
+  const [isOpen, setIsOpen] = useState(false);
+  const [canUrgent, setCanUrgent] = useState(false);
+  const [data, setData] = useState({
+    img: "",
+    name: "",
+    address: "",
+    phoneNumber: null,
+    email: "",
+  });
 
-  const changeHandler = () => {};
+  //-----------------------------------------------> storing inputs
+  const changeHandler = (e) => {
+    const { value, name } = e.target;
+
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
   const addImage = () => {};
 
   return (
     <div className={styles.container}>
-      <div className={styles.imgDiv} onClick={addImage}>
-        <Button className={styles.imgInput}>
-          <img src="./icons/image.svg" alt="add img" />
-        </Button>
-        <p>Add Image</p>
+      <div className={styles.main}>
+        <div className={styles.imgDiv} onClick={addImage}>
+          <Button className={styles.imgInput}>
+            <img src="./icons/image.svg" alt="add img" />
+          </Button>
+          <p>Add Image</p>
+        </div>
+        <InputBox
+          Style={{ marginBlock: 20 }}
+          title="Shop Name"
+          name="name"
+          onChangeHandler={changeHandler}
+        />
+        <InputBox
+          Style={{ marginBlock: 20 }}
+          title="Shop Address Without Name"
+          name="address"
+          onChangeHandler={changeHandler}
+        />
+        <InputBox
+          Style={{ marginBlock: 20 }}
+          title="Email"
+          name="email"
+          onChangeHandler={changeHandler}
+        />
+        <InputBox
+          Style={{ marginBlock: 20 }}
+          title="Contact Number"
+          name="phoneNumber"
+          onChangeHandler={changeHandler}
+          type={"number"}
+        />
+        <div className={styles.btnDiv}>
+          <ToggleBtn
+            Style={{ marginBlock: 20, width: 250, marginInline: "auto" }}
+            title={"Shop Open"}
+            onClickHandler={() => {
+              setIsOpen(!isOpen);
+            }}
+          />
+          <ToggleBtn
+            Style={{ marginBlock: 20, width: 250, marginInline: "auto" }}
+            title={"Urgent Dilivery"}
+            onClickHandler={() => {
+              setCanUrgent(!canUrgent);
+            }}
+          />
+        </div>
+        <Button className={styles.upload}>upload</Button>
       </div>
-      <InputBox
-        title="Price"
-        name="price"
-        onChangeHandler={changeHandler}
-        type={"number"}
-      />
-      <InputBox
-        title="Price"
-        name="price"
-        onChangeHandler={changeHandler}
-        type={"number"}
-      />
-      <InputBox
-        title="Price"
-        name="price"
-        onChangeHandler={changeHandler}
-        type={"number"}
-      />
-      <Button className={styles.upload}>upload</Button>
     </div>
   );
 }
@@ -46,11 +89,12 @@ const useStyles = makeStyles({
   container: {
     position: "relative",
     flex: 1,
-    overflow: "auto",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    paddingInline: "10%",
+    overflowY: "auto",
+  },
+  main: {
+    flex: 1,
+    minHeight: 400,
+    padding: "10%",
   },
   imgDiv: {
     "& p": {
@@ -69,9 +113,14 @@ const useStyles = makeStyles({
     marginInline: "auto",
     borderRadius: "50%",
   },
+  btnDiv: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
   upload: {
     ...BTN_STYLE,
     width: "90%",
+    marginBlock: 30,
     marginInline: "auto",
   },
 });
