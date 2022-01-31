@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { Button, makeStyles } from "@material-ui/core";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ export default function Profile() {
 
   //-----------------------------------------------> on load
   useEffect(() => {
-    const ux = cookie.get("ux");
+    const ux = Cookies.get("ux");
 
     if (!ux) {
       navigate(`/city/signin`);
@@ -28,12 +28,12 @@ export default function Profile() {
     }
 
     try {
-      const fullname = cookie.get("un").split("+");
+      const fullname = Cookies.get("un").split("+");
 
       setData({
         fname: fullname[0],
         lname: fullname[1],
-        fa: cookie.get("fa") || "",
+        fa: Cookies.get("fa") || "",
       });
     } catch (e) {
       alert("error in obtaining profile data of user");
@@ -52,7 +52,7 @@ export default function Profile() {
 
   //-----------------------------------------------> on change area
   const selectArea = () => {
-    cookie.remove("ai");
+    Cookies.remove("ai");
     navigate("/city/home/areas");
   };
 
@@ -61,7 +61,7 @@ export default function Profile() {
     try {
       const { fname, lname, fa } = data;
 
-      const res = await axios.put(`/${cookie.get("ux")}/updateUser`, {
+      const res = await axios.put(`/${Cookies.get("ux")}/updateUser`, {
         state: {
           name: `${fname}+${lname}`,
           address: fa || "",
@@ -69,8 +69,8 @@ export default function Profile() {
       });
 
       if (res.status === 200) {
-        cookie.set("un", `${fname}+${lname}`);
-        cookie.set("fa", fa);
+        Cookies.set("un", `${fname}+${lname}`);
+        Cookies.set("fa", fa);
         alert("updated successfully :)");
         navigate("/city/home");
       }

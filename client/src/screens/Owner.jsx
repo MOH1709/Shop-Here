@@ -1,8 +1,7 @@
-import { makeStyles } from "@material-ui/core";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
-import { useContext } from "react";
+import { makeStyles } from "@material-ui/core";
+import { useContext, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components

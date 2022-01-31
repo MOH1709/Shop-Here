@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom components
@@ -21,7 +21,7 @@ export default function Inventory() {
 
     const getProducts = async () => {
       try {
-        const bx = cookie.get("bx");
+        const bx = Cookies.get("bx");
         const res = await axios.get(`/${bx}/products`);
 
         isMounted && setProducts(res.data);
@@ -44,7 +44,7 @@ export default function Inventory() {
       if (!(data.name || data.price)) {
         alert("sorry to add new product, name and price required must!!");
       } else {
-        await axios.post(`/${cookie.get("bx")}/products`, data);
+        await axios.post(`/${Cookies.get("bx")}/products`, data);
         window.location.reload();
       }
     } catch (e) {
@@ -57,7 +57,7 @@ export default function Inventory() {
     try {
       setShowBox(false);
 
-      await axios.put(`/${cookie.get("bx")}/products`, data);
+      await axios.put(`/${Cookies.get("bx")}/products`, data);
       window.location.reload();
     } catch (e) {
       alert("error in editing products");

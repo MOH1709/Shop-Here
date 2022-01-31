@@ -41,24 +41,28 @@ export default function OwnerHome() {
           Style={{ marginBlock: 20 }}
           title="Shop Name"
           name="name"
+          value={data.name}
           onChangeHandler={changeHandler}
         />
         <InputBox
           Style={{ marginBlock: 20 }}
           title="Shop Address Without Name"
           name="address"
+          value={data.address}
           onChangeHandler={changeHandler}
         />
         <InputBox
           Style={{ marginBlock: 20 }}
           title="Email"
           name="email"
+          value={data.email}
           onChangeHandler={changeHandler}
         />
         <InputBox
           Style={{ marginBlock: 20 }}
           title="Contact Number"
           name="phoneNumber"
+          value={data.phoneNumber}
           onChangeHandler={changeHandler}
           type={"number"}
         />

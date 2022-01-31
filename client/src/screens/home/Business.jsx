@@ -1,4 +1,4 @@
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
@@ -18,13 +18,13 @@ export default function Business() {
     //-----------------------------------------------> fetch businesse in areas
     const getbusinesses = async () => {
       try {
-        const ai = cookie.get("ai");
-        const ci = cookie.get("ci");
+        const ai = Cookies.get("ai");
+        const ci = Cookies.get("ci");
         const cleanBusiness = await axios.get(`/${ci}/${ai}/shops`);
 
         isMounted && setBusinesses(cleanBusiness.data);
       } catch (e) {
-        cookie.remove("ai");
+        Cookies.remove("ai");
         navigate("/city/home/areas");
         alert("error in fetching shops in this area");
       }

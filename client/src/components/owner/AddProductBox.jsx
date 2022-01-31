@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom components
@@ -31,7 +31,7 @@ export default function AddProductBox({
   //----------------------------------------------->
   const deleteProduct = async () => {
     try {
-      await axios.delete(`/${cookie.get("bx")}/products/${input._id}`);
+      await axios.delete(`/${Cookies.get("bx")}/products/${input._id}`);
       window.location.reload();
     } catch (e) {
       alert("error in editing products");

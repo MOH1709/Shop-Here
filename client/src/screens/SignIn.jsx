@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ export default function SignIn() {
 
   //-----------------------------------------------> on load
   useEffect(() => {
-    if (cookie.get("ux")) {
+    if (Cookies.get("ux")) {
       navigate(-1);
     }
   }, [navigate]);
@@ -52,10 +52,10 @@ export default function SignIn() {
         return;
       }
 
-      const ci = cookie.get("ci");
-      const ai = cookie.get("ai");
-      const fa = cookie.get("fa");
-      const un = cookie.get("un");
+      const ci = Cookies.get("ci");
+      const ai = Cookies.get("ai");
+      const fa = Cookies.get("fa");
+      const un = Cookies.get("un");
 
       await axios.post(`/${ci}/${ai}/signin`, {
         name: un,
@@ -106,6 +106,7 @@ export default function SignIn() {
           onChangeHandler={onChangeHandler}
           name="password"
           type="password"
+          value={data.password}
         />
         <Button className={styles.create} onClick={signIn}>
           create

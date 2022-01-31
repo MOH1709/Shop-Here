@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
@@ -27,7 +27,7 @@ export default function Start() {
     //-----------------------------------------------> on load function
     const getCities = async () => {
       try {
-        if (cookie.get("ci")) {
+        if (Cookies.get("ci")) {
           navigate(`/city/home/areas`);
         }
 
@@ -76,9 +76,9 @@ export default function Start() {
       alert("please enter your full name");
       return;
     }
-    //save data in cookie
-    cookie.set("ci", cityid);
-    cookie.set("un", `${fname}+${lname}`);
+    //save data in Cookies
+    Cookies.set("ci", cityid);
+    Cookies.set("un", `${fname}+${lname}`);
 
     navigate(`/city/home/areas`);
   };

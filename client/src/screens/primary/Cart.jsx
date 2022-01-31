@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function Cart() {
   const { cart, setCart } = useContext(Context);
   const navigate = useNavigate();
   const [isUrgent, setIsUrgent] = useState(false);
-  const [address, setAddress] = useState(cookie.get("fa") || "");
+  const [address, setAddress] = useState(Cookies.get("fa") || "");
   const [total, setTotal] = useState(0);
 
   //----------------------------------------------->
@@ -55,9 +55,9 @@ export default function Cart() {
       if (isUrgent) {
         setTotal(total + 10);
       }
-      cookie.set("fa", address);
+      Cookies.set("fa", address);
 
-      const ux = cookie.get("ux");
+      const ux = Cookies.get("ux");
       if (!ux) {
         navigate(`/city/SignIn`);
         return;
@@ -141,7 +141,7 @@ export default function Cart() {
           />
         </div>
         <Button onClick={order} className={styles.orderBtn}>
-          {cookie.get("ux") ? "" : "sign in to "} order
+          {Cookies.get("ux") ? "" : "sign in to "} order
         </Button>
       </div>
     </div>

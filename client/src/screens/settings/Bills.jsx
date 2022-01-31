@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ export default function Bills() {
 
     const getOrders = async () => {
       try {
-        const res = await axios.get(`/${cookie.get("ux")}/orders`);
+        const res = await axios.get(`/${Cookies.get("ux")}/orders`);
         isMounted && setOrders(res.data);
       } catch (e) {
         alert("error in bills");

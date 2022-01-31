@@ -38,6 +38,7 @@ const useStyles = makeStyles({
       backgroundColor: "rgba(0,255, 255,0.2)",
       letterSpacing: 1,
       paddingLeft: 3,
+      borderRadius: 3,
     },
     "& label": {
       marginBottom: 5,

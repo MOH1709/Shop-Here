@@ -1,5 +1,5 @@
 import axios from "axios";
-import cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ export default function Area() {
 
   //-----------------------------------------------> onLoad
   useEffect(() => {
-    if (cookie.get("ai")) {
+    if (Cookies.get("ai")) {
       navigate("/city/home/businesses");
     }
 
@@ -20,8 +20,8 @@ export default function Area() {
     // fetch area
     const getAreas = async () => {
       try {
-        // fetch areas from cname in cookie
-        const ci = cookie.get("ci");
+        // fetch areas from cname in Cookies
+        const ci = Cookies.get("ci");
         const cleanAreas = await axios.get(`/${ci}/areas`);
 
         if (cleanAreas.status === 200) {
@@ -30,7 +30,7 @@ export default function Area() {
           navigate("/");
         }
       } catch (e) {
-        cookie.remove("ci");
+        Cookies.remove("ci");
         alert("Error in getting Areas");
       }
     };
@@ -43,8 +43,8 @@ export default function Area() {
 
   //-----------------------------------------------> onClick area
   const saveArea = (id) => {
-    // save area id in cookie as ai
-    cookie.set("ai", id);
+    // save area id in Cookies as ai
+    Cookies.set("ai", id);
 
     navigate(`/city/home/businesses`);
   };
