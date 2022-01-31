@@ -39,15 +39,24 @@ export default function LogIn() {
         const res = await axios.get(`/login/${phoneNumber}/${password}`);
 
         if (res.status === 200) {
-          navigate(`/city/home`);
+          navigate(`/city/home/areas`);
         } else {
-          alert("Wrong Inputs");
+          alert("Wrong data or password");
         }
+
+        setInput({
+          phoneNumber: "",
+          password: "",
+        });
       } else {
         alert("please fill all input field");
       }
     } catch (e) {
-      console.log("error in login");
+      alert("Wrong Inputs");
+      setInput({
+        phoneNumber: "",
+        password: "",
+      });
     }
   };
 
@@ -74,6 +83,7 @@ export default function LogIn() {
           onChangeHandler={onChangeHandler}
           name="password"
           type="password"
+          value={input.password}
         />
         <Button onClick={login} className={styles.login}>
           Log in

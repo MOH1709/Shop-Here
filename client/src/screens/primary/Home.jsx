@@ -1,23 +1,14 @@
 import { makeStyles } from "@material-ui/core";
-import { useEffect } from "react";
-import cookie from "js-cookie";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { Area } from "../home";
 
 export default function Home() {
   const styles = useStyles();
-  const navigate = useNavigate();
-
-  //-----------------------------------------------> on load default page
-  useEffect(() => {
-    if (cookie.get("ai")) {
-      navigate("/city/home/businesses");
-    } else {
-      navigate("/city/home/areas");
-    }
-  }, []);
+  const { pathname } = useLocation();
 
   return (
     <div className={styles.container}>
+      {pathname === "/city/home" && <Area />}
       <Outlet />
     </div>
   );

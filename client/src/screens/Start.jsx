@@ -69,7 +69,7 @@ export default function Start() {
 
   //-----------------------------------------------> onClick start Button
   const start = () => {
-    const { fname, lname, city, cityid } = data;
+    const { fname, lname, cityid } = data;
 
     // checking if all fields are field
     if (!(fname || lname)) {

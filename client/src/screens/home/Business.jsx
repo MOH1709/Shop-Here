@@ -25,7 +25,7 @@ export default function Business() {
         isMounted && setBusinesses(cleanBusiness.data);
       } catch (e) {
         cookie.remove("ai");
-        navigate("/city/home");
+        navigate("/city/home/areas");
         console.log("error in business");
       }
     };

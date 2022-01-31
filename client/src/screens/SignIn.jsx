@@ -2,7 +2,7 @@ import axios from "axios";
 import cookie from "js-cookie";
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom component
 import { InputBox, MiddleWare } from "../components";
@@ -12,7 +12,6 @@ import { useEffect } from "react";
 export default function SignIn() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const { cname } = useParams();
   const [isEmail, setIsEmail] = useState(false);
   const [data, setData] = useState({
     phoneNumber: "",
@@ -68,6 +67,7 @@ export default function SignIn() {
 
       navigate(-1);
     } catch (e) {
+      alert("account already exist");
       console.log("error in signin");
     }
   };

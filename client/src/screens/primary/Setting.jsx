@@ -114,6 +114,7 @@ const useStyles = makeStyles({
     color: COLOR.SECONDARY,
   },
   main: {
+    position: "relative",
     flex: 1,
     display: "flex",
     flexDirection: "column",

@@ -96,6 +96,9 @@ export default function Cart() {
             `something wrong while placing order with ${data[0].address} ☹`
           );
         }
+
+        setCart([]);
+        navigate("/city/home/areas");
       });
     } catch (e) {
       console.log("error in cart");
@@ -121,7 +124,7 @@ export default function Cart() {
         style={{ display: cart.length ? "flex" : "none" }}
       >
         <InputBox
-          title="Full Address"
+          title="Dilevery Address"
           value={address}
           Style={{ width: "80%", marginBlock: 30, marginInline: "auto" }}
           onChangeHandler={onChangeHandler}

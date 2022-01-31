@@ -25,7 +25,6 @@ router.get("/cleancities", async(req, res) => {
   }
 });
 
-//-----------------------------------------------> Clean Areas
 router.get("/:cityId/areas", async(req, res) => {
   try {
     const { cityId } = req.params;
@@ -85,43 +84,10 @@ router.get("/:cityId/:areaId/shops", async(req, res) => {
   }
 });
 
+//-----------------------------------------------> shops
 router.post("/:cityId/:areaId/shops", async(req, res) => {
   try {
-    const { areaId } = req.params;
-    const { userId, address, img, shopName } = req.body;
-    const { shops } = await Area.findOne({ _id: areaId }, { _id: 0 });
-
-    const isExist = shops.find((data) => {
-      return data.id === userId;
-    });
-
-    if (isExist || !userId || !shopName || !address) {
-      return res.status(400).send("invalid credintials for adding shop");
-    }
-    const shop = new Shop({
-      _id: userId,
-      products: [],
-      isOpen: true,
-      urgentDeliveryStatus: true,
-      tempBan: false,
-      urgentDeliveredCount: 0,
-      dayJoined: new Date(),
-      daysLeft: 0,
-    });
-    await shop.save();
-
-    await Area.updateOne({ _id: areaId }, {
-      $push: {
-        shops: {
-          img,
-          address,
-          id: userId,
-          name: shopName,
-        },
-      },
-    });
-
-    res.status(200).send(`${shopName} added successfully`);
+    res.status(200).send(`added successfully`);
   } catch (e) {
     res.status(500).send("error in adding new shop \n");
   }
@@ -196,7 +162,7 @@ router.get("/login/:userId/:password", async(req, res) => {
       res.cookie("ux", token);
       res.cookie("ci", user.currentLocation[0]);
       res.cookie("ai", user.currentLocation[1]);
-      res.cookie("fn", user.name);
+      res.cookie("un", user.name);
       res.cookie("fa", user.address);
 
       return res.status(200).send(user);
@@ -242,20 +208,21 @@ router.post("/:cityId/:areaId/signin", async(req, res) => {
   }
 });
 
-router.put("/:uxt/update", async(req, res) => {
+router.put("/:uxt/updateUser", async(req, res) => {
   try {
-    const { update } = req.body;
+    const { state } = req.body;
     const { uxt } = req.params;
     const user = await User.findOne({ tokens: { $in: uxt } });
 
-    if (update.name === "password") {
-      update.value = await bcrypt.hash(update.password, 12);
+    if (state.password) {
+      state.password = await bcrypt.hash(state.password, 12);
     }
+
+    const result = Object.assign(user, state);
 
     await User.updateOne({ _id: user._id }, {
       $set: {
-        ...user,
-        [update.name]: update.value,
+        ...result,
       },
     });
 
@@ -266,6 +233,32 @@ router.put("/:uxt/update", async(req, res) => {
 });
 
 //-----------------------------------------------> orders
+router.get("/:uxt/orders", async(req, res) => {
+  try {
+    const { uxt } = req.params;
+
+    const { orders } = await User.findOne({ tokens: { $in: uxt } }, { _id: 0, orders: 1 });
+
+    res.status(200).send(orders);
+  } catch (e) {
+    console.log(e);
+
+    res.status(400).send("error in placing order backend");
+  }
+});
+
+router.get("/:oid/orderdetails", async(req, res) => {
+  try {
+    const { oid } = req.params;
+
+    const details = await Order.findOne({ _id: oid }, { _id: 0 });
+
+    res.status(200).send(details);
+  } catch (e) {
+    res.status(400).send("error in placing order backend");
+  }
+});
+
 router.post("/:uxt/orders", async(req, res) => {
   try {
     const { uxt } = req.params;
