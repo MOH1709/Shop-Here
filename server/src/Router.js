@@ -255,7 +255,7 @@ router.get("/:oid/orderdetails", async(req, res) => {
 
     res.status(200).send(details);
   } catch (e) {
-    res.status(400).send("error in placing order backend");
+    res.status(400).send(details);
   }
 });
 

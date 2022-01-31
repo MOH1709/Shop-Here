@@ -68,7 +68,6 @@ export default function SignIn() {
       navigate(-1);
     } catch (e) {
       alert("account already exist");
-      console.log("error in signin");
     }
   };
 

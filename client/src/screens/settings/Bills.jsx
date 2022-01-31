@@ -19,7 +19,7 @@ export default function Bills() {
         const res = await axios.get(`/${cookie.get("ux")}/orders`);
         isMounted && setOrders(res.data);
       } catch (e) {
-        console.log("error in bills");
+        alert("error in bills");
       }
     };
 
@@ -35,7 +35,7 @@ export default function Bills() {
       const res = await axios.get(`/${id}/orderdetails`);
       console.log(res.data);
     } catch (e) {
-      console.log("error in product details");
+      alert("error in product details");
     }
   };
 

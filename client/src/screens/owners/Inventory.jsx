@@ -23,7 +23,7 @@ export default function Inventory() {
         const bx = cookie.get("bx");
         isMounted && setProducts([]);
       } catch (e) {
-        console.log("error in inventory");
+        alert("error in loading inventory");
       }
     };
 

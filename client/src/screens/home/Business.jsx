@@ -26,7 +26,7 @@ export default function Business() {
       } catch (e) {
         cookie.remove("ai");
         navigate("/city/home/areas");
-        console.log("error in business");
+        alert("error in fetching shops in this area");
       }
     };
 

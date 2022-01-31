@@ -36,7 +36,7 @@ export default function Profile() {
         fa: cookie.get("fa") || "",
       });
     } catch (e) {
-      console.log(e);
+      alert("error in obtaining profile data of user");
     }
   }, [navigate]);
 
@@ -75,7 +75,7 @@ export default function Profile() {
         navigate("/city/home");
       }
     } catch (e) {
-      console.log("error in updating profile");
+      alert("error in updating profile");
     }
   };
 

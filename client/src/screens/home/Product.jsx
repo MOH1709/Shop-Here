@@ -23,7 +23,7 @@ export default function Product() {
 
         isMounted && setProducts(res.data);
       } catch (e) {
-        console.log("error in products");
+        alert("error in getting products of this shop");
       }
     };
 

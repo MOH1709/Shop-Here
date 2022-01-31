@@ -34,7 +34,7 @@ export default function Start() {
         const cleanCities = await axios.get("/cleancities");
         isMouted && setCities(cleanCities.data);
       } catch (e) {
-        console.log("error in start");
+        alert("Error in getting cities");
       }
     };
     getCities();

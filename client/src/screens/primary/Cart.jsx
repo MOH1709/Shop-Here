@@ -101,7 +101,7 @@ export default function Cart() {
         navigate("/city/home/areas");
       });
     } catch (e) {
-      console.log("error in cart");
+      alert("error in placing order");
     }
   };
 

@@ -35,7 +35,7 @@ export default function Owner() {
           navigate("/city/messages");
         }
       } catch (e) {
-        console.log("error in owner login");
+        alert("error in owner login");
       }
     };
     sendRequest();

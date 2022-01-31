@@ -31,7 +31,7 @@ export default function Area() {
         }
       } catch (e) {
         cookie.remove("ci");
-        console.log("error in areas");
+        alert("Error in getting Areas");
       }
     };
     getAreas();
