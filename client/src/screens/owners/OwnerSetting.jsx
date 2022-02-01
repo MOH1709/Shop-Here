@@ -6,7 +6,7 @@ import { NavLink, useNavigate, Outlet, useParams } from "react-router-dom";
 //-----------------------------------------------> custom components
 import { COLOR } from "../../constants";
 
-export default function Setting() {
+export default function OwnerSetting() {
   const styles = useStyles();
   const navigate = useNavigate();
   const { cname } = useParams();
@@ -59,9 +59,9 @@ export default function Setting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/owner`}
+          to={`/${cname}/home`}
         >
-          Use For Bussiness
+          Switch As Consumer
         </Button>
         <Button
           className={styles.navBtn}

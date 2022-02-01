@@ -13,7 +13,6 @@ import { OwnerHome } from "./owners";
 export default function Owner() {
   const styles = useStyles();
   const navigate = useNavigate();
-
   const { width } = useContext(Context);
 
   useEffect(() => {
@@ -28,6 +27,9 @@ export default function Owner() {
         const { data } = await axios.get(`/city/${ux}/user`);
         if (data?.bussinessId) {
           Cookies.set("bx", data.bussinessId);
+          width < 700
+            ? navigate("/city/owner/profile")
+            : navigate("/city/owner/inventory");
         } else {
           //send request
 

@@ -243,7 +243,7 @@ router.post("/:cityId/:areaId/signin", async(req, res) => {
     res.status(400).send("error in user route");
   }
 });
-
+// user update
 router.put("/:uxt/updateUser", async(req, res) => {
   try {
     const { state } = req.body;

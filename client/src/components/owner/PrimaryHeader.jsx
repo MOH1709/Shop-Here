@@ -19,7 +19,7 @@ export default function PrimaryHeader({ setLocation, location }) {
           {/* <Button component={NavLink} to={`/${cname}/search`}>
             <img src="./icons/search.svg" alt="search" />
           </Button> */}
-          <Button component={NavLink} to={`/${cname}/setting`}>
+          <Button component={NavLink} to={`/${cname}/owner/setting`}>
             <img src="./icons/setting.svg" alt="setting" />
           </Button>
         </div>
