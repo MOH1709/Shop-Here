@@ -73,10 +73,11 @@ export default function LogIn() {
       </p>
       <div className={styles.form}>
         <InputBox
-          title={"Mobile Number / Email"}
+          title={"Mobile Number"}
           onChangeHandler={onChangeHandler}
           name="phoneNumber"
           value={input.phoneNumber}
+          type={"number"}
         />
         <InputBox
           title={"Password"}

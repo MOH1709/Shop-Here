@@ -1,13 +1,17 @@
 import { makeStyles, Button } from "@material-ui/core";
+import Cookies from "js-cookie";
+import axios from "axios";
 import { useState } from "react";
 
 //-----------------------------------------------> custom component
 import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
+import { useEffect } from "react";
 
 export default function OwnerHome() {
   const styles = useStyles();
-  const [isOpen, setIsOpen] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [canUrgent, setCanUrgent] = useState(false);
   const [data, setData] = useState({
     img: "",
@@ -16,6 +20,39 @@ export default function OwnerHome() {
     phoneNumber: null,
     email: "",
   });
+
+  //-----------------------------------------------> on load
+  useEffect(() => {
+    let isMounted = true;
+
+    const getOwnerData = async () => {
+      try {
+        const bx = Cookies.get("bx");
+        let res = await axios.get(`/${bx}/getownerdata`);
+        res = res.data;
+
+        if (isMounted) {
+          setIsOpen(res.isOpen);
+          setCanUrgent(res.canUrgent);
+          setShowBtn(true);
+          setData({
+            img: res.img,
+            name: res.name,
+            address: res.address,
+            phoneNumber: res.extras[0].phoneNumber,
+            email: res.extras[1].email,
+          });
+        }
+      } catch (e) {
+        alert("error in fetching data");
+      }
+    };
+
+    getOwnerData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   //-----------------------------------------------> storing inputs
   const changeHandler = (e) => {
@@ -26,6 +63,29 @@ export default function OwnerHome() {
       [name]: value,
     });
   };
+
+  //-----------------------------------------------> save data
+  const updateOwnerData = async () => {
+    try {
+      const bx = Cookies.get("bx");
+      const { img, name, address, phoneNumber, email } = data;
+
+      const res = await axios.put(`/${bx}/updateShopDetails`, {
+        isOpen,
+        canUrgent,
+        img,
+        name,
+        address,
+        extras: [{ phoneNumber }, { email }],
+      });
+
+      res.status && alert("updated succesfully");
+    } catch (e) {
+      alert("error in updating data");
+    }
+  };
+
+  //----------------------------------------------->
   const addImage = () => {};
 
   return (
@@ -66,23 +126,29 @@ export default function OwnerHome() {
           onChangeHandler={changeHandler}
           type={"number"}
         />
-        <div className={styles.btnDiv}>
-          <ToggleBtn
-            Style={{ marginBlock: 20, width: 250, marginInline: "auto" }}
-            title={"Shop Open"}
-            onClickHandler={() => {
-              setIsOpen(!isOpen);
-            }}
-          />
-          <ToggleBtn
-            Style={{ marginBlock: 20, width: 250, marginInline: "auto" }}
-            title={"Urgent Dilivery"}
-            onClickHandler={() => {
-              setCanUrgent(!canUrgent);
-            }}
-          />
-        </div>
-        <Button className={styles.upload}>upload</Button>
+        {showBtn && (
+          <div className={styles.btnDiv}>
+            <ToggleBtn
+              Style={{ marginBlock: 20, width: 250 }}
+              title={"Shop Open"}
+              initialState={isOpen}
+              onClickHandler={() => {
+                setIsOpen(!isOpen);
+              }}
+            />
+            <ToggleBtn
+              Style={{ marginBlock: 20, width: 250 }}
+              title={"Urgent Dilivery"}
+              initialState={canUrgent}
+              onClickHandler={() => {
+                setCanUrgent(!canUrgent);
+              }}
+            />
+          </div>
+        )}
+        <Button className={styles.upload} onClick={updateOwnerData}>
+          upload
+        </Button>
       </div>
     </div>
   );

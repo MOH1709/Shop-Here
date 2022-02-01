@@ -15,6 +15,7 @@ export default function Cart() {
   const { cart, setCart } = useContext(Context);
   const navigate = useNavigate();
   const [isUrgent, setIsUrgent] = useState(false);
+  const [urgent, setUrgent] = useState([]);
   const [address, setAddress] = useState(Cookies.get("fa") || "");
   const [total, setTotal] = useState(0);
 
@@ -42,6 +43,16 @@ export default function Cart() {
   //-----------------------------------------------> store text input
   const onChangeHandler = (e) => {
     setAddress(e.target.value);
+  };
+
+  //-----------------------------------------------> is urgent Available
+  const checkIsUrgentAvail = async (id) => {
+    try {
+      const res = await axios.get(`/${id}/isurgentavail`);
+      setIsUrgent(res.data);
+    } catch (e) {
+      alert("error in checking urgetn status");
+    }
   };
 
   //-----------------------------------------------> on order
@@ -82,6 +93,7 @@ export default function Cart() {
               quantity: product.quantity,
             };
           }),
+          isUrgent: urgent.includes(cart[0].shopId),
           owner: data[0].address,
           ownerId: data[0].shopId,
           recievedAddress: address,
@@ -108,17 +120,42 @@ export default function Cart() {
   //-----------------------------------------------> returning component
   return (
     <div className={styles.container}>
-      {cart.map((data) => (
-        <CartCard
-          key={data._id}
-          _id={data._id}
-          price={data.price}
-          q={data.quantity}
-          shopName={data.address}
-          name={data.name}
-          img={data.img}
-        />
-      ))}
+      {cart.map((data, index) => {
+        if (cart[index].shopId !== cart[index + 1]?.shopId) {
+          checkIsUrgentAvail(data.shopId);
+        }
+        return (
+          <div className={styles.shopCart} key={data._id}>
+            <CartCard
+              _id={data._id}
+              price={data.price}
+              q={data.quantity}
+              shopName={data.address}
+              name={data.name}
+              img={data.img}
+            />
+
+            <ToggleBtn
+              Style={{
+                width: 180,
+                marginBlock: 20,
+                display:
+                  cart[index].shopId !== cart[index + 1]?.shopId && isUrgent
+                    ? "flex"
+                    : "none",
+              }}
+              title={"Urgent"}
+              onClickHandler={(ic) => {
+                if (ic === false) {
+                  setUrgent([...urgent, data.shopId]);
+                } else {
+                  setUrgent(urgent.filter((val) => val !== data.shopId));
+                }
+              }}
+            />
+          </div>
+        );
+      })}
       <div
         className={styles.order}
         style={{ display: cart.length ? "flex" : "none" }}
@@ -132,13 +169,8 @@ export default function Cart() {
         <div className={styles.total}>
           <p className={styles.price}>
             TOTAL :<span style={{ marginInline: 5 }}> ₹{total} </span>
-            <span style={{ display: isUrgent ? "block" : "none" }}> + ₹10</span>
+            <span style={{ display: isUrgent ? "block" : "none" }}></span>
           </p>
-          <ToggleBtn
-            Style={{ width: 180 }}
-            title={"Urgent"}
-            onClickHandler={() => setIsUrgent(!isUrgent)}
-          />
         </div>
         <Button onClick={order} className={styles.orderBtn}>
           {Cookies.get("ux") ? "" : "sign in to "} order
@@ -154,6 +186,12 @@ const useStyles = makeStyles({
     flex: 1,
     position: "relative",
     overflow: "auto",
+  },
+  shopCart: {
+    width: "80%",
+    marginBlock: 30,
+    marginInline: "auto",
+    borderBottom: "2px solid rgba(0,0,0,0.5)",
   },
   order: {
     flexDirection: "column",

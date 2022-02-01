@@ -85,6 +85,51 @@ router.get("/:cityId/:areaId/shops", async(req, res) => {
   }
 });
 
+// get owner data
+router.get("/:bid/getownerdata", async(req, res) => {
+  try {
+    const { bid } = req.params;
+    const owner = await Shop.findOne({ _id: bid }, { _id: 0, products: 0, orders: 0 });
+
+    res.status(200).send(owner);
+  } catch (e) {
+    res.status(500).send("error in getting area names");
+  }
+});
+
+//check if urgent order available
+router.get("/:shopId/isurgentavail", async(req, res) => {
+  try {
+    const { shopId } = req.params;
+    const { canUrgent } = await Shop.findOne({ _id: shopId }, { _id: 0, canUrgent: 1 });
+
+    res.status(200).send(canUrgent);
+  } catch (e) {
+    res.status(500).send("error in getting products");
+  }
+});
+
+// shop detail update
+router.put("/:bid/updateShopDetails", async(req, res) => {
+  try {
+    const data = req.body;
+    const { bid } = req.params;
+    const owner = await Shop.findOne({ _id: bid });
+
+    const result = Object.assign(owner, data);
+
+    await Shop.updateOne({ _id: owner._id }, {
+      $set: {
+        ...result,
+      },
+    });
+
+    res.status(200).send("business data updated");
+  } catch (e) {
+    res.status(400).send("error in updating business data details");
+  }
+});
+
 // add new Shop
 router.post("/:cityId/:areaId/shops", async(req, res) => {
   try {
@@ -298,13 +343,14 @@ router.get("/:oid/orderdetails", async(req, res) => {
 router.post("/:uxt/orders", async(req, res) => {
   try {
     const { uxt } = req.params;
-    const { products, owner, ownerId, recievedAddress } = req.body;
+    const { products, owner, ownerId, recievedAddress, isUrgent } = req.body;
 
     const reciever = await User.findOne({ tokens: { $in: uxt } }, { _id: 1, name: 1 });
 
     const order = new Order({
       products,
       ownerId,
+      isUrgent,
       recieverId: reciever._id,
       recievedAddress,
     });

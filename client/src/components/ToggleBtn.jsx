@@ -3,13 +3,18 @@ import { Button, makeStyles } from "@material-ui/core";
 
 import { COLOR } from "../constants";
 
-export default function ToggleBtn({ onClickHandler, title, Style }) {
+export default function ToggleBtn({
+  onClickHandler,
+  title,
+  Style,
+  initialState,
+}) {
   const styles = useStyles();
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState(initialState || false);
 
   const clickHandler = () => {
-    onClickHandler();
     setIsClicked(!isClicked);
+    onClickHandler(isClicked);
   };
 
   return (
@@ -44,6 +49,7 @@ const useStyles = makeStyles({
     height: 35,
     borderRight: "none",
     borderRadius: 5,
+    marginInline: "auto",
   },
   btnDiv: {
     width: 90,

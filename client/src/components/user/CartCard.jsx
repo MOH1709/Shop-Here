@@ -88,8 +88,8 @@ const useStyles = makeStyles({
     display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
-    padding: 5,
-    margin: 10,
+    paddingBlock: 5,
+    marginInline: 10,
   },
   left: {
     flex: 1,

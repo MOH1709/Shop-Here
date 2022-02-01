@@ -72,14 +72,14 @@ export default function SignIn() {
   };
 
   //-----------------------------------------------> onLcick google Btn
-  const googleLogin = () => {
-    // check for confirmation of google
-    // autofill email input
-    // alert set password for your gmail
-    // save pasword and email to database
-    // add a new use in db
-    setIsEmail(!isEmail);
-  };
+  // const googleLogin = () => {
+  //   // check for confirmation of google
+  //   // autofill email input
+  //   // alert set password for your gmail
+  //   // save pasword and email to database
+  //   // add a new use in db
+  //   setIsEmail(!isEmail);
+  // };
 
   //-----------------------------------------------> return component
   return (
@@ -111,13 +111,13 @@ export default function SignIn() {
         <Button className={styles.create} onClick={signIn}>
           create
         </Button>
-        <div className={styles.api}>
+        {/* <div className={styles.api}>
           <p> OR </p>
           <Button onClick={googleLogin}>
             <img src="./google.png" alt="logo" height="30" />
             Sign In with Google
           </Button>
-        </div>
+        </div> */}
       </form>
     </div>
   );
