@@ -11,7 +11,7 @@ export default function Card({ img, title, content, onClickHandler }) {
       </div>
       <div className={styles.contentDiv}>
         <p>{title}</p>
-        <p>{content}</p>
+        <div>{content}</div>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { ConsumerMessage } from "../../components";
@@ -9,6 +10,7 @@ import { COLOR } from "../../constants";
 
 export default function Messages() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const [msg, setMsg] = useState([]);
 
   //-----------------------------------------------> on load
@@ -44,6 +46,9 @@ export default function Messages() {
         .map((data) => (
           <ConsumerMessage
             key={data._id}
+            onClickHandler={() => {
+              navigate(`/city/${data._id}`);
+            }}
             pin={data.orderPin}
             owners={[data.owner]}
           />

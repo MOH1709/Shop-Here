@@ -3,20 +3,20 @@ import { Button, makeStyles } from "@material-ui/core";
 //-----------------------------------------------> custom Components
 import { COLOR } from "../constants";
 
-export default function ConsumerMessage({ pin, owners }) {
+export default function ConsumerMessage({ pin, owners, onClickHandler }) {
   const styles = useStyles();
 
-  const clickHandler = () => {};
-
   return (
-    <div className={styles.container} onClick={clickHandler}>
+    <div className={styles.container}>
       <p className={styles.orderPin}>
         This Order Code is : <span>{pin}</span>
       </p>
       <p className={styles.shopNames}>
-        Shop names : <span>{owners.join(", ")}</span>
+        Shop name : <span>{owners.join(", ")}</span>
       </p>
-      <Button className={styles.btn}>click to show more</Button>
+      <Button className={styles.btn} onClick={onClickHandler}>
+        click to show more
+      </Button>
     </div>
   );
 }

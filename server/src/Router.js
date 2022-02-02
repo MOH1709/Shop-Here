@@ -327,7 +327,7 @@ router.get("/:uxt/orders", async(req, res) => {
     res.status(400).send("error in placing order backend");
   }
 });
-
+//get order details
 router.get("/:oid/orderdetails", async(req, res) => {
   try {
     const { oid } = req.params;
@@ -339,7 +339,7 @@ router.get("/:oid/orderdetails", async(req, res) => {
     res.status(400).send(details);
   }
 });
-
+// place new order
 router.post("/:uxt/orders", async(req, res) => {
   try {
     const { uxt } = req.params;

@@ -5,13 +5,15 @@ import { makeStyles, Button } from "@material-ui/core";
 //-----------------------------------------------> custom Componenets
 import { BTN_STYLE, COLOR } from "../../constants";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function OwnerMessage({ name, address, id }) {
   const styles = useStyles();
+  const navigate = useNavigate();
   const [pin, setPin] = useState(0);
 
   //-----------------------------------------------> congirm password
-  const clickHandler = async () => {
+  const confirmPin = async () => {
     try {
       const res = await axios.get(`/${id}/checkorderpin`);
 
@@ -44,9 +46,14 @@ export default function OwnerMessage({ name, address, id }) {
           }}
           placeholder="Enter Code"
         />
-        <Button onClick={clickHandler}>confirm</Button>
+        <Button onClick={confirmPin}>confirm</Button>
       </div>
-      <Button className={styles.btn} onClick={clickHandler}>
+      <Button
+        className={styles.btn}
+        onClick={() => {
+          navigate(`/city/${id}`);
+        }}
+      >
         click to show more
       </Button>
     </div>
