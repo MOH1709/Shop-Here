@@ -4,7 +4,12 @@ import { LogIn, SignIn, Main, Owner, Start, Error } from "./screens";
 import { Setting, Home, Messages, Cart } from "./screens/primary";
 import { Bills, Profile, Updates, ReportBug } from "./screens/settings";
 import { Business, Area, Product } from "./screens/home";
-import { Inventory, OwnerHome, OwnerSetting } from "./screens/owners";
+import {
+  Inventory,
+  OwnerHome,
+  OwnerSetting,
+  ShopMessages,
+} from "./screens/owners";
 
 export default function Router() {
   return (
@@ -16,7 +21,7 @@ export default function Router() {
 
       {/* Owner Screen Routes */}
       <Route path=":cname/owner" element={<Owner />}>
-        <Route path="messages" element={<Messages />} />
+        <Route path="messages" element={<ShopMessages />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="profile" element={<OwnerHome />} />
         <Route path="setting" element={<OwnerSetting />} />

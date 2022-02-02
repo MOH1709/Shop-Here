@@ -28,20 +28,22 @@ export default function OwnerHome() {
     const getOwnerData = async () => {
       try {
         const bx = Cookies.get("bx");
-        let res = await axios.get(`/${bx}/getownerdata`);
-        res = res.data;
+        if (bx) {
+          let res = await axios.get(`/${bx}/getownerdata`);
+          res = res.data;
 
-        if (isMounted) {
-          setIsOpen(res.isOpen);
-          setCanUrgent(res.canUrgent);
-          setShowBtn(true);
-          setData({
-            img: res.img,
-            name: res.name,
-            address: res.address,
-            phoneNumber: res.extras[0].phoneNumber,
-            email: res.extras[1].email,
-          });
+          if (isMounted) {
+            setIsOpen(res.isOpen);
+            setCanUrgent(res.canUrgent);
+            setShowBtn(true);
+            setData({
+              img: res.img,
+              name: res.name,
+              address: res.address,
+              phoneNumber: res.extras[0].phoneNumber,
+              email: res.extras[1].email,
+            });
+          }
         }
       } catch (e) {
         alert("error in fetching data");

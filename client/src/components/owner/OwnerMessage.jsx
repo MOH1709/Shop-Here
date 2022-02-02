@@ -1,11 +1,32 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom Componenets
 import { BTN_STYLE, COLOR } from "../../constants";
+import { useState } from "react";
 
-export default function OwnerMessage({ name, address }) {
+export default function OwnerMessage({ name, address, id }) {
   const styles = useStyles();
-  const clickHandler = () => {};
+  const [pin, setPin] = useState(0);
+
+  //-----------------------------------------------> congirm password
+  const clickHandler = async () => {
+    try {
+      const res = await axios.get(`/${id}/checkorderpin`);
+
+      if (res.data.orderPin === parseInt(pin)) {
+        await axios.put(`/${id}/${Cookies.get("bx")}/orderDilivered`);
+
+        alert("dilivered succesfully 🥳");
+        window.location.reload();
+      } else {
+        alert("Wrong pin");
+      }
+    } catch (e) {
+      alert("error in confirming password");
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -16,8 +37,14 @@ export default function OwnerMessage({ name, address }) {
         Address : <span>{address}</span>
       </p>
       <div className={styles.inputDiv}>
-        <input type="text" placeholder="Enter Code" />
-        <Button>confirm</Button>
+        <input
+          type="number"
+          onChange={(e) => {
+            setPin(e.target.value);
+          }}
+          placeholder="Enter Code"
+        />
+        <Button onClick={clickHandler}>confirm</Button>
       </div>
       <Button className={styles.btn} onClick={clickHandler}>
         click to show more

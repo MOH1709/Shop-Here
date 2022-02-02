@@ -140,12 +140,12 @@ router.post("/:cityId/:areaId/shops", async(req, res) => {
 });
 
 //-----------------------------------------------> products
-router.get("/:shopId/products", async(req, res) => {
+router.get("/:shopId/withproducts", async(req, res) => {
   try {
     const { shopId } = req.params;
-    const { products } = await Shop.findOne({ _id: shopId }, { _id: 0, products: 1 });
+    const shop = await Shop.findOne({ _id: shopId }, { _id: 0, extras: 1, isOpen: 1, products: 1 });
 
-    res.status(200).send(products);
+    res.status(200).send(shop);
   } catch (e) {
     res.status(500).send("error in getting products");
   }
@@ -359,7 +359,8 @@ router.post("/:uxt/orders", async(req, res) => {
     await User.updateOne({ tokens: { $in: uxt } }, {
       $push: {
         orders: {
-          orderId: _id,
+          orderPin: Math.floor(Math.random() * 8500 + 1000),
+          _id,
           owner,
         },
       },
@@ -368,7 +369,8 @@ router.post("/:uxt/orders", async(req, res) => {
     await Shop.updateOne({ _id: ownerId }, {
       $push: {
         orders: {
-          orderId: _id,
+          _id,
+          address: recievedAddress,
           reciever: reciever.name,
         },
       },
@@ -379,6 +381,59 @@ router.post("/:uxt/orders", async(req, res) => {
     console.log(e);
 
     res.status(400).send("error in placing order backend");
+  }
+});
+
+//check order pin
+router.get("/:bid/getBusinessOrders", async(req, res) => {
+  try {
+    const { bid } = req.params;
+
+    const result = await Shop.findOne({ _id: bid }, { _id: 0, orders: 1 });
+
+    res.status(200).send(result);
+  } catch (e) {
+    console.log(e);
+
+    res.status(400).send("error in obtaning messages");
+  }
+});
+
+//check order pin
+router.get("/:oid/checkorderpin", async(req, res) => {
+  try {
+    const { oid } = req.params;
+
+    const { recieverId } = await Order.findOne({ _id: oid }, { _id: 0, recieverId: 1 });
+    const { orders } = await User.findOne({ _id: recieverId }, { _id: 0, orders: { $elemMatch: { _id: oid } } });
+
+    res.status(200).send(orders[0]);
+  } catch (e) {
+    res.status(400).send("error in getting pin");
+  }
+});
+
+//set ordered status to dilivered order pin
+router.put("/:oid/:bid/orderDilivered", async(req, res) => {
+  try {
+    const { oid, bid } = req.params;
+
+    await Order.updateOne({ _id: oid }, {
+      $set: {
+        isSucessful: true,
+        recievedTime: new Date(),
+      },
+    });
+
+    await Shop.updateOne({ _id: bid }, {
+      $pull: {
+        orders: { _id: oid },
+      },
+    });
+
+    res.status(200).send("success");
+  } catch (e) {
+    res.status(400).send("error in getting pin");
   }
 });
 

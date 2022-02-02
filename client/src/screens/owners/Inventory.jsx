@@ -22,9 +22,9 @@ export default function Inventory() {
     const getProducts = async () => {
       try {
         const bx = Cookies.get("bx");
-        const res = await axios.get(`/${bx}/products`);
+        const res = await axios.get(`/${bx}/withproducts`);
 
-        isMounted && setProducts(res.data);
+        isMounted && setProducts(res.data.products);
       } catch (e) {
         alert("error in loading inventory");
       }
@@ -66,6 +66,15 @@ export default function Inventory() {
 
   return (
     <div className={styles.container}>
+      <Button
+        className={styles.btn}
+        onClick={() => {
+          setProduct({});
+          setShowBox(true);
+        }}
+      >
+        ADD
+      </Button>
       {products.map((data) => (
         <ProductCard
           key={data._id}
@@ -91,16 +100,6 @@ export default function Inventory() {
           />
         }
       />
-
-      <Button
-        className={styles.btn}
-        onClick={() => {
-          setProduct({});
-          setShowBox(true);
-        }}
-      >
-        ADD
-      </Button>
     </div>
   );
 }

@@ -19,10 +19,9 @@ export default function InputBox({
         id={title}
         type={type ?? "text"}
         name={name}
-        value={value || ""}
+        value={value > 100000000000 ? 0 : value || ""}
         // placeholder="type here"
         onChange={onChangeHandler}
-        required
       />
     </div>
   );

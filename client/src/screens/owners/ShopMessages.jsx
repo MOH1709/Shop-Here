@@ -4,10 +4,10 @@ import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
 //-----------------------------------------------> custom components
-import { ConsumerMessage } from "../../components";
+import { OwnerMessage } from "../../components/owner";
 import { COLOR } from "../../constants";
 
-export default function Messages() {
+export default function ShopMessages() {
   const styles = useStyles();
   const [msg, setMsg] = useState([]);
 
@@ -17,14 +17,15 @@ export default function Messages() {
 
     const getMessages = async () => {
       try {
-        const ux = Cookies.get("ux");
+        const bx = Cookies.get("bx");
 
-        if (ux) {
-          const res = await axios.get(`/${ux}/orders`);
-          isMounted && setMsg(res.data);
+        if (bx) {
+          const { data } = await axios.get(`/${bx}/getBusinessOrders`);
+
+          isMounted && setMsg(data.orders);
         }
       } catch (e) {
-        alert("error in loading messages");
+        alert("error in loading messages of owner");
       }
     };
 
@@ -37,18 +38,16 @@ export default function Messages() {
   return (
     <div className={styles.container}>
       <p className={styles.title}>
-        Share the Code generated from order with Shop Owner's, To Confirm Your
-        Order & recievr Bill :)
+        get your bill to safe side yourself from any issue :)
       </p>
-      {msg
-        .map((data) => (
-          <ConsumerMessage
-            key={data._id}
-            pin={data.orderPin}
-            owners={[data.owner]}
-          />
-        ))
-        .reverse()}
+      {msg.map((data) => (
+        <OwnerMessage
+          key={data._id}
+          name={data.reciever.split("+").join(" ")}
+          address={data.address}
+          id={data._id}
+        />
+      ))}
     </div>
   );
 }

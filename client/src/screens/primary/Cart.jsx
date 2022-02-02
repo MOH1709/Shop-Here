@@ -110,7 +110,7 @@ export default function Cart() {
         }
 
         setCart([]);
-        navigate("/city/home/areas");
+        navigate("/city/messages");
       });
     } catch (e) {
       alert("error in placing order");

@@ -21,11 +21,6 @@ const userSchema = new mongoose.Schema({
   orders: [{
     orderPin: {
       type: Number,
-      default: Math.floor(Math.random() * 8500 + 1000),
-    },
-    orderId: {
-      type: String,
-      required: true,
     },
     owner: {
       type: String,

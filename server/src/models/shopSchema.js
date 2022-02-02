@@ -47,9 +47,8 @@ const shopSchema = new mongoose.Schema({
     },
   }, ],
   orders: [{
-    orderId: {
+    address: {
       type: String,
-      required: true,
     },
     reciever: {
       type: String,
