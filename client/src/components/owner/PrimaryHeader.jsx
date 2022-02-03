@@ -1,6 +1,6 @@
 import { makeStyles, Button } from "@material-ui/core";
 import { useContext } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useLocation } from "react-router-dom";
 
 //-----------------------------------------------> custom Componenets
 import { BTN_STYLE, COLOR } from "../../constants";
@@ -10,6 +10,7 @@ export default function PrimaryHeader({ setLocation, location }) {
   const styles = useStyles();
   const { width } = useContext(Context); // getting windows width dynamically
   const { cname } = useParams();
+  const { pathname } = useLocation();
 
   return (
     <div className={styles.container}>
@@ -29,15 +30,15 @@ export default function PrimaryHeader({ setLocation, location }) {
           <Button
             className={styles.navBtn}
             component={NavLink}
-            to={`/${cname}/owner/profile`}
-            style={({ isActive }) => {
-              return isActive
+            to={`/${cname}/owner`}
+            style={
+              pathname === "/city/owner"
                 ? {
                     color: COLOR.SECONDARY,
                     borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                   }
-                : { color: "white" };
-            }}
+                : { color: "white" }
+            }
           >
             Profile
           </Button>

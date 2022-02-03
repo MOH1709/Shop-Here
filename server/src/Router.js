@@ -440,15 +440,17 @@ router.put("/:oid/:bid/orderDilivered", async(req, res) => {
 });
 
 //-----------------------------------------------> upload image
-router.post("/upload/image", async(req, res) => {
+router.post("/:ui/upload/image", async(req, res) => {
   try {
-    const { file } = req.files;
+    const { ui } = req.params;
+    const { img } = req.files;
+    const imgName = `${ui}.${img.mimetype.split("/")[1]}`;
 
-    file.mv(`${__dirname}/../../client/public/uploads/${file.name}`, (e) => {
-      console.log("error in saving image : ", e);
+    img.mv(`${__dirname}/../../client/public/uploads/${imgName}`, (e) => {
+      e && console.log("error in saving image : ", e);
     });
 
-    res.status(200).send({ filePath: `./uploads/${file.name}` });
+    res.status(200).send({ filePath: `./uploads/${imgName}` });
   } catch (e) {
     console.log(e);
 

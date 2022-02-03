@@ -47,7 +47,7 @@ export default function Messages() {
           <ConsumerMessage
             key={data._id}
             onClickHandler={() => {
-              navigate(`/city/${data._id}`);
+              navigate(`/city/messages/${data._id}`);
             }}
             pin={data.orderPin}
             owners={[data.owner]}

@@ -27,12 +27,8 @@ export default function Owner() {
         const { data } = await axios.get(`/city/${ux}/user`);
         if (data?.bussinessId) {
           Cookies.set("bx", data.bussinessId);
-          width < 700
-            ? navigate("/city/owner/profile")
-            : navigate("/city/owner/inventory");
         } else {
           //send request
-
           navigate("/city/messages");
         }
       } catch (e) {

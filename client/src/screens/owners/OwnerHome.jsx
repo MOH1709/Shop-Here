@@ -97,6 +97,7 @@ export default function OwnerHome() {
   //-----------------------------------------------> fileinput
   const addImage = async (e) => {
     try {
+      e.preventDefault();
       const res = await imageUploader(e.target.files[0]);
 
       setImg(res);
@@ -106,12 +107,7 @@ export default function OwnerHome() {
   };
 
   return (
-    <form
-      className={styles.container}
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <div className={styles.container}>
       <div className={styles.main}>
         <input
           style={{ display: "none" }}
@@ -182,7 +178,7 @@ export default function OwnerHome() {
           upload
         </Button>
       </div>
-    </form>
+    </div>
   );
 }
 

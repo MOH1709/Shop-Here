@@ -51,7 +51,7 @@ export default function OwnerMessage({ name, address, id }) {
       <Button
         className={styles.btn}
         onClick={() => {
-          navigate(`/city/${id}`);
+          navigate(`/city/messages/${id}`);
         }}
       >
         click to show more

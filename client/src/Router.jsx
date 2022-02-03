@@ -27,9 +27,9 @@ export default function Router() {
 
       {/* Owner Screen Routes */}
       <Route path=":cname/owner" element={<Owner />}>
+        <Route index element={<OwnerHome />} />
         <Route path="messages" element={<ShopMessages />} />
         <Route path="inventory" element={<Inventory />} />
-        <Route path="profile" element={<OwnerHome />} />
         <Route path="setting" element={<OwnerSetting />} />
       </Route>
 
@@ -41,7 +41,7 @@ export default function Router() {
           <Route path="businesses" element={<Business />} />
         </Route>
         <Route path="messages" element={<Messages />} />
-        <Route path=":oid" element={<ProductViewer />} />
+        <Route path="messages/:oid" element={<ProductViewer />} />
         <Route path="cart" element={<Cart />} />
         {/* <Route path="search" element={<Search />} /> */}
         <Route path="setting" element={<Setting />}>
