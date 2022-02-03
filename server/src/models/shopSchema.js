@@ -7,6 +7,9 @@ const shopSchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  img: {
+    type: String,
+  },
   extras: [{
     email: {
       type: String,

@@ -1,20 +1,21 @@
+import { useEffect, useRef, useState } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useState } from "react";
 
 //-----------------------------------------------> custom component
 import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
-import { useEffect } from "react";
+import imageUploader from "../../imageUploader";
 
 export default function OwnerHome() {
   const styles = useStyles();
+  const fileInput = useRef();
   const [showBtn, setShowBtn] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [canUrgent, setCanUrgent] = useState(false);
+  const [img, setImg] = useState("");
   const [data, setData] = useState({
-    img: "",
     name: "",
     address: "",
     phoneNumber: null,
@@ -36,8 +37,8 @@ export default function OwnerHome() {
             setIsOpen(res.isOpen);
             setCanUrgent(res.canUrgent);
             setShowBtn(true);
+            setImg(res.img);
             setData({
-              img: res.img,
               name: res.name,
               address: res.address,
               phoneNumber: res.extras[0].phoneNumber,
@@ -70,13 +71,14 @@ export default function OwnerHome() {
   const updateOwnerData = async () => {
     try {
       const bx = Cookies.get("bx");
-      const { img, name, address, phoneNumber, email } = data;
+      const ai = Cookies.get("ai");
+      const { name, address, phoneNumber, email } = data;
 
-      const res = await axios.put(`/${bx}/updateShopDetails`, {
+      const res = await axios.put(`/${bx}/${ai}/updateShopDetails`, {
         isOpen,
         canUrgent,
-        img,
         name,
+        img,
         address,
         extras: [{ phoneNumber }, { email }],
       });
@@ -88,14 +90,42 @@ export default function OwnerHome() {
   };
 
   //----------------------------------------------->
-  const addImage = () => {};
+  const selectImage = () => {
+    fileInput.current.click();
+  };
+
+  //-----------------------------------------------> fileinput
+  const addImage = async (e) => {
+    try {
+      const res = await imageUploader(e.target.files[0]);
+
+      setImg(res);
+    } catch (e) {
+      alert("error in uploading image");
+    }
+  };
 
   return (
-    <div className={styles.container}>
+    <form
+      className={styles.container}
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <div className={styles.main}>
-        <div className={styles.imgDiv} onClick={addImage}>
+        <input
+          style={{ display: "none" }}
+          onChange={addImage}
+          ref={fileInput}
+          type="file"
+        />
+        <div className={styles.imgDiv} onClick={selectImage}>
           <Button className={styles.imgInput}>
-            <img src="./icons/image.svg" alt="add img" />
+            <img
+              src={img || "./icons/image.svg"}
+              alt="add img"
+              className={styles.ppImg}
+            />
           </Button>
           <p>Add Image</p>
         </div>
@@ -152,7 +182,7 @@ export default function OwnerHome() {
           upload
         </Button>
       </div>
-    </div>
+    </form>
   );
 }
 
@@ -177,13 +207,21 @@ const useStyles = makeStyles({
     textAlign: "center",
     cursor: "pointer",
   },
+
   imgInput: {
     position: "realative",
     ...BTN_STYLE,
     fontSize: 10,
+    width: 65,
     height: 65,
+    overflow: "hidden",
     marginInline: "auto",
-    borderRadius: "50%",
+    borderRadius: 10,
+  },
+  ppImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
   },
   btnDiv: {
     display: "flex",

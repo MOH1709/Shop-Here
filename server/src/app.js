@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import express from "express";
 import "dotenv/config";
+import fileupload from "express-fileupload";
 // import { createServer } from "http";
 // import { Server } from "socket.io";
 
@@ -9,6 +10,7 @@ import Router from "./Router.js";
 //-----------------------------------------------> using imports
 const app = express();
 app.use(express.json()); // to convert all post request into json format
+app.use(fileupload());
 app.use(Router); // using custom routes
 // const http = createServer(app);
 // const io = new Server(http);

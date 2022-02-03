@@ -1,19 +1,20 @@
 import axios from "axios";
 
-const imageUploader = async(filename, file) => {
-  const formData = new FormData();
-  formData.append(filename, file);
+const imageUploader = async(file) => {
+  if (file) {
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await axios.post("/upload/image", fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-  try {
-    const res = await axios.post("/upload/image", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    const { fileName, filePath } = res.data;
-  } catch (e) {
-    alert("error in uploading image");
+      return res.data.filePath;
+    } catch (e) {
+      alert("error in uploading image");
+    }
   }
 };
 

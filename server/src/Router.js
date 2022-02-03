@@ -1,18 +1,16 @@
 import bcrypt from "bcryptjs";
 import { Router } from "express";
+
 import mailTranspoter from "./MailText.js";
 import { City, Area, Shop, User, Order } from "./models/index.js";
 
-const router = Router();
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-//-----------------------------------------------> test router
-router.get("/test", async(req, res) => {
-  try {
-    res.status(200).send("ok");
-  } catch (e) {
-    res.status(500).send("error in testing");
-  }
-});
+const __filename = fileURLToPath(
+  import.meta.url);
+const __dirname = dirname(__filename);
+const router = Router();
 
 //-----------------------------------------------> Clean Cities
 router.get("/cleancities", async(req, res) => {
@@ -110,19 +108,27 @@ router.get("/:shopId/isurgentavail", async(req, res) => {
 });
 
 // shop detail update
-router.put("/:bid/updateShopDetails", async(req, res) => {
+router.put("/:bid/:aid/updateShopDetails", async(req, res) => {
   try {
     const data = req.body;
-    const { bid } = req.params;
+    const { bid, aid } = req.params;
     const owner = await Shop.findOne({ _id: bid });
 
-    const result = Object.assign(owner, data);
+    await Shop.updateOne({ _id: owner._id }, { $set: data });
+    console.log(bid, aid);
 
-    await Shop.updateOne({ _id: owner._id }, {
+    const responce = await Area.updateOne({ _id: aid, "shops.id": bid }, {
       $set: {
-        ...result,
+        "shops.$": {
+          id: owner.id,
+          img: data.img,
+          name: data.name,
+          address: data.address,
+        },
       },
     });
+
+    console.log(responce);
 
     res.status(200).send("business data updated");
   } catch (e) {
@@ -215,7 +221,7 @@ router.get("/city/:uxt/user", async(req, res) => {
     res.status(500).send("error in getting user data");
   }
 });
-
+// login user
 router.get("/login/:userId/:password", async(req, res) => {
   try {
     const { userId, password } = req.params;
@@ -239,7 +245,7 @@ router.get("/login/:userId/:password", async(req, res) => {
     res.status(400).send("error in logging in");
   }
 });
-
+//logout user
 router.delete("/:uxt/deleteToken", async(req, res) => {
   try {
     const { uxt } = req.params;
@@ -254,7 +260,7 @@ router.delete("/:uxt/deleteToken", async(req, res) => {
     res.status(500).send("error in getting user data");
   }
 });
-
+// add new user
 router.post("/:cityId/:areaId/signin", async(req, res) => {
   try {
     const { areaId, cityId } = req.params;
@@ -299,12 +305,8 @@ router.put("/:uxt/updateUser", async(req, res) => {
       state.password = await bcrypt.hash(state.password, 12);
     }
 
-    const result = Object.assign(user, state);
-
     await User.updateOne({ _id: user._id }, {
-      $set: {
-        ...result,
-      },
+      $set: state,
     });
 
     res.status(200).send("user updated");
@@ -437,6 +439,23 @@ router.put("/:oid/:bid/orderDilivered", async(req, res) => {
   }
 });
 
+//-----------------------------------------------> upload image
+router.post("/upload/image", async(req, res) => {
+  try {
+    const { file } = req.files;
+
+    file.mv(`${__dirname}/../../client/public/uploads/${file.name}`, (e) => {
+      console.log("error in saving image : ", e);
+    });
+
+    res.status(200).send({ filePath: `./uploads/${file.name}` });
+  } catch (e) {
+    console.log(e);
+
+    res.status(400).send("error in uploading photos");
+  }
+});
+
 //-----------------------------------------------> send email
 router.post("/mail", async(req, res) => {
   try {
@@ -450,8 +469,6 @@ router.post("/mail", async(req, res) => {
 
     res.status(200).send("message send succesfully");
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in updating user details");
   }
 });
