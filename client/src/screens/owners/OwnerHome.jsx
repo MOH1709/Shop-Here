@@ -15,6 +15,7 @@ export default function OwnerHome() {
   const [isOpen, setIsOpen] = useState(true);
   const [canUrgent, setCanUrgent] = useState(false);
   const [img, setImg] = useState("");
+  const [file, setFile] = useState({});
   const [data, setData] = useState({
     name: "",
     address: "",
@@ -74,11 +75,13 @@ export default function OwnerHome() {
       const ai = Cookies.get("ai");
       const { name, address, phoneNumber, email } = data;
 
+      const imgPath = await imageUploader(file);
+
       const res = await axios.put(`/${bx}/${ai}/updateShopDetails`, {
         isOpen,
         canUrgent,
         name,
-        img,
+        img: imgPath,
         address,
         extras: [{ phoneNumber }, { email }],
       });
@@ -95,12 +98,16 @@ export default function OwnerHome() {
   };
 
   //-----------------------------------------------> fileinput
-  const addImage = async (e) => {
+  const addImage = (e) => {
     try {
-      e.preventDefault();
-      const res = await imageUploader(e.target.files[0]);
-
-      setImg(res);
+      setFile(e.target.files[0]);
+      if (e.target.files && e.target.files[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          setImg(e.target.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
     } catch (e) {
       alert("error in uploading image");
     }
@@ -207,17 +214,16 @@ const useStyles = makeStyles({
   imgInput: {
     position: "realative",
     ...BTN_STYLE,
-    fontSize: 10,
     width: 65,
     height: 65,
     overflow: "hidden",
     marginInline: "auto",
-    borderRadius: 10,
+    borderRadius: "50%",
   },
   ppImg: {
-    width: "100%",
-    height: "100%",
-    objectFit: "contain",
+    minWidth: 65,
+    minHeight: 65,
+    objectFit: "cover",
   },
   btnDiv: {
     display: "flex",

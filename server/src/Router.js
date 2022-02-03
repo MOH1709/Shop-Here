@@ -115,7 +115,6 @@ router.put("/:bid/:aid/updateShopDetails", async(req, res) => {
     const owner = await Shop.findOne({ _id: bid });
 
     await Shop.updateOne({ _id: owner._id }, { $set: data });
-    console.log(bid, aid);
 
     const responce = await Area.updateOne({ _id: aid, "shops.id": bid }, {
       $set: {
@@ -127,8 +126,6 @@ router.put("/:bid/:aid/updateShopDetails", async(req, res) => {
         },
       },
     });
-
-    console.log(responce);
 
     res.status(200).send("business data updated");
   } catch (e) {
@@ -188,8 +185,6 @@ router.put("/:bid/products", async(req, res) => {
 
     res.status(200).send(`product edited successfully`);
   } catch (e) {
-    console.log(e);
-
     res.status(500).send("error in edited products");
   }
 });
@@ -289,8 +284,6 @@ router.post("/:cityId/:areaId/signin", async(req, res) => {
 
     res.status(200).send("user added successfully");
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in user route");
   }
 });
@@ -324,8 +317,6 @@ router.get("/:uxt/orders", async(req, res) => {
 
     res.status(200).send(orders);
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in placing order backend");
   }
 });
@@ -380,8 +371,6 @@ router.post("/:uxt/orders", async(req, res) => {
 
     res.status(200).send("order placed successfully");
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in placing order backend");
   }
 });
@@ -395,8 +384,6 @@ router.get("/:bid/getBusinessOrders", async(req, res) => {
 
     res.status(200).send(result);
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in obtaning messages");
   }
 });
@@ -452,8 +439,6 @@ router.post("/:ui/upload/image", async(req, res) => {
 
     res.status(200).send({ filePath: `./uploads/${imgName}` });
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in uploading photos");
   }
 });
