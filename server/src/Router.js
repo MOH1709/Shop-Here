@@ -13,6 +13,15 @@ const __dirname = dirname(__filename);
 const router = Router();
 
 //-----------------------------------------------> Clean Cities
+router.get("/test", async(req, res) => {
+  try {
+    res.status(200).send("test");
+  } catch (e) {
+    res.status(500).send("error in geting cities name");
+  }
+});
+
+//-----------------------------------------------> Clean Cities
 router.get("/cleancities", async(req, res) => {
   try {
     const cities = await City.find({}, { name: 1 });
@@ -39,18 +48,7 @@ router.get("/:cityId/areas", async(req, res) => {
 router.post("/:cityId/areas", async(req, res) => {
   try {
     const { cityId } = req.params;
-    const { areaName, address, img } = req.body;
-    const { areas } = await City.findOne({ _id: cityId }, { _id: 0, areas: 1 });
-
-    const isExist = areas.find((data) => {
-      return data.name === areaName && data.address === address;
-    });
-
-    if (isExist || !areaName || !address) {
-      return res.status(400).send("invalid credintials adding new area");
-    }
-
-    function postImg() {}
+    const { name, address, img } = req.body;
 
     const area = new Area({ shops: [] });
     area.save();
@@ -58,14 +56,15 @@ router.post("/:cityId/areas", async(req, res) => {
     await City.updateOne({ _id: cityId }, {
       $push: {
         areas: {
-          id: area["_id"],
-          address: address,
-          name: areaName,
+          _id: area._id,
+          img,
+          name,
+          address,
         },
       },
     });
 
-    res.status(200).send(`${areaName} added successfully`);
+    res.status(200).send(`${name} added successfully`);
   } catch (e) {
     res.status(500).send("error in adding new area \n");
   }
@@ -108,18 +107,25 @@ router.get("/:shopId/isurgentavail", async(req, res) => {
 });
 
 // shop detail update
-router.put("/:bid/:aid/updateShopDetails", async(req, res) => {
+router.put("/:bid/updateShopDetails", async(req, res) => {
   try {
     const data = req.body;
-    const { bid, aid } = req.params;
-    const owner = await Shop.findOne({ _id: bid });
+    const { bid } = req.params;
 
-    await Shop.updateOne({ _id: owner._id }, { $set: data });
+    await Shop.updateOne({ _id: bid }, { $set: data });
+    //add if not exist
+    await Area.updateMany({ _id: { $in: data.areas }, "shops._id": { $ne: bid } }, {
+      $push: {
+        shops: {
+          _id: bid,
+        },
+      },
+    });
 
-    const responce = await Area.updateOne({ _id: aid, "shops.id": bid }, {
+    await Area.updateMany({ _id: { $in: data.areas }, "shops._id": bid }, {
       $set: {
         "shops.$": {
-          id: owner.id,
+          _id: bid,
           img: data.img,
           name: data.name,
           address: data.address,
@@ -129,13 +135,26 @@ router.put("/:bid/:aid/updateShopDetails", async(req, res) => {
 
     res.status(200).send("business data updated");
   } catch (e) {
+    console.log(e);
+
     res.status(400).send("error in updating business data details");
   }
 });
 
 // add new Shop
-router.post("/:cityId/:areaId/shops", async(req, res) => {
+router.post("/:ux/addnewshop", async(req, res) => {
   try {
+    const { ux } = req.params;
+
+    const shop = new Shop({});
+    shop.save();
+
+    await User.updateOne({ _id: ux }, {
+      $set: {
+        bussinessId: shop._id,
+      },
+    });
+
     res.status(200).send(`added successfully`);
   } catch (e) {
     res.status(500).send("error in adding new shop \n");
@@ -151,6 +170,19 @@ router.get("/:shopId/withproducts", async(req, res) => {
     res.status(200).send(shop);
   } catch (e) {
     res.status(500).send("error in getting products");
+  }
+});
+
+//get areas
+router.get("/:bid/shopareas", async(req, res) => {
+  try {
+    const { bid } = req.params;
+
+    const areas = await Shop.findOne({ _id: bid }, { _id: 0, areas: 1 });
+
+    res.status(200).send(areas);
+  } catch (e) {
+    res.status(500).send("error in getting shop areas");
   }
 });
 
@@ -188,6 +220,7 @@ router.put("/:bid/products", async(req, res) => {
     res.status(500).send("error in edited products");
   }
 });
+
 //delete product
 router.delete("/:bid/products/:_id", async(req, res) => {
   try {
