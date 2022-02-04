@@ -9,6 +9,10 @@ package-lock.json
 # testing
 /coverage
 
+# admin
+src/admin
+
+
 # production
 /build
 

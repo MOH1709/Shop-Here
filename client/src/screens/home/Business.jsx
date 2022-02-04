@@ -26,7 +26,7 @@ export default function Business() {
       } catch (e) {
         Cookies.remove("ai");
         navigate("/city/home/areas");
-        alert("error in fetching shops in this area");
+        // alert("error in fetching shops");
       }
     };
 

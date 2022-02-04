@@ -5,7 +5,9 @@
   "main": "./src/app.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./src/app.js"
+    "server": "nodemon ./src/app.js",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,8 @@
     "nodemailer": "^6.7.2",
     "socket.io": "^4.4.1",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
   }
 }

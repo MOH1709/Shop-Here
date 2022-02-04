@@ -272,6 +272,8 @@ router.get("/login/:userId/:password", async(req, res) => {
       res.cookie("fa", user.address);
       res.cookie("bx", user.bussinessId);
 
+      console.log(user.currentLocation[1]);
+
       return res.status(200).send(user);
     } else {
       res.status(400).send("Invalid Credentials");
