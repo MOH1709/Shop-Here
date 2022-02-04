@@ -10,7 +10,7 @@ export default function Card({ img, title, content, onClickHandler }) {
         <img src={img || "./logo.png"} alt="img" />
       </div>
       <div className={styles.contentDiv}>
-        <p>{title}</p>
+        <p>{title || "An Anonymous Shop"}</p>
         <div>{content}</div>
       </div>
     </div>

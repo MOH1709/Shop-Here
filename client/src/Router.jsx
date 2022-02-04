@@ -28,8 +28,8 @@ export default function Router() {
 
       {/* Owner Screen Routes */}
       <Route path=":cname/owner" element={<Owner />}>
-        <Route index element={<OwnerHome />} />
-        <Route path="messages" element={<ShopMessages />} />
+        <Route path="profile" element={<OwnerHome />} />
+        <Route index element={<ShopMessages />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="setting" element={<OwnerSetting />} />
         <Route path="areaSelection" element={<AreaSelection />} />

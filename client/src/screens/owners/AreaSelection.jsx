@@ -13,6 +13,7 @@ import { Context } from "../../contexts/SelectedAreas";
 export default function AreaSelection() {
   const styles = useStyles();
   const navigate = useNavigate();
+  const [rmareas, setRmareas] = useState();
   const [areas, setAreas] = useState([]);
   const { selectedAreas, setSelectedAreas } = useContext(Context);
 
@@ -33,6 +34,7 @@ export default function AreaSelection() {
 
         if (status === 200) {
           if (isMounted) {
+            setRmareas(resSelAreas);
             let sa = [],
               ar = [];
             data.forEach((element) => {
@@ -74,9 +76,12 @@ export default function AreaSelection() {
   const updateAreas = async () => {
     try {
       const bx = Cookies.get("bx");
-      await axios.delete(`/${bx}/deleteShopFromAreas`);
+      await axios.post(`/${bx}/editshopareas`, {
+        rmareas,
+        selectedAreas,
+      });
 
-      alert("areas updated sucessfully");
+      alert("Your Shop will be visible now in this areas");
       navigate("/city/owner");
     } catch (e) {
       alert("error in updating areas");

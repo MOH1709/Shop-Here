@@ -11,6 +11,7 @@ export default function Setting() {
   const navigate = useNavigate();
   const { cname } = useParams();
 
+  //-----------------------------------------------> logout
   const logOut = async () => {
     try {
       const Cookiess = document.cookie.split("; ");
@@ -27,6 +28,12 @@ export default function Setting() {
     } catch (e) {
       alert("error in logging out");
     }
+  };
+
+  //-----------------------------------------------> select areas
+  const selectArea = () => {
+    Cookies.remove("ai");
+    navigate("/city/home/areas");
   };
 
   return (
@@ -77,6 +84,9 @@ export default function Setting() {
         >
           Want A Product
         </Button> */}
+        <Button className={styles.navBtn} onClick={selectArea}>
+          change area
+        </Button>
         <Button
           className={styles.navBtn}
           component={NavLink}

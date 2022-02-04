@@ -30,15 +30,15 @@ export default function PrimaryHeader({ setLocation, location }) {
           <Button
             className={styles.navBtn}
             component={NavLink}
-            to={`/${cname}/owner`}
-            style={
-              pathname === "/city/owner"
+            to={`/${cname}/owner/profile`}
+            style={({ isActive }) => {
+              return isActive
                 ? {
                     color: COLOR.SECONDARY,
                     borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                   }
-                : { color: "white" }
-            }
+                : { color: "white" };
+            }}
           >
             Profile
           </Button>
@@ -46,15 +46,15 @@ export default function PrimaryHeader({ setLocation, location }) {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/owner/messages`}
-          style={({ isActive }) => {
-            return isActive
+          to={`/${cname}/owner`}
+          style={
+            pathname === "/city/owner"
               ? {
                   color: COLOR.SECONDARY,
                   borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                 }
-              : { color: "white" };
-          }}
+              : { color: "white" }
+          }
         >
           Messages
         </Button>

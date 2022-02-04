@@ -45,20 +45,6 @@ export default function OwnerSetting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/userprofile`}
-        >
-          My Profile
-        </Button>
-        {/* <Button
-          className={styles.navBtn}
-          component={NavLink}
-          to={`/${cname}/setting/userbills`}
-        >
-          My Orders
-        </Button> */}
-        <Button
-          className={styles.navBtn}
-          component={NavLink}
           to={`/${cname}/home`}
         >
           Switch As Consumer

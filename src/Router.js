@@ -114,9 +114,9 @@ router.put("/:bid/updateShopDetails", async(req, res) => {
 
     await Shop.updateOne({ _id: bid }, { $set: data });
 
-    await Area.updateMany({ _id: { $in: data.areas } }, {
-      $push: {
-        shops: {
+    await Area.updateMany({ _id: { $in: data.areas }, "shops._id": bid }, {
+      $set: {
+        "shops.$": {
           _id: bid,
           img: data.img,
           name: data.name,
@@ -130,6 +130,26 @@ router.put("/:bid/updateShopDetails", async(req, res) => {
     console.log(e);
 
     res.status(400).send("error in updating business data details");
+  }
+});
+
+// delete shops
+router.post("/:bid/editshopareas", async(req, res) => {
+  try {
+    const { bid } = req.params;
+    const { rmareas, selectedAreas } = req.body;
+
+    await Area.updateMany({ _id: { $in: rmareas } }, {
+      $pull: { shops: { _id: bid } },
+    });
+
+    await Area.updateMany({ _id: { $in: selectedAreas } }, {
+      $push: { shops: { _id: bid } },
+    });
+
+    res.status(200).send(`deleted successfully`);
+  } catch (e) {
+    res.status(500).send("error in deleting new shop \n");
   }
 });
 
@@ -150,21 +170,6 @@ router.post("/:ux/addnewshop", async(req, res) => {
     res.status(200).send(`added successfully`);
   } catch (e) {
     res.status(500).send("error in adding new shop \n");
-  }
-});
-
-// delete shops
-router.delete("/:bid/deleteShopFromAreas", async(req, res) => {
-  try {
-    const { bid } = req.params;
-
-    await Area.updateMany({}, {
-      $pull: { shops: { _id: bid } },
-    });
-
-    res.status(200).send(`deleted successfully`);
-  } catch (e) {
-    res.status(500).send("error in deleting new shop \n");
   }
 });
 

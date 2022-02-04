@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 //-----------------------------------------------> custom components
-import { InputBox } from "../../components";
+import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, SHADOW } from "../../constants";
 
 export default function Profile() {
@@ -48,12 +48,6 @@ export default function Profile() {
       ...data,
       [name]: value,
     });
-  };
-
-  //-----------------------------------------------> on change area
-  const selectArea = () => {
-    Cookies.remove("ai");
-    navigate("/city/home/areas");
   };
 
   //-----------------------------------------------> on change name or address
@@ -105,10 +99,13 @@ export default function Profile() {
           onChangeHandler={changeHandler}
         />
 
+        <ToggleBtn
+          title={"save messages"}
+          Style={{ width: 170, marginInline: "auto", marginBlock: 30 }}
+        />
+
         <Button onClick={updateUserDetails}>update</Button>
       </div>
-      <Button onClick={selectArea}>change area</Button>
-      {/* <Button>change city</Button> */}
     </div>
   );
 }

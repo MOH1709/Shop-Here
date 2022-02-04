@@ -38,17 +38,21 @@ export default function ToggleBtn({
 const useStyles = makeStyles({
   container: {
     "& p": {
+      flex: 1,
       marginInline: "auto",
       fontWeight: "bold",
       fontSize: 13,
+      paddingInline: 10,
     },
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     border: `2px solid ${COLOR.PRIMARY}`,
+    borderBottom: "none",
     height: 35,
     borderRight: "none",
     borderRadius: 5,
+    textAlign: "center",
     marginInline: "auto",
   },
   btnDiv: {
