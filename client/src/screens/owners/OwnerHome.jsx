@@ -1,18 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom component
 import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 import imageUploader from "../../imageUploader";
-import { useNavigate } from "react-router-dom";
+import { Context } from "../../contexts/SelectedAreas";
 
 export default function OwnerHome() {
   const styles = useStyles();
   const fileInput = useRef();
   const navigate = useNavigate();
+  const { selectedAreas } = useContext(Context);
   const [showBtn, setShowBtn] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [canUrgent, setCanUrgent] = useState(false);
@@ -81,8 +83,8 @@ export default function OwnerHome() {
       const res = await axios.put(`/${bx}/updateShopDetails`, {
         isOpen,
         canUrgent,
-        areas: ["61fca187b189a6bb3272e47d", "61fbfc3903ba1847c6202763"],
         name,
+        areas: selectedAreas.map((data) => data._id),
         img: imgPath,
         address,
         extras: [{ phoneNumber }, { email }],

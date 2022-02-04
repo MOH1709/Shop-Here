@@ -5,7 +5,6 @@ export default function AreaSelectionCard({
   img,
   title,
   content,
-  isSelected,
   onClickHandler,
 }) {
   const styles = useStyles();
@@ -13,13 +12,7 @@ export default function AreaSelectionCard({
   return (
     <div className={styles.container} onClick={onClickHandler}>
       <div className={styles.img}>
-        <img
-          src={img || "./logo.png"}
-          alt="img"
-          style={{
-            border: isSelected ? `10px solid ${COLOR.SECONDARY}` : "none",
-          }}
-        />
+        <img src={img || "./logo.png"} alt="img" />
       </div>
       <div className={styles.contentDiv}>
         <p>{title}</p>
@@ -45,6 +38,7 @@ const useStyles = makeStyles({
       height: 60,
       objectFit: "cover",
       borderRadius: "50%",
+      border: `10px solid ${COLOR.SECONDARY}`,
     },
     ...FLEX_CENTER,
     width: "30%",
