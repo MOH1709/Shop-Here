@@ -7,15 +7,17 @@ import axios from "axios";
 import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 import imageUploader from "../../imageUploader";
+import { useNavigate } from "react-router-dom";
 
 export default function OwnerHome() {
   const styles = useStyles();
   const fileInput = useRef();
+  const navigate = useNavigate();
   const [showBtn, setShowBtn] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [canUrgent, setCanUrgent] = useState(false);
   const [img, setImg] = useState("");
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState(0);
   const [data, setData] = useState({
     name: "",
     address: "",
@@ -72,14 +74,14 @@ export default function OwnerHome() {
   const updateOwnerData = async () => {
     try {
       const bx = Cookies.get("bx");
-      const ai = Cookies.get("ai");
       const { name, address, phoneNumber, email } = data;
 
-      const imgPath = await imageUploader(file);
+      const imgPath = file ? await imageUploader(file) : img;
 
-      const res = await axios.put(`/${bx}/${ai}/updateShopDetails`, {
+      const res = await axios.put(`/${bx}/updateShopDetails`, {
         isOpen,
         canUrgent,
+        areas: ["61fca187b189a6bb3272e47d", "61fbfc3903ba1847c6202763"],
         name,
         img: imgPath,
         address,
@@ -95,6 +97,11 @@ export default function OwnerHome() {
   //----------------------------------------------->
   const selectImage = () => {
     fileInput.current.click();
+  };
+
+  //-----------------------------------------------> select areas
+  const selectAreas = () => {
+    navigate("/city/owner/areaSelection");
   };
 
   //-----------------------------------------------> fileinput
@@ -181,6 +188,9 @@ export default function OwnerHome() {
             />
           </div>
         )}
+        <Button className={styles.upload} onClick={selectAreas}>
+          add areas
+        </Button>
         <Button className={styles.upload} onClick={updateOwnerData}>
           upload
         </Button>

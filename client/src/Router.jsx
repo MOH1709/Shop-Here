@@ -15,6 +15,7 @@ import {
   OwnerHome,
   OwnerSetting,
   ShopMessages,
+  AreaSelection,
 } from "./screens/owners";
 
 export default function Router() {
@@ -31,6 +32,7 @@ export default function Router() {
         <Route path="messages" element={<ShopMessages />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="setting" element={<OwnerSetting />} />
+        <Route path="areaSelection" element={<AreaSelection />} />
       </Route>
 
       {/* User Screen Routes */}

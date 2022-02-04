@@ -21,24 +21,34 @@ export default function Cart() {
 
   //----------------------------------------------->
   useEffect(() => {
-    setTotal(
-      cart.reduce((pv, cv) => {
-        return pv + parseInt(cv.price) * cv.quantity;
-      }, 0)
-    );
+    let isMounted = true;
+    if (isMounted) {
+      const compareShopId = (a, b) => {
+        if (a.shopId < b.shopId) {
+          return -1;
+        }
+        if (a.shopId > b.shopId) {
+          return 1;
+        }
+        return 0;
+      };
 
-    const compareShopId = (a, b) => {
-      if (a.shopId < b.shopId) {
-        return -1;
-      }
-      if (a.shopId > b.shopId) {
-        return 1;
-      }
-      return 0;
+      setCart(cart.sort(compareShopId));
+
+      setTotal(
+        cart.reduce((pv, cv) => {
+          return pv + parseInt(cv.price) * cv.quantity;
+        }, 0)
+      );
+    }
+
+    return () => {
+      isMounted = false;
     };
-
-    setCart(cart.sort(compareShopId));
   }, [cart, setCart]);
+
+  //----------------------------------------------->
+  useEffect(() => {}, [cart]);
 
   //-----------------------------------------------> store text input
   const onChangeHandler = (e) => {

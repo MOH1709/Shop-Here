@@ -41,12 +41,12 @@ export default function Business() {
     <>
       {businesses.map((data) => (
         <Card
-          key={data.id}
+          key={data._id}
           title={data.name}
           content={data.address}
           img={data.img}
           onClickHandler={() => {
-            navigate(`/city/home/${data.name}, ${data.address}+${data.id}`);
+            navigate(`/city/home/${data.name}, ${data.address}+${data._id}`);
           }}
         />
       ))}

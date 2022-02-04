@@ -5,12 +5,28 @@ const citySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  areas: {
-    type: Array,
-  },
-  providers: {
-    type: Array,
-  },
+  areas: [{
+    img: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+  }, ],
+  providers: [{
+    name: {
+      type: String,
+    },
+    work: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+  }, ],
 });
 
 const City = mongoose.model("cities", citySchema);

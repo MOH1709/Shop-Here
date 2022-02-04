@@ -36,7 +36,7 @@ export default function Owner() {
       }
     };
     sendRequest();
-  }, []);
+  }, [navigate]);
 
   return (
     <>

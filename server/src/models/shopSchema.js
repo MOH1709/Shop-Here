@@ -58,6 +58,9 @@ const shopSchema = new mongoose.Schema({
       required: true,
     },
   }, ],
+  areas: {
+    type: Array,
+  },
   isOpen: {
     type: Boolean,
     default: true,

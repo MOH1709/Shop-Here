@@ -60,12 +60,12 @@ export default function Area() {
       </div>
       {areas.map((data) => (
         <Card
-          key={data.id}
+          key={data._id}
           title={data.name}
           content={data.address}
           img={data.img}
           onClickHandler={() => {
-            saveArea(data.id);
+            saveArea(data._id);
           }}
         />
       ))}

@@ -135,7 +135,7 @@ const useStyles = makeStyles({
   save: {
     ...BTN_STYLE,
     width: "90%",
-    marginTop: 50,
+    marginTop: 20,
     marginInline: "auto",
   },
 });

@@ -34,7 +34,7 @@ const useStyles = makeStyles({
       width: "100%",
       border: "none",
       outline: "none",
-      backgroundColor: "rgba(0,255, 255,0.2)",
+      backgroundColor: "rgba(24,140,176,0.2)",
       letterSpacing: 1,
       paddingLeft: 3,
       borderRadius: 3,
