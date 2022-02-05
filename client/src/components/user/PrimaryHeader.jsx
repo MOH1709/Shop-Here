@@ -3,13 +3,15 @@ import { useContext } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
 //-----------------------------------------------> custom Componenets
-import { BTN_STYLE, COLOR } from "../../constants";
+import { BTN_STYLE, COLOR, FLEX_CENTER } from "../../constants";
 import { Context } from "../../contexts/WidthProvider";
+import { Context as CartContext } from "../../contexts/CartProvider";
 
 export default function PrimaryHeader({ setLocation, location }) {
   const styles = useStyles();
-  const { width } = useContext(Context); // getting windows width dynamically
   const { cname } = useParams();
+  const { width } = useContext(Context); // getting windows width dynamically
+  const { cart } = useContext(CartContext);
 
   return (
     <div className={styles.container}>
@@ -69,6 +71,15 @@ export default function PrimaryHeader({ setLocation, location }) {
                 : { color: "white" };
             }}
           >
+            <div
+              className={styles.badge}
+              style={{
+                display: cart.length ? "flex" : "none",
+                right: width > 400 ? 30 : 5,
+              }}
+            >
+              {cart.length}
+            </div>
             Cart
           </Button>
         )}
@@ -117,5 +128,14 @@ const useStyles = makeStyles({
     height: 40,
     marginInline: 5,
     fontSize: 13,
+  },
+  badge: {
+    ...FLEX_CENTER,
+    position: "absolute",
+    top: 0,
+    backgroundColor: COLOR.RED,
+    borderRadius: "50%",
+    width: 20,
+    height: 20,
   },
 });

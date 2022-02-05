@@ -1,29 +1,29 @@
 import { makeStyles } from "@material-ui/core";
-// import { useContext } from "react";
+import { useContext } from "react";
 
 //-----------------------------------------------> custom components
 import { COLOR } from "../../constants";
-// import { Context } from "../../contexts/CartProvider";
+import { Context } from "../../contexts/CartProvider";
 
 export default function SecondaryHeader() {
   const styles = useStyles();
-  // const { cart } = useContext(Context);
+  const { cart } = useContext(Context);
 
   return (
     <div className={styles.container}>
       <p className={styles.title}>Cart</p>
-      {/* <p className={styles.shops}>
+      <p className={styles.shops}>
         {cart.length
           ? cart
               .map((data, index) => {
                 if (cart[index].address !== cart[index + 1]?.address) {
-                  return data.address;
+                  return data.address.split(",")[0];
                 }
                 return "";
               })
               .join(" ")
           : "Cart is Empty !!"}
-      </p> */}
+      </p>
     </div>
   );
 }
@@ -47,11 +47,11 @@ const useStyles = makeStyles({
     fontSize: 30,
     letterSpacing: 1,
   },
-  // shops: {
-  //   opacity: 0.5,
-  //   height: "1.5em",
-  //   overflow: "hidden",
-  //   whiteSpace: "nowrap",
-  //   textOverflow: "ellipsis",
-  // },
+  shops: {
+    opacity: 0.5,
+    height: "1.5em",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
 });

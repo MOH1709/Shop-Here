@@ -101,7 +101,12 @@ export default function Profile() {
 
         <ToggleBtn
           title={"save messages"}
-          Style={{ width: 170, marginInline: "auto", marginBlock: 30 }}
+          Style={{
+            width: 170,
+            marginInline: "auto",
+            marginBlock: 30,
+            borderBottom: "none",
+          }}
         />
 
         <Button onClick={updateUserDetails}>update</Button>

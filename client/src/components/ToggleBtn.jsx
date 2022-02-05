@@ -48,7 +48,6 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "space-between",
     border: `2px solid ${COLOR.PRIMARY}`,
-    borderBottom: "none",
     height: 35,
     borderRight: "none",
     borderRadius: 5,
