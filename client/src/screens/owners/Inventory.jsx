@@ -11,6 +11,7 @@ import { useEffect } from "react";
 
 export default function Inventory() {
   const styles = useStyles();
+  const bx = Cookies.get("bx");
   const [showBox, setShowBox] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
@@ -22,7 +23,7 @@ export default function Inventory() {
     const getProducts = async () => {
       try {
         const bx = Cookies.get("bx");
-        const res = await axios.get(`/${bx}/withproducts`);
+        const res = await axios.get(`/bussiness/uservisible/${bx}`);
 
         const sortByCategory = (a, b) => {
           if (a.category < b.category) {
@@ -54,7 +55,7 @@ export default function Inventory() {
       if (!(data.name || data.price)) {
         alert("sorry to add new product, name and price required must!!");
       } else {
-        await axios.post(`/${Cookies.get("bx")}/products`, data);
+        await axios.post(`/product/${bx}`, data);
         window.location.reload();
       }
     } catch (e) {
@@ -67,7 +68,7 @@ export default function Inventory() {
     try {
       setShowBox(false);
 
-      await axios.put(`/${Cookies.get("bx")}/products`, data);
+      await axios.put(`/product/${bx}`, data);
       window.location.reload();
     } catch (e) {
       alert("error in editing products");

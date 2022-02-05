@@ -58,7 +58,7 @@ export default function Cart() {
   //-----------------------------------------------> is urgent Available
   const checkIsUrgentAvail = async (id) => {
     try {
-      const res = await axios.get(`/${id}/isurgentavail`);
+      const res = await axios.get(`/bussiness/isurgentavail/${id}`);
       setIsUrgent(res.data);
     } catch (e) {
       alert("error in checking urgetn status");
@@ -95,7 +95,7 @@ export default function Cart() {
 
       tempArr.pop();
       tempArr.forEach(async (data) => {
-        const res = await axios.post(`/${ux}/orders`, {
+        const res = await axios.post(`/order/${ux}`, {
           products: data.map((product) => {
             return {
               name: product.name,

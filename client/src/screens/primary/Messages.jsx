@@ -22,7 +22,7 @@ export default function Messages() {
         const ux = Cookies.get("ux");
 
         if (ux) {
-          const res = await axios.get(`/${ux}/orders`);
+          const res = await axios.get(`/user/orders/${ux}`);
           isMounted && setMsg(res.data);
         }
       } catch (e) {

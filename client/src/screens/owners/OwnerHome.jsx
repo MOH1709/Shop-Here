@@ -35,7 +35,7 @@ export default function OwnerHome() {
       try {
         const bx = Cookies.get("bx");
         if (bx) {
-          let res = await axios.get(`/${bx}/getownerdata`);
+          let res = await axios.get(`/bussiness/${bx}`);
           res = res.data;
 
           if (isMounted) {
@@ -80,7 +80,7 @@ export default function OwnerHome() {
 
       const imgPath = file ? await imageUploader(file) : img;
 
-      const res = await axios.put(`/${bx}/updateShopDetails`, {
+      const res = await axios.put(`/bussiness/${bx}`, {
         isOpen,
         canUrgent,
         name,

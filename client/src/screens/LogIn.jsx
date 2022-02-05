@@ -36,23 +36,18 @@ export default function LogIn() {
           return;
         }
 
-        const res = await axios.get(`/login/${phoneNumber}/${password}`);
+        const res = await axios.put(`/user/login/${phoneNumber}/${password}`);
 
         if (res.status === 200) {
           navigate(`/city/home/areas`);
         } else {
           alert("Wrong data or password");
         }
-
-        setInput({
-          phoneNumber: "",
-          password: "",
-        });
       } else {
         alert("please fill all input field");
       }
     } catch (e) {
-      alert("Wrong Inputs");
+      alert("invalid credintials");
       setInput({
         phoneNumber: "",
         password: "",

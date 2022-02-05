@@ -31,7 +31,7 @@ export default function Start() {
           navigate(`/city/home/areas`);
         }
 
-        const cleanCities = await axios.get("/cleancities");
+        const cleanCities = await axios.get("/cities");
         isMouted && setCities(cleanCities.data);
       } catch (e) {
         alert("Error in getting cities");

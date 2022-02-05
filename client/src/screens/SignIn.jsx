@@ -57,7 +57,9 @@ export default function SignIn() {
       const fa = Cookies.get("fa");
       const un = Cookies.get("un");
 
-      await axios.post(`/${ci}/${ai}/signin`, {
+      await axios.post(`/user/signin`, {
+        cid: ci,
+        aid: ai,
         name: un,
         userId: data.phoneNumber,
         password: data.password,

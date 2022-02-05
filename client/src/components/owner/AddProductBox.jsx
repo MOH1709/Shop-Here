@@ -31,7 +31,8 @@ export default function AddProductBox({
   //----------------------------------------------->
   const deleteProduct = async () => {
     try {
-      await axios.delete(`/${Cookies.get("bx")}/products/${input._id}`);
+      const bx = Cookies.get("bx");
+      await axios.delete(`/product/${bx}/${input._id}`);
       window.location.reload();
     } catch (e) {
       alert("error in editing products");

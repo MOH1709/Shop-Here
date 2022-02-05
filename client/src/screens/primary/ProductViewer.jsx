@@ -17,7 +17,7 @@ export default function ProductViewer() {
 
     const getProducts = async () => {
       try {
-        const res = await axios.get(`/${oid}/orderdetails`);
+        const res = await axios.get(`/order/${oid}`);
 
         isMounted && setProducts(res.data.products || []);
       } catch (e) {

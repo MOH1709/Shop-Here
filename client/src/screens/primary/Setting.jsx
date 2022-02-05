@@ -17,7 +17,7 @@ export default function Setting() {
       const Cookiess = document.cookie.split("; ");
       const ux = Cookies.get("ux");
       if (ux) {
-        await axios.delete(`/${ux}/deleteToken`);
+        await axios.delete(`/user/logout/${ux}`);
       }
 
       Cookiess.forEach((data) => {

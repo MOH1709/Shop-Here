@@ -19,8 +19,7 @@ export default function Business() {
     const getbusinesses = async () => {
       try {
         const ai = Cookies.get("ai");
-        const ci = Cookies.get("ci");
-        const cleanBusiness = await axios.get(`/${ci}/${ai}/shops`);
+        const cleanBusiness = await axios.get(`/area/bussinesses/${ai}`);
 
         isMounted && setBusinesses(cleanBusiness.data);
       } catch (e) {

@@ -55,7 +55,7 @@ export default function Profile() {
     try {
       const { fname, lname, fa } = data;
 
-      const res = await axios.put(`/${Cookies.get("ux")}/updateUser`, {
+      const res = await axios.put(`/user/${Cookies.get("ux")}`, {
         state: {
           name: `${fname}+${lname}`,
           address: fa || "",

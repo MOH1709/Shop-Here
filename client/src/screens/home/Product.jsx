@@ -26,7 +26,7 @@ export default function Product() {
 
     const getProducts = async () => {
       try {
-        const { data } = await axios.get(`/${shop[1]}/withproducts`);
+        const { data } = await axios.get(`/bussiness/uservisible/${shop[1]}`);
 
         if (isMounted) {
           setShopData({
@@ -160,8 +160,12 @@ const useStyles = makeStyles({
   },
   category: {
     fontWeight: "bold",
-    paddingLeft: 10,
-    marginBottom: 10,
+    width: "91%",
+    marginLeft: "5%",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
     marginTop: 30,
+    borderBottom: "2px solid rgba(0,0,0,0.5)",
   },
 });

@@ -8,7 +8,7 @@ const imageUploader = async(file) => {
       const bx = Cookies.get("bx");
       fd.append("img", file);
 
-      const res = await axios.post(`/${bx}/upload/image`, fd, {
+      const res = await axios.post(`/upload/image/${bx}`, fd, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

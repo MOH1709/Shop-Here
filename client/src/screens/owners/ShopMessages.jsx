@@ -20,9 +20,8 @@ export default function ShopMessages() {
         const bx = Cookies.get("bx");
 
         if (bx) {
-          const { data } = await axios.get(`/${bx}/getBusinessOrders`);
-
-          isMounted && setMsg(data.orders);
+          const { data } = await axios.get(`/bussiness/orders/${bx}`);
+          isMounted && setMsg(data.orders || []);
         }
       } catch (e) {
         alert("error in loading messages of owner");

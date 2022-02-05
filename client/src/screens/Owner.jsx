@@ -24,7 +24,7 @@ export default function Owner() {
 
     const sendRequest = async () => {
       try {
-        const { data } = await axios.get(`/city/${ux}/user`);
+        const { data } = await axios.get(`/user/${ux}`);
         if (data?.bussinessId) {
           Cookies.set("bx", data.bussinessId);
         } else {
@@ -32,6 +32,7 @@ export default function Owner() {
           navigate("/city/messages");
         }
       } catch (e) {
+        navigate("/city/messages");
         alert("error in owner login");
       }
     };

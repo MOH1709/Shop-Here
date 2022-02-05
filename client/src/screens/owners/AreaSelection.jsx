@@ -27,9 +27,9 @@ export default function AreaSelection() {
         const ci = Cookies.get("ci");
         const bx = Cookies.get("bx");
 
-        const { data, status } = await axios.get(`/${ci}/areas`);
+        const { data, status } = await axios.get(`/cities/areas/${ci}`);
         const resSelAreas = await (
-          await axios.get(`/${bx}/shopareas`)
+          await axios.get(`/bussiness/shopareas/${bx}`)
         ).data.areas;
 
         if (status === 200) {
@@ -76,13 +76,13 @@ export default function AreaSelection() {
   const updateAreas = async () => {
     try {
       const bx = Cookies.get("bx");
-      await axios.post(`/${bx}/editshopareas`, {
+      await axios.post(`/bussiness/shopareas/${bx}`, {
         rmareas,
         selectedAreas,
       });
 
       alert("Your Shop will be visible now in this areas");
-      navigate("/city/owner");
+      navigate("/city/owner/profile");
     } catch (e) {
       alert("error in updating areas");
     }

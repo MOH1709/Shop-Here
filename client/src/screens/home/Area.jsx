@@ -25,7 +25,7 @@ export default function Area() {
       try {
         // fetch areas from cname in Cookies
         const ci = Cookies.get("ci");
-        const cleanAreas = await axios.get(`/${ci}/areas`);
+        const cleanAreas = await axios.get(`/cities/areas/${ci}`);
 
         if (cleanAreas.status === 200) {
           isMounted && setAreas(cleanAreas.data);
@@ -33,7 +33,7 @@ export default function Area() {
           navigate("/");
         }
       } catch (e) {
-        Cookies.remove("ci");
+        // Cookies.remove("ci");
         alert("Error in getting Areas");
       }
     };
