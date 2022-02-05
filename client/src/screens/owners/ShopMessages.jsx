@@ -43,6 +43,7 @@ export default function ShopMessages() {
       {msg.map((data) => (
         <OwnerMessage
           key={data._id}
+          isUrgent={data.isUrgent}
           name={data.reciever.split("+").join(" ")}
           address={data.address}
           id={data._id}

@@ -7,7 +7,7 @@ import { BTN_STYLE, COLOR } from "../../constants";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function OwnerMessage({ name, address, id }) {
+export default function OwnerMessage({ name, address, id, isUrgent }) {
   const styles = useStyles();
   const navigate = useNavigate();
   const [pin, setPin] = useState(0);
@@ -38,6 +38,7 @@ export default function OwnerMessage({ name, address, id }) {
       <p className={styles.address}>
         Address : <span>{address}</span>
       </p>
+      <p className={styles.isUrgent}>{isUrgent ? "Urgent Order 🕐" : ""}</p>
       <div className={styles.inputDiv}>
         <input
           type="number"
@@ -87,6 +88,11 @@ const useStyles = makeStyles({
     },
     paddingLeft: 10,
     overflow: "hidden",
+  },
+  isUrgent: {
+    paddingLeft: 10,
+    fontWeight: "bold",
+    color: COLOR.SECONDARY,
   },
   inputDiv: {
     "& Button": {

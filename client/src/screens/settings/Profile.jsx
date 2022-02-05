@@ -1,9 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Button, makeStyles } from "@material-ui/core";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 //-----------------------------------------------> custom components
 import { InputBox, ToggleBtn } from "../../components";
@@ -12,6 +11,7 @@ import { BTN_STYLE, SHADOW } from "../../constants";
 export default function Profile() {
   const styles = useStyles();
   const navigate = useNavigate();
+  const [saveMsg, setSaveMsg] = useState(false);
   const [data, setData] = useState({
     fname: "",
     lname: "",
@@ -59,6 +59,7 @@ export default function Profile() {
         state: {
           name: `${fname}+${lname}`,
           address: fa || "",
+          saveMsg,
         },
       });
 
@@ -101,6 +102,10 @@ export default function Profile() {
 
         <ToggleBtn
           title={"save messages"}
+          initialState={saveMsg}
+          onClickHandler={() => {
+            setSaveMsg(!saveMsg);
+          }}
           Style={{
             width: 170,
             marginInline: "auto",

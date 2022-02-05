@@ -34,7 +34,18 @@ export default function Product() {
             email: data.extras[1].email,
             isOpen: data.isOpen,
           });
-          setProducts(data.products);
+
+          const sortByCategory = (a, b) => {
+            if (a.category < b.category) {
+              return -1;
+            }
+            if (a.category > b.category) {
+              return 1;
+            }
+            return 0;
+          };
+
+          setProducts(data.products.sort(sortByCategory));
         }
       } catch (e) {
         alert("error in getting products of this shop");
@@ -86,19 +97,35 @@ export default function Product() {
       </div>
 
       <div style={{ display: shopData.isOpen ? "block" : "none" }}>
-        {products.map((data) => (
-          <ProductCard
-            key={data._id}
-            _id={data._id}
-            quantity={data.quantity}
-            title={data.name}
-            price={data.price}
-            mrp={data.MRP}
-            img={data.img}
-            isAdded={data.isAdded}
-            onClickHandler={editProduct}
-          />
-        ))}
+        {products.map((data, index) => {
+          return (
+            <div key={data._id}>
+              <p
+                style={{
+                  display:
+                    products[index - 1]?.category !== products[index].category
+                      ? "block"
+                      : "none",
+                }}
+                className={styles.category}
+              >
+                {data.category || "Extras"}
+              </p>
+              <ProductCard
+                _id={data._id}
+                quantity={data.quantity}
+                title={data.name}
+                price={data.price}
+                mrp={data.MRP}
+                img={data.img}
+                category={data.category}
+                maxQ={data.quantity}
+                isAdded={data.isAdded}
+                onClickHandler={editProduct}
+              />
+            </div>
+          );
+        })}
       </div>
     </>
   );
@@ -130,5 +157,11 @@ const useStyles = makeStyles({
     marginInline: "auto",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  category: {
+    fontWeight: "bold",
+    paddingLeft: 10,
+    marginBottom: 10,
+    marginTop: 30,
   },
 });

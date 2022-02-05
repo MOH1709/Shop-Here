@@ -7,7 +7,15 @@ import { BTN_STYLE, COLOR } from "../../constants";
 //-----------------------------------------------> custom components
 import { Context } from "../../contexts/CartProvider";
 
-export default function CartCard({ img, name, q, price, shopName, _id }) {
+export default function CartCard({
+  img,
+  name,
+  q,
+  price,
+  shopName,
+  _id,
+  avail,
+}) {
   const styles = useStyles();
   const [total, setTotal] = useState(parseInt(price) * q);
   const { cart, setCart } = useContext(Context);
@@ -22,7 +30,7 @@ export default function CartCard({ img, name, q, price, shopName, _id }) {
         <div className={styles.qDiv}>
           <Button
             onClick={() => {
-              if (q < 10) {
+              if (q < avail) {
                 setCart(
                   cart.map((data) => {
                     if (data._id === _id) {
@@ -34,9 +42,9 @@ export default function CartCard({ img, name, q, price, shopName, _id }) {
                 setTotal(total + parseInt(price));
               }
             }}
-            style={{ fontSize: q < 10 ? 20 : 12 }}
+            style={{ fontSize: q < avail ? 20 : 12 }}
           >
-            {q < 10 ? "+" : "MAX"}
+            {q < avail ? "+" : "MAX"}
           </Button>
           <span>{q}</span>
           <Button

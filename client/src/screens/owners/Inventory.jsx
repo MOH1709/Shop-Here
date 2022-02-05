@@ -24,7 +24,17 @@ export default function Inventory() {
         const bx = Cookies.get("bx");
         const res = await axios.get(`/${bx}/withproducts`);
 
-        isMounted && setProducts(res.data.products);
+        const sortByCategory = (a, b) => {
+          if (a.category < b.category) {
+            return -1;
+          }
+          if (a.category > b.category) {
+            return 1;
+          }
+          return 0;
+        };
+
+        isMounted && setProducts(res.data.products.sort(sortByCategory));
       } catch (e) {
         alert("error in loading inventory");
       }
@@ -75,20 +85,35 @@ export default function Inventory() {
       >
         ADD
       </Button>
-      {products.map((data) => (
-        <ProductCard
-          key={data._id}
-          img={data.img}
-          mrp={data.MRP}
-          price={data.price}
-          quantity={data.quantity}
-          title={data.name}
-          onClickHandler={() => {
-            setProduct(data);
-            setShowBox(true);
-          }}
-        />
-      ))}
+      {products.map((data, index) => {
+        return (
+          <div key={data._id}>
+            <p
+              style={{
+                display:
+                  products[index - 1]?.category !== products[index].category
+                    ? "block"
+                    : "none",
+              }}
+              className={styles.category}
+            >
+              {data.category || "Extras"}
+            </p>
+            <ProductCard
+              key={data._id}
+              img={data.img}
+              mrp={data.MRP}
+              price={data.price}
+              quantity={data.quantity}
+              title={data.name}
+              onClickHandler={() => {
+                setProduct(data);
+                setShowBox(true);
+              }}
+            />
+          </div>
+        );
+      })}
       <AlertBox
         Style={{ display: showBox ? "flex" : "none" }}
         box={
@@ -116,5 +141,11 @@ const useStyles = makeStyles({
     width: "90%",
     marginInline: "auto",
     marginBlock: 20,
+  },
+  category: {
+    fontWeight: "bold",
+    paddingLeft: 10,
+    marginBottom: 10,
+    marginTop: 30,
   },
 });

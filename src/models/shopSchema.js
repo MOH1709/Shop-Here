@@ -57,6 +57,10 @@ const shopSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    isUrgent: {
+      type: Boolean,
+      default: false,
+    },
   }, ],
   areas: {
     type: Array,

@@ -143,6 +143,7 @@ export default function Cart() {
               shopName={data.address}
               name={data.name}
               img={data.img}
+              avail={data.avail}
             />
 
             <ToggleBtn

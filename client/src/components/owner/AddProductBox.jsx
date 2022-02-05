@@ -21,7 +21,7 @@ export default function AddProductBox({
 
     setInput({
       ...input,
-      [name]: value,
+      [name]: name === "category" ? value.toUpperCase() : value,
     });
   };
 

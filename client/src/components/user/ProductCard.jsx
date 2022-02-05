@@ -7,9 +7,11 @@ export default function Card({
   img,
   title,
   mrp,
+  category,
   quantity,
   price,
   _id,
+  maxQ,
   isAdded,
   onClickHandler,
 }) {
@@ -21,7 +23,16 @@ export default function Card({
       className={styles.container}
       onClick={() => {
         onClickHandler(
-          { img, name: title, MRP: mrp, price, _id, quantity },
+          {
+            img,
+            name: title,
+            MRP: mrp,
+            price,
+            _id,
+            quantity,
+            avail: maxQ,
+            category,
+          },
           !isAdded
         );
       }}

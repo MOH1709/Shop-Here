@@ -390,7 +390,6 @@ router.post("/:uxt/orders", async(req, res) => {
     const order = new Order({
       products,
       ownerId,
-      isUrgent,
       recieverId: reciever._id,
       recievedAddress,
     });
@@ -410,6 +409,7 @@ router.post("/:uxt/orders", async(req, res) => {
       $push: {
         orders: {
           _id,
+          isUrgent,
           address: recievedAddress,
           reciever: reciever.name,
         },

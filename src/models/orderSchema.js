@@ -34,10 +34,6 @@ const orderSchema = new mongoose.Schema({
       required: true,
     },
   }, ],
-  isUrgent: {
-    type: Boolean,
-    default: false,
-  },
   isSucessful: {
     type: Boolean,
     default: false,
