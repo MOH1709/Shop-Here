@@ -6,16 +6,8 @@ import fileupload from "express-fileupload";
 // import { Server } from "socket.io";
 
 //-----------------------------------------------> custom components
-// import Router from "./Router.js";
-import {
-  city,
-  area,
-  user,
-  order,
-  bussiness,
-  product,
-  extras,
-} from "./routes/index.js";
+import admin from "./routes/admin.js"; //comment this line
+import * as router from "./routes/index.js";
 
 //-----------------------------------------------> testing socket.io
 // const http = createServer(app);
@@ -31,13 +23,14 @@ app.use(express.json()); // to convert all post request into json format
 app.use(fileupload()); // to upload files i.e. images
 
 //-----------------------------------------------> using routes
-app.use(extras);
-app.use("/cities", city);
-app.use("/area", area);
-app.use("/bussiness", bussiness);
-app.use("/user", user);
-app.use("/order", order);
-app.use("/product", product);
+app.use(admin); // comment this line
+app.use(router.extras);
+app.use("/cities", router.city);
+app.use("/area", router.area);
+app.use("/bussiness", router.bussiness);
+app.use("/user", router.user);
+app.use("/order", router.order);
+app.use("/product", router.product);
 
 //-----------------------------------------------> connect to database
 mongoose

@@ -194,7 +194,7 @@ export default function OwnerHome() {
           add areas
         </Button>
         <Button className={styles.upload} onClick={updateOwnerData}>
-          upload
+          save
         </Button>
       </div>
     </div>

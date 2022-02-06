@@ -15,10 +15,10 @@ export default function OwnerMessage({ name, address, id, isUrgent }) {
   //-----------------------------------------------> congirm password
   const confirmPin = async () => {
     try {
-      const res = await axios.get(`/${id}/checkorderpin`);
+      const res = await axios.get(`/order/checkorderpin/${id}`);
 
       if (res.data.orderPin === parseInt(pin)) {
-        await axios.put(`/${id}/${Cookies.get("bx")}/orderDilivered`);
+        await axios.put(`/order/setorderDelivered/${id}/${Cookies.get("bx")}`);
 
         alert("dilivered succesfully 🥳");
         window.location.reload();

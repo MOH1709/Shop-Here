@@ -26,7 +26,7 @@ router.post("/upload/image/:ui", async(req, res) => {
     const { img } = req.files;
     const imgName = `${ui}.${img.mimetype.split("/")[1]}`;
 
-    img.mv(`${__dirname}/../client/public/uploads/${imgName}`, (e) => {
+    img.mv(`${__dirname}/../../client/public/uploads/${imgName}`, (e) => {
       e && console.log("error in saving image : ", e);
     });
 

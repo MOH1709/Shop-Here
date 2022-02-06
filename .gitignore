@@ -1,3 +1,4 @@
 /node_modules
 .env
+/src/routes/admin.js
 package-lock.json

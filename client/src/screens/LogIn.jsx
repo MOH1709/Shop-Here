@@ -74,13 +74,18 @@ export default function LogIn() {
           value={input.phoneNumber}
           type={"number"}
         />
-        <InputBox
-          title={"Password"}
-          onChangeHandler={onChangeHandler}
-          name="password"
-          type="password"
-          value={input.password}
-        />
+        <div>
+          <InputBox
+            title={"Password"}
+            onChangeHandler={onChangeHandler}
+            name="password"
+            type="password"
+            value={input.password}
+          />
+          <NavLink className={styles.fp} to="/">
+            forgot password ?
+          </NavLink>
+        </div>
         <Button onClick={login} className={styles.login}>
           Log in
         </Button>
@@ -136,6 +141,14 @@ const useStyles = makeStyles({
     justifyContent: "space-evenly",
   },
 
+  fp: {
+    float: "right",
+    marginTop: 10,
+    letterSpacing: -0.3,
+    fontSize: 15,
+    textDecoration: "none",
+    color: COLOR.PRIMARY,
+  },
   login: {
     ...BTN_STYLE,
     width: "100%",
