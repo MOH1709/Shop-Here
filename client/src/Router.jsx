@@ -17,19 +17,41 @@ import {
   ShopMessages,
   AreaSelection,
 } from "./screens/owners";
+import AdminMain from "./admin/AdminMain";
+import {
+  Admins,
+  AdminAreas,
+  AdminCities,
+  AdminBussiness,
+  AdminLogin,
+  AdminUser,
+} from "./admin/screens";
 
 export default function Router() {
+  const adminId = process.env.REACT_APP_ADMINID;
+
   return (
     <Routes>
       <Route path="/" element={<Start />} />
+
+      {/* for admins */}
+      <Route path={`admin/${adminId}/home`} element={<AdminMain />}>
+        <Route path="williamzavier" element={<Admins />} />
+        <Route path="cities" element={<AdminCities />} />
+        <Route path="areas" element={<AdminAreas />} />
+        <Route path="users" element={<AdminUser />} />
+        <Route index element={<AdminBussiness />} />
+      </Route>
+      <Route path={`admin/${adminId}`} element={<AdminLogin />} />
+
       <Route path="login" element={<LogIn />} />
       <Route path=":cname/signin" element={<SignIn />} />
-      <Route path="404" element={<Error />} />
+      <Route path="*" element={<Error />} />
 
       {/* Owner Screen Routes */}
       <Route path=":cname/owner" element={<Owner />}>
-        <Route path="profile" element={<OwnerHome />} />
         <Route index element={<ShopMessages />} />
+        <Route path="profile" element={<OwnerHome />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="setting" element={<OwnerSetting />} />
         <Route path="areaSelection" element={<AreaSelection />} />

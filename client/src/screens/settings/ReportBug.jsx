@@ -1,20 +1,44 @@
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { makeStyles, Button } from "@material-ui/core";
 
-import { BTN_STYLE, COLOR, SHADOW } from "../../constants";
+import { BTN_STYLE, SHADOW } from "../../constants";
 
 export default function ReportBug() {
   const styles = useStyles();
+  const navigate = useNavigate();
+  const [text, setText] = useState("");
+
+  //-----------------------------------------------> on click send
+  const sendIssue = async () => {
+    try {
+      const ux = Cookies.get("ux");
+      await axios.post(`/user/issue/${ux}`, {
+        message: text,
+      });
+      alert("issue reported succesfully");
+      navigate("/city/home");
+    } catch (e) {
+      alert("error in sending issue");
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <p className={styles.title}>Facing any issue, please let us know</p>
+      <p className={styles.title}>Facing any issue ⛔</p>
+      <p className={styles.title}>please let us know 😊</p>
       <textarea
-        placeholder="Type here something..."
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Type here..."
         className={styles.isuueInput}
         cols="30"
         rows="10"
       ></textarea>
-      <Button className={styles.btn}>send</Button>
+      <Button onClick={sendIssue} className={styles.btn}>
+        send
+      </Button>
     </div>
   );
 }
@@ -34,7 +58,6 @@ const useStyles = makeStyles({
   title: {
     fontSize: 14,
     fontWeight: "bold",
-    marginBlock: 10,
   },
   isuueInput: {
     outline: "none",
@@ -42,6 +65,7 @@ const useStyles = makeStyles({
     minWidth: "100%",
     maxWidth: "100%",
     padding: 10,
+    marginTop: 20,
     fontSize: 15,
     marginBottom: 30,
     borderRadius: 3,
