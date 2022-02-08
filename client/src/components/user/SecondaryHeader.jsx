@@ -16,10 +16,14 @@ export default function SecondaryHeader() {
         {cart.length
           ? cart
               .map((data, index) => {
-                if (cart[index].address !== cart[index + 1]?.address) {
-                  return data.address.split(",")[0];
+                try {
+                  if (cart[index].address !== cart[index + 1]?.address) {
+                    return data.address.split(",")[0];
+                  }
+                  return "";
+                } catch (e) {
+                  return "Halol Shops";
                 }
-                return "";
               })
               .join(" ")
           : "Cart is Empty !!"}

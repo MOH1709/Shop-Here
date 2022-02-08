@@ -19,9 +19,15 @@ export default function Business() {
     const getbusinesses = async () => {
       try {
         const ai = Cookies.get("ai");
-        const cleanBusiness = await axios.get(`/area/bussinesses/${ai}`);
 
-        isMounted && setBusinesses(cleanBusiness.data);
+        if (ai !== "undefined") {
+          const cleanBusiness = await axios.get(`/area/bussinesses/${ai}`);
+          isMounted && setBusinesses(cleanBusiness.data);
+        } else {
+          Cookies.remove("ai");
+
+          navigate("/city/home/areas");
+        }
       } catch (e) {
         Cookies.remove("ai");
         navigate("/city/home/areas");
@@ -38,17 +44,24 @@ export default function Business() {
 
   return (
     <>
-      {businesses.map((data) => (
-        <Card
-          key={data._id}
-          title={data.name}
-          content={data.address}
-          img={data.img}
-          onClickHandler={() => {
-            navigate(`/city/home/${data.name}, ${data.address}+${data._id}`);
-          }}
-        />
-      ))}
+      {businesses.map((data) => {
+        return (
+          data.name &&
+          data.address && (
+            <Card
+              key={data._id}
+              title={data.name}
+              content={data.address}
+              img={data.img}
+              onClickHandler={() => {
+                navigate(
+                  `/city/home/${data.name}, ${data.address}+${data._id}`
+                );
+              }}
+            />
+          )
+        );
+      })}
     </>
   );
 }

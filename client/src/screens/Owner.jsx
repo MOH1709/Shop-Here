@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { makeStyles } from "@material-ui/core";
 import { useContext, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { MiddleWare } from "../components";
@@ -42,16 +42,22 @@ export default function Owner() {
   return (
     <>
       <MiddleWare />
-      <div className={styles.primary}>
-        <PrimaryHeader />
-        <Outlet />
-      </div>
-      <div
-        className={styles.secondary}
-        style={{ display: width > 700 ? "flex" : "none" }}
-      >
-        <OwnerHome />
-      </div>
+      {Cookies.get("bx") ? (
+        <>
+          <div className={styles.primary}>
+            <PrimaryHeader />
+            <Outlet />
+          </div>
+          <div
+            className={styles.secondary}
+            style={{ display: width > 700 ? "flex" : "none" }}
+          >
+            <OwnerHome />
+          </div>
+        </>
+      ) : (
+        <Navigate to="/city/messages" />
+      )}
     </>
   );
 }

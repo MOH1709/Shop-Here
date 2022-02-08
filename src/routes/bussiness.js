@@ -19,7 +19,7 @@ router.get("/:bid", async(req, res) => {
 router.get("/uservisible/:bid", async(req, res) => {
   try {
     const { bid } = req.params;
-    const shop = await Shop.findOne({ _id: bid }, { _id: 0, extras: 1, isOpen: 1, products: 1 });
+    const shop = await Shop.findOne({ _id: bid }, { _id: 0, extras: 1, isOpen: 1, products: 1, canUrgent: 1 });
 
     res.status(200).send(shop);
   } catch (e) {
@@ -37,18 +37,6 @@ router.get("/shopareas/:bid", async(req, res) => {
     res.status(200).send(areas);
   } catch (e) {
     res.status(500).send("error in getting shop areas");
-  }
-});
-
-//-----------------------------------------------> get is urgent order avail confirmation
-router.get("/isurgentavail/:bid", async(req, res) => {
-  try {
-    const { bid } = req.params;
-    const { canUrgent } = await Shop.findOne({ _id: bid }, { _id: 0, canUrgent: 1 });
-
-    res.status(200).send(canUrgent);
-  } catch (e) {
-    res.status(500).send("error in getting products");
   }
 });
 

@@ -17,6 +17,8 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+
+/* 
 ::-webkit-scrollbar {
   width: 0.75rem;
 }
@@ -27,4 +29,4 @@ input::-webkit-inner-spin-button {
 
 ::-webkit-scrollbar-thumb {
   background-color: #032e45;
-}
+} */

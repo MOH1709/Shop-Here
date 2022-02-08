@@ -14,7 +14,6 @@ export default function Cart() {
   const styles = useStyles();
   const { cart, setCart } = useContext(Context);
   const navigate = useNavigate();
-  const [isUrgent, setIsUrgent] = useState(false);
   const [urgent, setUrgent] = useState([]);
   const [address, setAddress] = useState(Cookies.get("fa") || "");
   const [total, setTotal] = useState(0);
@@ -47,22 +46,9 @@ export default function Cart() {
     };
   }, [cart, setCart]);
 
-  //----------------------------------------------->
-  useEffect(() => {}, [cart]);
-
   //-----------------------------------------------> store text input
   const onChangeHandler = (e) => {
     setAddress(e.target.value);
-  };
-
-  //-----------------------------------------------> is urgent Available
-  const checkIsUrgentAvail = async (id) => {
-    try {
-      const res = await axios.get(`/bussiness/isurgentavail/${id}`);
-      setIsUrgent(res.data);
-    } catch (e) {
-      alert("error in checking urgetn status");
-    }
   };
 
   //-----------------------------------------------> on order
@@ -73,9 +59,6 @@ export default function Cart() {
         return;
       }
 
-      if (isUrgent) {
-        setTotal(total + 10);
-      }
       Cookies.set("fa", address);
 
       const ux = Cookies.get("ux");
@@ -111,7 +94,10 @@ export default function Cart() {
 
         if (res.status === 200) {
           alert(
-            `hurray, your order placed successfully to ${data[0].address} 🥳 `
+            `hurray, your order placed successfully to ${data[0].address} 🥳,
+            will be delivered to you before ${
+              urgent.includes(cart[0].shopId) ? "1 hour 🕐" : "10 P.M. 🕙"
+            }`
           );
         } else {
           alert(
@@ -131,9 +117,6 @@ export default function Cart() {
   return (
     <div className={styles.container}>
       {cart.map((data, index) => {
-        if (cart[index].shopId !== cart[index + 1]?.shopId) {
-          checkIsUrgentAvail(data.shopId);
-        }
         return (
           <div className={styles.shopCart} key={data._id}>
             <CartCard
@@ -151,7 +134,8 @@ export default function Cart() {
                 width: 180,
                 marginBlock: 20,
                 display:
-                  cart[index].shopId !== cart[index + 1]?.shopId && isUrgent
+                  cart[index].shopId !== cart[index + 1]?.shopId &&
+                  data.canUrgent
                     ? "flex"
                     : "none",
               }}
@@ -159,6 +143,10 @@ export default function Cart() {
               onClickHandler={(ic) => {
                 if (ic === false) {
                   setUrgent([...urgent, data.shopId]);
+                  alert(
+                    `In urgent delivery product from this shop will be delivered before 1 hour 🕐 
+                     with cost of only, 10₹ extra`
+                  );
                 } else {
                   setUrgent(urgent.filter((val) => val !== data.shopId));
                 }
@@ -179,8 +167,10 @@ export default function Cart() {
         />
         <div className={styles.total}>
           <p className={styles.price}>
-            TOTAL :<span style={{ marginInline: 5 }}> ₹{total} </span>
-            <span style={{ display: isUrgent ? "block" : "none" }}></span>
+            TOTAL :
+            <span style={{ marginInline: 5 }}>
+              ₹{total} {urgent.length ? ` + ${urgent.length * 10}₹` : ""}
+            </span>
           </p>
         </div>
         <Button onClick={order} className={styles.orderBtn}>

@@ -67,6 +67,7 @@ export default function Setting() {
           className={styles.navBtn}
           component={NavLink}
           to={`/${cname}/owner`}
+          style={{ display: Cookies.get("bx") ? "flex" : "none" }}
         >
           Use For Bussiness
         </Button>
@@ -142,6 +143,9 @@ const useStyles = makeStyles({
     overflowY: "auto",
   },
   navBtn: {
+    "& :hover": {
+      color: COLOR.SECONDARY,
+    },
     height: 50,
     borderRadius: 0,
     fontWeight: "bold",

@@ -164,7 +164,7 @@ export default function OwnerHome() {
         />
         <InputBox
           Style={{ marginBlock: 20 }}
-          title="Contact Number"
+          title="Business Number"
           name="phoneNumber"
           value={data.phoneNumber}
           onChangeHandler={changeHandler}
@@ -191,10 +191,10 @@ export default function OwnerHome() {
           </div>
         )}
         <Button className={styles.upload} onClick={selectAreas}>
-          add areas
+          select areas
         </Button>
         <Button className={styles.upload} onClick={updateOwnerData}>
-          save
+          Upload
         </Button>
       </div>
     </div>

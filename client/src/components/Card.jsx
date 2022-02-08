@@ -1,27 +1,32 @@
-import { makeStyles } from "@material-ui/core";
-import { FLEX_CENTER } from "../constants";
+import { makeStyles, Button } from "@material-ui/core";
+import { FLEX_CENTER, COLOR } from "../constants";
 
 export default function Card({ img, title, content, onClickHandler }) {
   const styles = useStyles();
 
   return (
-    <div className={styles.container} onClick={onClickHandler}>
+    <Button className={styles.container} onClick={onClickHandler}>
       <div className={styles.img}>
         <img src={img || "./logo.png"} alt="img" />
       </div>
       <div className={styles.contentDiv}>
-        <p>{title || "An Anonymous Shop"}</p>
+        <p>{title}</p>
         <div>{content}</div>
       </div>
-    </div>
+    </Button>
   );
 }
 
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
+    "& :hover": {
+      color: COLOR.SECONDARY,
+    },
     position: "relative",
     display: "flex",
+    width: "100%",
+    textAlign: "left",
     padding: 10,
     paddingLeft: 0,
     marginBlock: 10,
@@ -47,10 +52,12 @@ const useStyles = makeStyles({
       whiteSpace: "nowrap",
 
       fontWeight: 500,
-      fontSize: 15,
+      fontSize: 13,
     },
     "& :nth-child(2)": {
-      fontSize: 11,
+      fontSize: 10,
+      letterSpacing: -0.2,
+      textTransform: "lowercase",
       width: "90%",
       height: "3em",
       overflow: "hidden",

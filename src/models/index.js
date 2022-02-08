@@ -4,5 +4,6 @@ import Order from "./orderSchema.js";
 import City from "./citySchema.js";
 import Provider from "./providerSchema.js";
 import Area from "./areaSchema.js";
+import Issue from "./issueSchema.js";
 
-export { User, Shop, Provider, Order, City, Area };
+export { User, Shop, Provider, Order, City, Area, Issue };

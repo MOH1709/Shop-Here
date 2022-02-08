@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Router } from "express";
-import { User } from "../models/index.js";
+import { User, Issue } from "../models/index.js";
 
 const router = Router();
 
@@ -43,7 +43,7 @@ router.put("/login/:userId/:password", async(req, res) => {
       res.cookie("ai", user.currentLocation[1]);
       res.cookie("un", user.name);
       res.cookie("fa", user.address);
-      res.cookie("bx", user.bussinessId);
+      user.bussinessId && res.cookie("bx", user.bussinessId);
 
       return res.status(200).send("logging in successfull");
     } else {
@@ -120,6 +120,21 @@ router.delete("/logout/:ujwt", async(req, res) => {
     res.status(200).send(user);
   } catch (e) {
     res.status(500).send("error in loging out");
+  }
+});
+
+//-----------------------------------------------> report issue
+router.post("/issue/:ux", async(req, res) => {
+  try {
+    const { ux } = req.params;
+    const { message } = req.body;
+
+    const issue = new Issue({ ux, message });
+    await issue.save();
+
+    res.status(200).send("reported sucessfully");
+  } catch (e) {
+    res.status(400).send("error in sending issue");
   }
 });
 

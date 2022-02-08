@@ -133,6 +133,7 @@ const useStyles = makeStyles({
     ...FLEX_CENTER,
     position: "absolute",
     top: 0,
+    color: "white",
     backgroundColor: COLOR.RED,
     borderRadius: "50%",
     width: 20,

@@ -21,7 +21,8 @@ export default function ShopMessages() {
 
         if (bx) {
           const { data } = await axios.get(`/bussiness/orders/${bx}`);
-          isMounted && setMsg(data.orders || []);
+
+          isMounted && setMsg(data.orders.reverse() || []);
         }
       } catch (e) {
         alert("error in loading messages of owner");

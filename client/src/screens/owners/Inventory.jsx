@@ -78,6 +78,7 @@ export default function Inventory() {
   return (
     <div className={styles.container}>
       <Button
+        style={{ display: products.length > 200 ? "none" : "flex" }}
         className={styles.btn}
         onClick={() => {
           setProduct({});

@@ -6,13 +6,14 @@ import { useParams } from "react-router-dom";
 //-----------------------------------------------> custom components
 import { ProductCard } from "../../components/user";
 import { Context } from "../../contexts/CartProvider";
-import { COLOR } from "../../constants";
+import { COLOR, SHADOW } from "../../constants";
 
 export default function Product() {
   const styles = useStyles();
   const { bid } = useParams();
   const [shop] = useState(bid.split("+"));
   const { cart, setCart } = useContext(Context);
+  const [canUrgent, setCanUrgent] = useState(false);
   const [products, setProducts] = useState([]);
   const [shopData, setShopData] = useState({
     phoneNumber: "",
@@ -34,6 +35,7 @@ export default function Product() {
             email: data.extras[1].email,
             isOpen: data.isOpen,
           });
+          setCanUrgent(data.canUrgent);
 
           const sortByCategory = (a, b) => {
             if (a.category < b.category) {
@@ -73,7 +75,7 @@ export default function Product() {
       if (inCart === false) {
         setCart([
           ...cart,
-          { ...obj, quantity: 1, address: shop[0], shopId: shop[1] },
+          { ...obj, quantity: 1, canUrgent, address: shop[0], shopId: shop[1] },
         ]);
       }
     } else {
@@ -89,10 +91,10 @@ export default function Product() {
       )}
       <div className={styles.shopDetails}>
         <p>
-          Email <span> {shopData.email || "not available"}</span>
+          Email : <span> {shopData.email || "not available"}</span>
         </p>
         <p>
-          Contact <span> {shopData.phoneNumber || "not available"}</span>
+          Contact : <span> {shopData.phoneNumber || "not available"}</span>
         </p>
       </div>
 
@@ -136,18 +138,18 @@ const useStyles = makeStyles({
   shopDetails: {
     "& p": {
       marginBlock: 10,
+      fontWeight: "bold",
       color: COLOR.SECONDARY,
     },
     "& span": {
-      marginLeft: 5,
       color: COLOR.PRIMARY,
-      fontWeight: "bold",
     },
+    paddingLeft: 10,
     paddingBlock: 5,
     borderRadius: 5,
-    width: "80%",
-    marginInline: "auto",
-    borderBottom: "3px solid rgba(0,0,0,0.4)",
+    overflow: "hidden",
+
+    boxShadow: SHADOW,
   },
   close: {
     paddingBlock: 10,

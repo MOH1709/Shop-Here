@@ -81,10 +81,9 @@ export default function AreaSelection() {
         selectedAreas,
       });
 
-      alert("Your Shop will be visible now in this areas");
-      navigate("/city/owner/profile");
+      navigate(-1);
     } catch (e) {
-      alert("error in updating areas");
+      alert("error in saving areas");
     }
   };
 
