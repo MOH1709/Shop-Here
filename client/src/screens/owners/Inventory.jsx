@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 
@@ -7,7 +7,6 @@ import { makeStyles, Button } from "@material-ui/core";
 import { ProductCard, AddProductBox } from "../../components/owner";
 import { BTN_STYLE } from "../../constants";
 import { AlertBox } from "../../components";
-import { useEffect } from "react";
 
 export default function Inventory() {
   const styles = useStyles();
@@ -77,16 +76,6 @@ export default function Inventory() {
 
   return (
     <div className={styles.container}>
-      <Button
-        style={{ display: products.length > 200 ? "none" : "flex" }}
-        className={styles.btn}
-        onClick={() => {
-          setProduct({});
-          setShowBox(true);
-        }}
-      >
-        ADD
-      </Button>
       {products.map((data, index) => {
         return (
           <div key={data._id}>
@@ -116,6 +105,16 @@ export default function Inventory() {
           </div>
         );
       })}
+      <Button
+        style={{ display: products.length > 200 ? "none" : "flex" }}
+        className={styles.btn}
+        onClick={() => {
+          setProduct({});
+          setShowBox(true);
+        }}
+      >
+        ADD
+      </Button>
       <AlertBox
         Style={{ display: showBox ? "flex" : "none" }}
         box={

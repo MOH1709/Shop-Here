@@ -14,13 +14,13 @@ export default function Setting() {
   //-----------------------------------------------> logout
   const logOut = async () => {
     try {
-      const Cookiess = document.cookie.split("; ");
+      const savedCookies = document.cookie.split("; ");
       const ux = Cookies.get("ux");
       if (ux) {
         await axios.delete(`/user/logout/${ux}`);
       }
 
-      Cookiess.forEach((data) => {
+      savedCookies.forEach((data) => {
         Cookies.remove(data.split("=")[0]);
       });
 

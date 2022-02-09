@@ -59,8 +59,6 @@ export default function Cart() {
         return;
       }
 
-      Cookies.set("fa", address);
-
       const ux = Cookies.get("ux");
       if (!ux) {
         navigate(`/city/SignIn`);
