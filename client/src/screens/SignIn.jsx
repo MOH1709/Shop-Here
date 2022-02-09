@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export default function SignIn() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const [isEmail, setIsEmail] = useState(false);
+  // const [isEmail, setIsEmail] = useState(false);
   const [data, setData] = useState({
     phoneNumber: "",
     password: "",

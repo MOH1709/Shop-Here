@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core";
+// import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -66,9 +66,9 @@ export default function Business() {
   );
 }
 
-//-----------------------------------------------> Styles
-const useStyles = makeStyles({
-  container: {
-    position: "relative",
-  },
-});
+// //-----------------------------------------------> Styles
+// const useStyles = makeStyles({
+//   container: {
+//     position: "relative",
+//   },
+// });

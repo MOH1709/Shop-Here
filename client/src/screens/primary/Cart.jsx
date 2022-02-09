@@ -32,7 +32,7 @@ export default function Cart() {
         return 0;
       };
 
-      setCart(cart.sort(compareShopId));
+      isMounted && setCart(cart.sort(compareShopId));
 
       setTotal(
         cart.reduce((pv, cv) => {
@@ -84,7 +84,7 @@ export default function Cart() {
               quantity: product.quantity,
             };
           }),
-          isUrgent: urgent.includes(cart[0].shopId),
+          isUrgent: urgent.includes(data[0].shopId),
           owner: data[0].address,
           ownerId: data[0].shopId,
           recievedAddress: address,
@@ -94,7 +94,7 @@ export default function Cart() {
           alert(
             `hurray, your order placed successfully to ${data[0].address} 🥳,
             will be delivered to you before ${
-              urgent.includes(cart[0].shopId) ? "1 hour 🕐" : "10 P.M. 🕙"
+              urgent.includes(data[0].shopId) ? "1 hour 🕐" : "10 P.M. 🕙"
             }`
           );
         } else {

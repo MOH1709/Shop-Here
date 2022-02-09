@@ -58,7 +58,7 @@ export default function AreaSelection() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [setSelectedAreas]);
 
   //-----------------------------------------------> deSelectArea
   const deSelectArea = (data) => {
