@@ -106,6 +106,7 @@ export default function Cart() {
         }
 
         setCart([]);
+        setUrgent([]);
         navigate("/city/messages");
       });
     } catch (e) {
@@ -131,7 +132,6 @@ export default function Cart() {
 
             <ToggleBtn
               Style={{
-                width: 180,
                 marginBlock: 20,
                 display:
                   cart[index].shopId !== cart[index + 1]?.shopId &&
@@ -139,7 +139,7 @@ export default function Cart() {
                     ? "flex"
                     : "none",
               }}
-              title={"Urgent"}
+              title={"Urgent Order"}
               onClickHandler={(ic) => {
                 if (ic === false) {
                   setUrgent([...urgent, data.shopId]);
@@ -176,6 +176,13 @@ export default function Cart() {
         <Button onClick={order} className={styles.orderBtn}>
           {Cookies.get("ux") ? "" : "sign in to "} order
         </Button>
+      </div>
+      <div
+        className={styles.emptyCart}
+        style={{ display: cart.length ? "none" : "block" }}
+      >
+        <img src="./emptyCart.png" alt="img" />
+        {/* <p>Empty Cart</p> */}
       </div>
     </div>
   );
@@ -226,5 +233,19 @@ const useStyles = makeStyles({
     height: 40,
     marginTop: 30,
     margin: 20,
+  },
+  emptyCart: {
+    "& img": {
+      marginTop: 50,
+      width: "100%",
+    },
+    "& p": {
+      fontSize: 20,
+      color: COLOR.PRIMARY,
+      fontWeight: "bold",
+    },
+    overflow: "hidden",
+    textAlign: "center",
+    marginBlock: "auto",
   },
 });

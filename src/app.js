@@ -23,8 +23,8 @@ app.use(express.json()); // to convert all post request into json format
 app.use(fileupload()); // to upload files i.e. images
 
 //-----------------------------------------------> using routes
-app.use(admin); // comment this line
 app.use(router.extras);
+app.use("/admin", admin); // comment this line
 app.use("/cities", router.city);
 app.use("/area", router.area);
 app.use("/bussiness", router.bussiness);

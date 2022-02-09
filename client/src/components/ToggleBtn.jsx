@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 
-import { COLOR } from "../constants";
+import { COLOR, SHADOW } from "../constants";
 
 export default function ToggleBtn({
   onClickHandler,
@@ -39,20 +39,17 @@ const useStyles = makeStyles({
   container: {
     "& p": {
       flex: 1,
-      marginInline: "auto",
       fontWeight: "bold",
-      fontSize: 13,
-      paddingInline: 10,
     },
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    border: `2px solid ${COLOR.PRIMARY}`,
-    height: 35,
-    borderRight: "none",
-    borderRadius: 5,
-    textAlign: "center",
-    marginInline: "auto",
+    height: 40,
+    width: "100%",
+    padding: 10,
+    borderRadius: 3,
+    boxShadow: SHADOW,
+    // border: `2px solid rgba(0,0,0,0.5)`,
   },
   btnDiv: {
     width: 90,

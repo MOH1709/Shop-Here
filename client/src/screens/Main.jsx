@@ -1,17 +1,26 @@
 import { makeStyles } from "@material-ui/core";
-import { useContext } from "react";
-import { Outlet } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { PrimaryHeader, SecondaryHeader } from "../components/user";
 import { MiddleWare } from "../components";
 import { Context } from "../contexts/WidthProvider";
-import { Cart } from "./primary";
 
 //----------------------------------------------->
+import { Cart } from "./primary";
+
 export default function MainScreen() {
   const styles = useStyles();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { width } = useContext(Context);
+
+  useEffect(() => {
+    if (width > 700 && pathname === "/city/cart") {
+      navigate("/city/home");
+    }
+  }, [width, navigate, pathname]);
 
   return (
     <>

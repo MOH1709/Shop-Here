@@ -17,7 +17,7 @@ export default function SecondaryHeader() {
           ? cart
               .map((data, index) => {
                 try {
-                  if (cart[index].address !== cart[index + 1]?.address) {
+                  if (cart[index - 1]?.address !== cart[index].address) {
                     return data.address.split(",")[0];
                   }
                   return "";
@@ -25,7 +25,7 @@ export default function SecondaryHeader() {
                   return "Halol Shops";
                 }
               })
-              .join(" ")
+              .join(", ")
           : "Cart is Empty !!"}
       </p>
     </div>

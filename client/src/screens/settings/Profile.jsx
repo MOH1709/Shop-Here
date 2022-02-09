@@ -107,14 +107,13 @@ export default function Profile() {
             setSaveMsg(!saveMsg);
           }}
           Style={{
-            width: 170,
-            marginInline: "auto",
             marginBlock: 30,
-            borderBottom: "none",
           }}
         />
 
-        <Button onClick={updateUserDetails}>update</Button>
+        <Button className={styles.btn} onClick={updateUserDetails}>
+          update
+        </Button>
       </div>
     </div>
   );
@@ -123,12 +122,6 @@ export default function Profile() {
 //-----------------------------------------------> Styles
 const useStyles = makeStyles({
   container: {
-    "& Button": {
-      ...BTN_STYLE,
-      width: "90%",
-      marginInline: "auto",
-      marginBlock: 20,
-    },
     position: "absolute",
     top: 0,
     left: 0,
@@ -143,5 +136,11 @@ const useStyles = makeStyles({
     marginBottom: 20,
     borderRadius: 5,
     boxShadow: SHADOW,
+  },
+  btn: {
+    ...BTN_STYLE,
+    width: "90%",
+    marginInline: "auto",
+    marginBlock: 20,
   },
 });

@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { makeStyles } from "@material-ui/core";
 import { useContext, useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { MiddleWare } from "../components";
@@ -12,9 +12,11 @@ import { OwnerHome } from "./owners";
 
 export default function Owner() {
   const styles = useStyles();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { width } = useContext(Context);
 
+  //-----------------------------------------------> check is Owner
   useEffect(() => {
     const ux = Cookies.get("ux");
     if (!ux) {
@@ -38,6 +40,13 @@ export default function Owner() {
     };
     sendRequest();
   }, [navigate]);
+
+  //-----------------------------------------------> check width
+  useEffect(() => {
+    if (width > 700 && pathname === "/city/owner/profile") {
+      navigate("/city/owner");
+    }
+  }, [width, pathname, navigate]);
 
   return (
     <>

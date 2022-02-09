@@ -173,7 +173,7 @@ export default function OwnerHome() {
         {showBtn && (
           <div className={styles.btnDiv}>
             <ToggleBtn
-              Style={{ marginBlock: 20, width: 250 }}
+              Style={{ marginBlock: 20 }}
               title={"Shop Open"}
               initialState={isOpen}
               onClickHandler={() => {
@@ -181,7 +181,7 @@ export default function OwnerHome() {
               }}
             />
             <ToggleBtn
-              Style={{ marginBlock: 20, width: 250 }}
+              Style={{ marginBlock: 20 }}
               title={"Urgent Dilivery"}
               initialState={canUrgent}
               onClickHandler={() => {

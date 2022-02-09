@@ -11,8 +11,6 @@ router.get("/bussinesses/:aid", async(req, res) => {
 
     res.status(200).send(shops);
   } catch (e) {
-    console.log(e);
-
     res.status(500).send("error in getting shops in this area");
   }
 });

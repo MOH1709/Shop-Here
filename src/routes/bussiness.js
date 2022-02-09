@@ -74,8 +74,6 @@ router.put("/:bid", async(req, res) => {
 
     res.status(200).send("business data updated");
   } catch (e) {
-    console.log(e);
-
     res.status(400).send("error in updating business data details");
   }
 });
