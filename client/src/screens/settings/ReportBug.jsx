@@ -15,10 +15,14 @@ export default function ReportBug() {
   const sendIssue = async () => {
     try {
       const ux = Cookies.get("ux");
-      await axios.post(`/user/issue/${ux}`, {
-        message: text,
-      });
-      alert("issue reported succesfully");
+
+      if (text) {
+        await axios.post(`/user/issue/${ux}`, {
+          message: text,
+        });
+        alert("issue reported succesfully");
+      }
+
       navigate("/city/home");
     } catch (e) {
       alert("error in sending issue");

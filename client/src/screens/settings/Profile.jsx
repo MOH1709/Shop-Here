@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
-import { InputBox, ToggleBtn } from "../../components";
+import { InputBox } from "../../components";
 import { BTN_STYLE, SHADOW } from "../../constants";
 
 export default function Profile() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const [saveMsg, setSaveMsg] = useState(false);
+  // const [saveMsg, setSaveMsg] = useState(Cookies.get("sm"));
   const [data, setData] = useState({
     fname: "",
     lname: "",
@@ -59,13 +59,13 @@ export default function Profile() {
         state: {
           name: `${fname}+${lname}`,
           address: fa || "",
-          saveMsg,
         },
       });
 
       if (res.status === 200) {
         Cookies.set("un", `${fname}+${lname}`);
         Cookies.set("fa", fa);
+        // Cookies.set("sm", saveMsg ? "hxg_?" : "");
         alert("updated successfully :)");
         navigate("/city/home");
       }
@@ -100,7 +100,7 @@ export default function Profile() {
           onChangeHandler={changeHandler}
         />
 
-        <ToggleBtn
+        {/* <ToggleBtn
           title={"save messages"}
           initialState={saveMsg}
           onClickHandler={() => {
@@ -109,7 +109,7 @@ export default function Profile() {
           Style={{
             marginBlock: 30,
           }}
-        />
+        /> */}
 
         <Button className={styles.btn} onClick={updateUserDetails}>
           update

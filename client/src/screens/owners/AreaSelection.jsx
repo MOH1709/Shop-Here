@@ -28,9 +28,8 @@ export default function AreaSelection() {
         const bx = Cookies.get("bx");
 
         const { data, status } = await axios.get(`/cities/areas/${ci}`);
-        const resSelAreas = await (
-          await axios.get(`/bussiness/shopareas/${bx}`)
-        ).data.areas;
+        const resSelAreas = (await axios.get(`/bussiness/shopareas/${bx}`))
+          .data;
 
         if (status === 200) {
           if (isMounted) {

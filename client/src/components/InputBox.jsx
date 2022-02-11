@@ -19,6 +19,7 @@ export default function InputBox({
         id={title}
         type={type ?? "text"}
         name={name}
+        maxLength="50"
         value={value > 100000000000 ? 0 : value || ""}
         // placeholder="type here"
         onChange={onChangeHandler}

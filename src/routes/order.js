@@ -77,6 +77,7 @@ router.get("/checkorderpin/:oid", async(req, res) => {
 router.put("/setorderDelivered/:oid/:bid", async(req, res) => {
   try {
     const { oid, bid } = req.params;
+    const { recieverId } = await Order.findOne({ _id: oid }, { recieverId: 1, _id: 0 });
 
     await Order.updateOne({ _id: oid }, {
       $set: {
@@ -86,6 +87,12 @@ router.put("/setorderDelivered/:oid/:bid", async(req, res) => {
     });
 
     await Shop.updateOne({ _id: bid }, {
+      $pull: {
+        orders: { _id: oid },
+      },
+    });
+
+    await User.updateOne({ _id: recieverId }, {
       $pull: {
         orders: { _id: oid },
       },

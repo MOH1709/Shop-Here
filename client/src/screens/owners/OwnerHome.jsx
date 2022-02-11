@@ -84,7 +84,11 @@ export default function OwnerHome() {
         isOpen,
         canUrgent,
         name,
-        areas: selectedAreas.map((data) => data._id),
+        areas: selectedAreas.length
+          ? selectedAreas.map((data) => data._id)
+          : (
+              await axios.get(`/bussiness/shopareas/${bx}`)
+            ).data,
         img: imgPath,
         address,
         extras: [{ phoneNumber }, { email }],

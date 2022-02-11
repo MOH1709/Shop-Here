@@ -32,7 +32,7 @@ router.get("/shopareas/:bid", async(req, res) => {
   try {
     const { bid } = req.params;
 
-    const areas = await Shop.findOne({ _id: bid }, { _id: 0, areas: 1 });
+    const { areas } = await Shop.findOne({ _id: bid }, { _id: 0, areas: 1 });
 
     res.status(200).send(areas);
   } catch (e) {
