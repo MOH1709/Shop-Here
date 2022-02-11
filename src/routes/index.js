@@ -4,6 +4,7 @@ import bussiness from "./bussiness.js";
 import user from "./user.js";
 import order from "./order.js";
 import product from "./product.js";
-import extras from "./extras.js";
+import google from "./google.js";
+import admin from "./admin.js";
 
-export { city, area, bussiness, user, order, product, extras };
+export { city, area, bussiness, user, order, product, google, admin };

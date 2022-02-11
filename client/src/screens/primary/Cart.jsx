@@ -79,6 +79,7 @@ export default function Cart() {
         const res = await axios.post(`/order/${ux}`, {
           products: data.map((product) => {
             return {
+              _id: product._id,
               name: product.name,
               price: product.price,
               quantity: product.quantity,
