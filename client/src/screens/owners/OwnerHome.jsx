@@ -78,7 +78,7 @@ export default function OwnerHome() {
       const bx = Cookies.get("bx");
       const { name, address, phoneNumber, email } = data;
 
-      const imgPath = file ? await imageUploader(file) : img;
+      // const imgPath = file ? await imageUploader(file) : img;
 
       const res = await axios.put(`/bussiness/${bx}`, {
         isOpen,
@@ -89,7 +89,7 @@ export default function OwnerHome() {
           : (
               await axios.get(`/bussiness/shopareas/${bx}`)
             ).data,
-        img: imgPath,
+        // img: imgPath,
         address,
         extras: [{ phoneNumber }, { email }],
       });

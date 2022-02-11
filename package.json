@@ -29,7 +29,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.5",
     "nodemailer": "^6.7.2",
-    "socket.io": "^4.4.1"
+    "socket.io": "^4.4.1",
+    "web-push": "^3.4.5"
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

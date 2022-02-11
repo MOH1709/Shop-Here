@@ -5,6 +5,7 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
+import { send } from "../../utils/Push";
 import { CartCard } from "../../components/user";
 import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
@@ -92,7 +93,8 @@ export default function Cart() {
         });
 
         if (res.status === 200) {
-          alert(
+          send(
+            "SocSho",
             `hurray, your order placed successfully to ${data[0].address} 🥳,
             will be delivered to you before ${
               urgent.includes(data[0].shopId) ? "1 hour 🕐" : "10 P.M. 🕙"

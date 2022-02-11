@@ -1,6 +1,6 @@
+import "dotenv/config";
 import mongoose from "mongoose";
 import express from "express";
-import "dotenv/config";
 import fileupload from "express-fileupload";
 // import { createServer } from "http";
 // import { Server } from "socket.io";
@@ -22,7 +22,7 @@ app.use(express.json()); // to convert all post request into json format
 app.use(fileupload()); // to upload files i.e. images
 
 //-----------------------------------------------> using routes
-app.use("/google", router.google);
+app.use("/utils", router.utils);
 app.use("/admin", router.admin); // comment this line
 app.use("/cities", router.city);
 app.use("/area", router.area);
