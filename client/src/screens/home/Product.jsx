@@ -25,17 +25,19 @@ export default function Product() {
   useEffect(() => {
     let isMounted = true;
 
+    // fetching and setting products of shop
     const getProducts = async () => {
       try {
-        const { data } = await axios.get(`/bussiness/uservisible/${shop[1]}`);
+        const response = (await axios.get(`/bussiness/uservisible/${shop[1]}`))
+          .data;
 
         if (isMounted) {
           setShopData({
-            phoneNumber: data.extras[0].phoneNumber,
-            email: data.extras[1].email,
-            isOpen: data.isOpen,
+            phoneNumber: response.extras[0].phoneNumber,
+            email: response.extras[1].email,
+            isOpen: response.isOpen,
           });
-          setCanUrgent(data.canUrgent);
+          setCanUrgent(response.canUrgent);
 
           const sortByCategory = (a, b) => {
             if (a.category < b.category) {
@@ -47,7 +49,7 @@ export default function Product() {
             return 0;
           };
 
-          setProducts(data.products.sort(sortByCategory));
+          setProducts(response.products.sort(sortByCategory));
         }
       } catch (e) {
         alert("error in getting products of this shop");
@@ -113,18 +115,7 @@ export default function Product() {
               >
                 {data.category || "Extras"}
               </p>
-              <ProductCard
-                _id={data._id}
-                quantity={data.quantity}
-                title={data.name}
-                price={data.price}
-                mrp={data.MRP}
-                img={data.img}
-                category={data.category}
-                maxQ={data.quantity}
-                isAdded={data.isAdded}
-                onClickHandler={editProduct}
-              />
+              <ProductCard state={data} onClickHandler={editProduct} />
             </div>
           );
         })}

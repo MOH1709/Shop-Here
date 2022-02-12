@@ -23,18 +23,18 @@ export default function Area() {
     // fetch area
     const getAreas = async () => {
       try {
-        // fetch areas from city in Cookies
         const ci = Cookies.get("ci");
-        const cleanAreas = await axios.get(`/cities/areas/${ci}`);
+        const response = await axios.get(`/cities/areas/${ci}`);
 
-        if (cleanAreas.status === 200) {
-          isMounted && setAreas(cleanAreas.data);
+        // check if city exist or not
+        if (response.status === 200) {
+          isMounted && setAreas(response.data);
         } else {
           navigate("/");
         }
       } catch (e) {
-        // Cookies.remove("ci");
-        alert("Error in getting Areas");
+        Cookies.remove("ci");
+        navigate("/");
       }
     };
     getAreas();
@@ -45,7 +45,7 @@ export default function Area() {
   }, [navigate]);
 
   //-----------------------------------------------> onClick area
-  const saveArea = (id) => {
+  const selectArea = (id) => {
     // save area id in Cookies as ai
     Cookies.set("ai", id);
 
@@ -65,7 +65,7 @@ export default function Area() {
           content={data.address}
           img={data.img}
           onClickHandler={() => {
-            saveArea(data._id);
+            selectArea(data._id);
           }}
         />
       ))}
@@ -80,7 +80,7 @@ export default function Area() {
   );
 }
 
-//-----------------------------------------------> Styles
+//-----------------------------------------------> Custom styles
 const useStyles = makeStyles({
   title: {
     "& img": {

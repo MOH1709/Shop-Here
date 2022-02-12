@@ -12,28 +12,30 @@ export default function SignIn() {
   const styles = useStyles();
   const navigate = useNavigate();
   // const [isEmail, setIsEmail] = useState(false);
-  const [data, setData] = useState({
+  const [input, setInput] = useState({
     phoneNumber: "",
     password: "",
   });
 
   //-----------------------------------------------> on load
   useEffect(() => {
+    // check if user already signed in or not
     if (Cookies.get("ux")) {
       navigate(-1);
     }
   }, [navigate]);
 
-  //-----------------------------------------------> Storing inputs
+  //-----------------------------------------------> set inputs
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
+    // deduce restriction for valid phone number
     if (name === "phoneNumber" && value.length > 10) {
       return;
     }
 
-    setData({
-      ...data,
+    setInput({
+      ...input,
       [name]: value,
     });
   };
@@ -41,29 +43,24 @@ export default function SignIn() {
   //-----------------------------------------------> onClick Signin
   const signIn = async () => {
     try {
-      if (!(data.phoneNumber || data.password)) {
+      // check if both field are filled
+      if (!(input.phoneNumber || input.password)) {
         alert("please fill all field");
         return;
       }
 
-      if (data.password.length < 8) {
+      if (input.password.length < 8) {
         alert("password should be minimum 8 character long");
         return;
       }
 
-      const ci = Cookies.get("ci");
-      const ai = Cookies.get("ai");
-      const fa = Cookies.get("fa");
-      const un = Cookies.get("un");
-
       await axios.post(`/user/signin`, {
-        cid: ci,
-        aid: ai,
-        name: un,
-        userId: data.phoneNumber,
-        password: data.password,
-        phoneNumber: data.phoneNumber,
-        address: fa,
+        cid: Cookies.get("ci"),
+        aid: Cookies.get("ai"),
+        name: Cookies.get("un"),
+        userId: input.phoneNumber,
+        password: input.password,
+        address: Cookies.get("fa"),
       });
 
       navigate(-1);
@@ -98,7 +95,7 @@ export default function SignIn() {
         <InputBox
           title={"Email ID"}
           type={"text"}
-          value={data.phoneNumber}
+          value={input.phoneNumber}
           onChangeHandler={onChangeHandler}
           name="phoneNumber"
         />
@@ -107,7 +104,7 @@ export default function SignIn() {
           onChangeHandler={onChangeHandler}
           name="password"
           type="password"
-          value={data.password}
+          value={input.password}
         />
         <Button className={styles.create} onClick={signIn}>
           create
@@ -124,7 +121,7 @@ export default function SignIn() {
   );
 }
 
-//-----------------------------------------------> Styles
+//-----------------------------------------------> Custom styles
 const useStyles = makeStyles({
   container: {
     flex: 1,

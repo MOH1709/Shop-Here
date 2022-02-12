@@ -1,6 +1,5 @@
-import Cookies from "js-cookie";
 import axios from "axios";
-// import { makeStyles } from "@material-ui/core";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,17 +20,19 @@ export default function Business() {
         const ai = Cookies.get("ai");
 
         if (ai !== "undefined") {
-          const cleanBusiness = await axios.get(`/area/bussinesses/${ai}`);
-          isMounted && setBusinesses(cleanBusiness.data);
+          const response = await axios.get(`/area/bussinesses/${ai}`);
+
+          if (response.status === 200) {
+            isMounted && setBusinesses(response.data);
+          } else {
+            alert("shop is removed");
+          }
         } else {
           Cookies.remove("ai");
-
           navigate("/city/home/areas");
         }
       } catch (e) {
-        Cookies.remove("ai");
-        navigate("/city/home/areas");
-        // alert("error in fetching shops");
+        alert("shop is removed");
       }
     };
 
@@ -65,10 +66,3 @@ export default function Business() {
     </>
   );
 }
-
-// //-----------------------------------------------> Styles
-// const useStyles = makeStyles({
-//   container: {
-//     position: "relative",
-//   },
-// });

@@ -121,15 +121,7 @@ export default function Cart() {
       {cart.map((data, index) => {
         return (
           <div className={styles.shopCart} key={data._id}>
-            <CartCard
-              _id={data._id}
-              price={data.price}
-              q={data.quantity}
-              shopName={data.address}
-              name={data.name}
-              img={data.img}
-              avail={data.avail}
-            />
+            <CartCard state={data} />
 
             <ToggleBtn
               Style={{

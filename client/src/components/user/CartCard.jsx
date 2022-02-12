@@ -7,34 +7,27 @@ import { BTN_STYLE, COLOR } from "../../constants";
 //-----------------------------------------------> custom components
 import { Context } from "../../contexts/CartProvider";
 
-export default function CartCard({
-  img,
-  name,
-  q,
-  price,
-  shopName,
-  _id,
-  avail,
-}) {
+export default function CartCard({ state }) {
   const styles = useStyles();
-  const [total, setTotal] = useState(parseInt(price) * q);
+  const { img, name, quantity, price, address, _id, avail } = state;
+  const [total, setTotal] = useState(parseInt(price) * quantity);
   const { cart, setCart } = useContext(Context);
 
   return (
     <div
       className={styles.container}
-      style={{ display: q > 0 ? "flex" : "none" }}
+      style={{ display: quantity > 0 ? "flex" : "none" }}
     >
       <div className={styles.left}>
         <img src={img || "./logo.png"} alt="product" className={styles.img} />
         <div className={styles.qDiv}>
           <Button
             onClick={() => {
-              if (q < avail) {
+              if (quantity < avail) {
                 setCart(
                   cart.map((data) => {
                     if (data._id === _id) {
-                      return { ...data, quantity: q + 1 };
+                      return { ...data, quantity: quantity + 1 };
                     }
                     return data;
                   })
@@ -42,17 +35,17 @@ export default function CartCard({
                 setTotal(total + parseInt(price));
               }
             }}
-            style={{ fontSize: q < avail ? 20 : 12 }}
+            style={{ fontSize: quantity < avail ? 20 : 12 }}
           >
-            {q < avail ? "+" : "MAX"}
+            {quantity < avail ? "+" : "MAX"}
           </Button>
-          <span>{q}</span>
+          <span>{quantity}</span>
           <Button
             onClick={() => {
               setCart(
                 cart.map((data) => {
                   if (data._id === _id) {
-                    return { ...data, quantity: q - 1 };
+                    return { ...data, quantity: quantity - 1 };
                   }
                   return data;
                 })
@@ -60,7 +53,7 @@ export default function CartCard({
 
               setTotal(total - parseInt(price));
 
-              if (q === 1) {
+              if (quantity === 1) {
                 setCart(
                   cart.filter((data) => {
                     return data._id !== _id;
@@ -69,7 +62,7 @@ export default function CartCard({
               }
             }}
           >
-            {q === 1 ? (
+            {quantity === 1 ? (
               <img src="./icons/delete.svg" alt="delete" height="20" />
             ) : (
               "-"
@@ -79,7 +72,7 @@ export default function CartCard({
       </div>
       <div className={styles.detail}>
         <p className={styles.name}>{name}</p>
-        <div className={styles.shopName}>{shopName}</div>
+        <p className={styles.address}>{address}</p>
         <p className={styles.total}>
           <span>TOTAL : </span> ₹{total}
         </p>
@@ -145,7 +138,7 @@ const useStyles = makeStyles({
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
   },
-  shopName: {
+  address: {
     fontSize: 15,
     overflow: "hidden",
     opacity: 0.5,

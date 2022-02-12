@@ -12,8 +12,8 @@ import { OwnerProfile } from "./owners";
 
 export default function OwnerMain() {
   const styles = useStyles();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { width } = useContext(Context);
 
   //-----------------------------------------------> check is Owner
@@ -26,16 +26,17 @@ export default function OwnerMain() {
 
     const sendRequest = async () => {
       try {
-        const { data } = await axios.get(`/user/${ux}`);
-        if (data?.bussinessId) {
-          Cookies.set("bx", data.bussinessId);
+        const res = (await axios.get(`/user/${ux}`)).data;
+
+        // check if user is allowed for bussiness or not
+        if (res?.bussinessId) {
+          Cookies.set("bx", res.bussinessId);
         } else {
-          //send request
+          //-- send request
           navigate("/city/messages");
         }
       } catch (e) {
         navigate("/city/messages");
-        alert("error in owner login");
       }
     };
     sendRequest();
@@ -71,7 +72,7 @@ export default function OwnerMain() {
   );
 }
 
-//-----------------------------------------------> Styles
+//-----------------------------------------------> custom styles
 const useStyles = makeStyles({
   primary: {
     flex: 1,

@@ -92,11 +92,7 @@ export default function OwnerInventory() {
             </p>
             <ProductCard
               key={data._id}
-              img={data.img}
-              mrp={data.MRP}
-              price={data.price}
-              quantity={data.quantity}
-              title={data.name}
+              state={data}
               onClickHandler={() => {
                 setProduct(data);
                 setShowBox(true);
