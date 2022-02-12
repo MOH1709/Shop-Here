@@ -2,37 +2,46 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import { useNavigate, NavLink } from "react-router-dom";
 
 //-----------------------------------------------> Custom Components
 import { InputBox } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
-import { useNavigate, NavLink } from "react-router-dom";
 
 export default function Start() {
   const styles = useStyles();
   const navigate = useNavigate();
+  const [cities, setCities] = useState([]);
   const [showOption, setShowOption] = useState(false);
-  const [data, setData] = useState({
+  const [input, setInput] = useState({
     fname: "",
     lname: "",
-    city: "halol",
-    cityid: "61da77bdc8276a19e9a07504",
+    city: "",
+    cityId: "",
   });
-  const [cities, setCities] = useState([]);
 
   //-----------------------------------------------> on load
   useEffect(() => {
-    let isMouted = true;
+    let isMounted = true;
 
-    //-----------------------------------------------> on load function
+    // fetch and store cities, in cities state
     const getCities = async () => {
       try {
+        // if ci already exist, auto navigate to home page
         if (Cookies.get("ci")) {
           navigate(`/city/home/areas`);
         }
 
-        const cleanCities = await axios.get("/cities");
-        isMouted && setCities(cleanCities.data);
+        const response = (await axios.get("/cities")).data;
+        if (isMounted) {
+          setCities(response);
+          setInput({
+            fname: "",
+            lname: "",
+            city: response[0].name,
+            cityId: response[0]._id,
+          });
+        }
       } catch (e) {
         alert("Error in getting cities");
       }
@@ -40,28 +49,29 @@ export default function Start() {
     getCities();
 
     return () => {
-      isMouted = false;
+      isMounted = false;
     };
   }, [navigate]);
 
-  //-----------------------------------------------> store input text
+  //-----------------------------------------------> set name of user
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
+    // check if the value is not symbol or number
     if (/^[A-Z]$/i.test(value[value.length - 1]) || value === "") {
-      setData({
-        ...data,
+      setInput({
+        ...input,
         [name]: value,
       });
     }
   };
 
-  //-----------------------------------------------> store city
+  //-----------------------------------------------> set value of drop down menu
   const selectOption = (name, id) => {
-    setData({
-      ...data,
+    setInput({
+      ...input,
       city: name,
-      cityid: id,
+      cityId: id,
     });
 
     setShowOption(false);
@@ -69,15 +79,15 @@ export default function Start() {
 
   //-----------------------------------------------> onClick start Button
   const start = () => {
-    const { fname, lname, cityid } = data;
+    const { fname, lname, cityId } = input;
 
     // checking if all fields are field
     if (!(fname || lname)) {
       alert("please enter your full name");
       return;
     }
-    //save data in Cookies
-    Cookies.set("ci", cityid);
+    //save input in Cookies
+    Cookies.set("ci", cityId);
     Cookies.set("un", `${fname}+${lname}`);
 
     navigate(`/city/home/areas`);
@@ -99,13 +109,13 @@ export default function Start() {
           title={"First Name"}
           onChangeHandler={onChangeHandler}
           name="fname"
-          value={data.fname}
+          value={input.fname}
         />
         <InputBox
           title={"Last Name"}
           onChangeHandler={onChangeHandler}
           name="lname"
-          value={data.lname}
+          value={input.lname}
         />
         <div className={styles.cityDiv}>
           <p>City</p>
@@ -116,19 +126,19 @@ export default function Start() {
               setShowOption(!showOption);
             }}
           >
-            {data.city}
+            {input.city}
             <img src="./icons/drop.svg" alt=">" />
           </Button>
           <div
             className={styles.options}
             style={{ display: showOption ? "flex" : "none" }}
           >
-            {cities.map((data, index) => (
+            {cities.map((input, index) => (
               <Button
                 key={index}
-                onClick={() => selectOption(data.name, data._id)}
+                onClick={() => selectOption(input.name, input._id)}
               >
-                {data.name}
+                {input.name}
               </Button>
             ))}
           </div>

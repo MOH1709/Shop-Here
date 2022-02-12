@@ -8,9 +8,9 @@ import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MiddleWare } from "../components";
 import { PrimaryHeader } from "../components/owner";
 import { Context } from "../contexts/WidthProvider";
-import { OwnerHome } from "./owners";
+import { OwnerProfile } from "./owners";
 
-export default function Owner() {
+export default function OwnerMain() {
   const styles = useStyles();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export default function Owner() {
             className={styles.secondary}
             style={{ display: width > 700 ? "flex" : "none" }}
           >
-            <OwnerHome />
+            <OwnerProfile />
           </div>
         </>
       ) : (

@@ -10,7 +10,7 @@ import { Card } from "../../components";
 import { BTN_STYLE } from "../../constants";
 import { Context } from "../../contexts/SelectedAreas";
 
-export default function AreaSelection() {
+export default function OwnerAreaSelection() {
   const styles = useStyles();
   const navigate = useNavigate();
   const [rmareas, setRmareas] = useState();

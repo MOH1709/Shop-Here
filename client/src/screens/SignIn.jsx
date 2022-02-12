@@ -1,13 +1,12 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom component
 import { InputBox, MiddleWare } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
-import { useEffect } from "react";
 
 export default function SignIn() {
   const styles = useStyles();
@@ -97,8 +96,8 @@ export default function SignIn() {
       </p>
       <form className={styles.form}>
         <InputBox
-          title={"Mobile Number"}
-          type={"number"}
+          title={"Email ID"}
+          type={"text"}
           value={data.phoneNumber}
           onChangeHandler={onChangeHandler}
           name="phoneNumber"

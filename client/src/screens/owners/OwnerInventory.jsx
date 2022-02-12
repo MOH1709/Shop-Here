@@ -8,7 +8,7 @@ import { ProductCard, AddProductBox } from "../../components/owner";
 import { BTN_STYLE } from "../../constants";
 import { AlertBox } from "../../components";
 
-export default function Inventory() {
+export default function OwnerInventory() {
   const styles = useStyles();
   const bx = Cookies.get("bx");
   const [showBox, setShowBox] = useState(false);

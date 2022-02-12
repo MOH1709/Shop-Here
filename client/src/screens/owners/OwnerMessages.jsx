@@ -1,13 +1,13 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core";
 
 //-----------------------------------------------> custom components
 import { OwnerMessage } from "../../components/owner";
 import { COLOR } from "../../constants";
 
-export default function ShopMessages() {
+export default function OwnerMessages() {
   const styles = useStyles();
   const [msg, setMsg] = useState([]);
 

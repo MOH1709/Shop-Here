@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState, useContext } from "react";
-import { makeStyles, Button } from "@material-ui/core";
-import Cookies from "js-cookie";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { makeStyles, Button } from "@material-ui/core";
+import { useEffect, useRef, useState, useContext } from "react";
 
 //-----------------------------------------------> custom component
 import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
-import imageUploader from "../../imageUploader";
+// import imageUploader from "../../imageUploader";
 import { Context } from "../../contexts/SelectedAreas";
 
-export default function OwnerHome() {
+export default function OwnerProfile() {
   const styles = useStyles();
   const fileInput = useRef();
   const navigate = useNavigate();
@@ -35,8 +35,7 @@ export default function OwnerHome() {
       try {
         const bx = Cookies.get("bx");
         if (bx) {
-          let res = await axios.get(`/bussiness/${bx}`);
-          res = res.data;
+          let res = (await axios.get(`/bussiness/${bx}`)).data;
 
           if (isMounted) {
             setIsOpen(res.isOpen);

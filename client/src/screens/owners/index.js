@@ -1,7 +1,13 @@
-import OwnerHome from "./OwnerHome";
-import Inventory from "./Inventory";
+import OwnerProfile from "./OwnerProfile";
+import OwnerInventory from "./OwnerInventory";
 import OwnerSetting from "./OwnerSetting";
-import ShopMessages from "./ShopMessages";
-import AreaSelection from "./AreaSelection";
+import OwnerMessages from "./OwnerMessages";
+import OwnerAreaSelection from "./OwnerAreaSelection";
 
-export { Inventory, OwnerHome, OwnerSetting, ShopMessages, AreaSelection };
+export {
+  OwnerInventory,
+  OwnerProfile,
+  OwnerSetting,
+  OwnerMessages,
+  OwnerAreaSelection,
+};
