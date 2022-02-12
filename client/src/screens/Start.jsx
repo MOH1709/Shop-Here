@@ -151,7 +151,7 @@ export default function Start() {
   );
 }
 
-//-----------------------------------------------> Styles
+//-----------------------------------------------> Custom styles
 const useStyles = makeStyles({
   container: {
     flex: 1,

@@ -1,6 +1,6 @@
 import { makeStyles, Button } from "@material-ui/core";
 import { useContext } from "react";
-import { NavLink, useParams, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 //-----------------------------------------------> custom Componenets
 import { BTN_STYLE, COLOR } from "../../constants";
@@ -9,7 +9,6 @@ import { Context } from "../../contexts/WidthProvider";
 export default function PrimaryHeader({ setLocation, location }) {
   const styles = useStyles();
   const { width } = useContext(Context); // getting windows width dynamically
-  const { cname } = useParams();
   const { pathname } = useLocation();
 
   return (
@@ -17,10 +16,10 @@ export default function PrimaryHeader({ setLocation, location }) {
       <div className={styles.top}>
         <img src="./logo.png" alt="logo" height="50" className={styles.logo} />
         <div className={styles.right}>
-          {/* <Button component={NavLink} to={`/${cname}/search`}>
+          {/* <Button component={NavLink} to={`/city/search`}>
             <img src="./icons/search.svg" alt="search" />
           </Button> */}
-          <Button component={NavLink} to={`/${cname}/owner/setting`}>
+          <Button component={NavLink} to={`/city/owner/setting`}>
             <img src="./icons/setting.svg" alt="setting" />
           </Button>
         </div>
@@ -30,7 +29,7 @@ export default function PrimaryHeader({ setLocation, location }) {
           <Button
             className={styles.navBtn}
             component={NavLink}
-            to={`/${cname}/owner/profile`}
+            to={`/city/owner/profile`}
             style={({ isActive }) => {
               return isActive
                 ? {
@@ -46,7 +45,7 @@ export default function PrimaryHeader({ setLocation, location }) {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/owner`}
+          to={`/city/owner`}
           style={
             pathname === "/city/owner"
               ? {
@@ -61,7 +60,7 @@ export default function PrimaryHeader({ setLocation, location }) {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/owner/inventory`}
+          to={`/city/owner/inventory`}
           style={({ isActive }) => {
             return isActive
               ? {

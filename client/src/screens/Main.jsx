@@ -6,21 +6,20 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PrimaryHeader, SecondaryHeader } from "../components/user";
 import { MiddleWare } from "../components";
 import { Context } from "../contexts/WidthProvider";
-
-//----------------------------------------------->
 import { Cart } from "./primary";
 
-export default function MainScreen() {
+export default function Main() {
   const styles = useStyles();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { width } = useContext(Context);
 
+  //-----------------------------------------------> on load
   useEffect(() => {
     if (width > 700 && pathname === "/city/cart") {
       navigate("/city/home");
     }
-  }, [width, navigate, pathname]);
+  }, [width, pathname, navigate]);
 
   return (
     <>
@@ -40,7 +39,7 @@ export default function MainScreen() {
   );
 }
 
-//-----------------------------------------------> Styles
+//-----------------------------------------------> Custom styles
 const useStyles = makeStyles({
   primary: {
     flex: 1,

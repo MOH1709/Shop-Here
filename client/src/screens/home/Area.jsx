@@ -23,7 +23,7 @@ export default function Area() {
     // fetch area
     const getAreas = async () => {
       try {
-        // fetch areas from cname in Cookies
+        // fetch areas from city in Cookies
         const ci = Cookies.get("ci");
         const cleanAreas = await axios.get(`/cities/areas/${ci}`);
 

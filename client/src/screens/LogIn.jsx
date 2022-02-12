@@ -1,11 +1,11 @@
+import axios from "axios";
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
+import { NavLink, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom Components
 import { InputBox } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
-import { NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export default function LogIn() {
   const styles = useStyles();
@@ -15,7 +15,7 @@ export default function LogIn() {
     password: "",
   });
 
-  //-----------------------------------------------> store inputs
+  //-----------------------------------------------> set inputs
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
 
@@ -30,18 +30,22 @@ export default function LogIn() {
     try {
       const { phoneNumber, password } = input;
 
+      // check if both inputs are filled
       if (phoneNumber && password) {
+        // check custom validation of mobile number
         if (phoneNumber.length < 10) {
           alert("please, enter a valid phone number :)");
           return;
         }
 
+        // getting data of user from backend
         const res = await axios.put(`/user/login/${phoneNumber}/${password}`);
 
+        // checking user authentication
         if (res.status === 200) {
           navigate(`/city/home/areas`);
         } else {
-          alert("Wrong data or password");
+          alert("Incorrect Id or password");
         }
       } else {
         alert("please fill all input field");
@@ -94,7 +98,7 @@ export default function LogIn() {
   );
 }
 
-//-----------------------------------------------> Styles
+//-----------------------------------------------> Custom styles
 const useStyles = makeStyles({
   container: {
     flex: 1,

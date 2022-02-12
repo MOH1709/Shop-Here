@@ -23,7 +23,7 @@ export default function OwnerAreaSelection() {
     // fetch area
     const getAreas = async () => {
       try {
-        // fetch areas from cname in Cookies
+        // fetch areas from city in Cookies
         const ci = Cookies.get("ci");
         const bx = Cookies.get("bx");
 

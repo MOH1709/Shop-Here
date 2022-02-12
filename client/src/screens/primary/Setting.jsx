@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
-import { NavLink, useNavigate, Outlet, useParams } from "react-router-dom";
+import { NavLink, useNavigate, Outlet } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { COLOR } from "../../constants";
@@ -9,7 +9,6 @@ import { COLOR } from "../../constants";
 export default function Setting() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const { cname } = useParams();
 
   //-----------------------------------------------> logout
   const logOut = async () => {
@@ -52,21 +51,21 @@ export default function Setting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/userprofile`}
+          to={`/city/setting/userprofile`}
         >
           My Profile
         </Button>
         {/* <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/userbills`}
+          to={`/city/setting/userbills`}
         >
           My Orders
         </Button> */}
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/owner`}
+          to={`/city/owner`}
           style={{ display: Cookies.get("bx") ? "flex" : "none" }}
         >
           Use For Bussiness
@@ -74,14 +73,14 @@ export default function Setting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/updates`}
+          to={`/city/setting/updates`}
         >
           Update & Info
         </Button>
         {/* <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/`}
+          to={`/city/setting/`}
         >
           Want A Product
         </Button> */}
@@ -91,7 +90,7 @@ export default function Setting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/report`}
+          to={`/city/setting/report`}
         >
           Report An Issue
         </Button>

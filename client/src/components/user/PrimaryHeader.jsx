@@ -1,15 +1,14 @@
 import { makeStyles, Button } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
-import { NavLink, useParams } from "react-router-dom";
 
 //-----------------------------------------------> custom Componenets
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../../constants";
 import { Context } from "../../contexts/WidthProvider";
 import { Context as CartContext } from "../../contexts/CartProvider";
 
-export default function PrimaryHeader({ setLocation, location }) {
+export default function PrimaryHeader() {
   const styles = useStyles();
-  const { cname } = useParams();
   const { width } = useContext(Context); // getting windows width dynamically
   const { cart } = useContext(CartContext);
 
@@ -18,10 +17,10 @@ export default function PrimaryHeader({ setLocation, location }) {
       <div className={styles.top}>
         <img src="./logo.png" alt="logo" height="50" className={styles.logo} />
         <div className={styles.right}>
-          {/* <Button component={NavLink} to={`/${cname}/search`}>
+          {/* <Button component={NavLink} to={`/city/search`}>
             <img src="./icons/search.svg" alt="search" />
           </Button> */}
-          <Button component={NavLink} to={`/${cname}/setting`}>
+          <Button component={NavLink} to={`/city/setting`}>
             <img src="./icons/setting.svg" alt="setting" />
           </Button>
         </div>
@@ -30,7 +29,7 @@ export default function PrimaryHeader({ setLocation, location }) {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/home`}
+          to={`/city/home`}
           style={({ isActive }) => {
             return isActive
               ? {
@@ -45,7 +44,7 @@ export default function PrimaryHeader({ setLocation, location }) {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/messages`}
+          to={`/city/messages`}
           style={({ isActive }) => {
             return isActive
               ? {
@@ -61,7 +60,7 @@ export default function PrimaryHeader({ setLocation, location }) {
           <Button
             className={styles.navBtn}
             component={NavLink}
-            to={`/${cname}/cart`}
+            to={`/city/cart`}
             style={({ isActive }) => {
               return isActive
                 ? {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
-import { NavLink, useNavigate, Outlet, useParams } from "react-router-dom";
+import { NavLink, useNavigate, Outlet } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { COLOR } from "../../constants";
@@ -9,7 +9,6 @@ import { COLOR } from "../../constants";
 export default function OwnerSetting() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const { cname } = useParams();
 
   //-----------------------------------------------> logout
   const logOut = async () => {
@@ -43,31 +42,27 @@ export default function OwnerSetting() {
         </Button>
       </div>
       <div className={styles.main}>
-        <Button
-          className={styles.navBtn}
-          component={NavLink}
-          to={`/${cname}/home`}
-        >
+        <Button className={styles.navBtn} component={NavLink} to={`/city/home`}>
           Switch As Consumer
         </Button>
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/updates`}
+          to={`/city/setting/updates`}
         >
           Update & Info
         </Button>
         {/* <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/`}
+          to={`/city/setting/`}
         >
           Want A Product
         </Button> */}
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/${cname}/setting/report`}
+          to={`/city/setting/report`}
         >
           Report An Issue
         </Button>
