@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Shop } from "../models/index.js";
+import { Product } from "../models/index.js";
 
 const router = Router();
 
@@ -9,10 +9,8 @@ router.put("/:bid", async(req, res) => {
     const { bid } = req.params;
     const product = req.body;
 
-    await Shop.updateOne({ _id: bid, "products._id": product._id }, {
-      $set: {
-        "products.$": product,
-      },
+    await Product.updateOne({ _id: product._id, businessId: bid }, {
+      $set: product,
     });
 
     res.status(200).send(`product edited successfully`);
@@ -22,16 +20,17 @@ router.put("/:bid", async(req, res) => {
 });
 
 //----------------------------------------------->  add products of shop
-router.post("/:bid", async(req, res) => {
+router.post("/:cid/:bid", async(req, res) => {
   try {
-    const { bid } = req.params;
+    const { bid, cid } = req.params;
     const newProducts = req.body;
 
-    await Shop.updateOne({ _id: bid }, {
-      $push: {
-        products: newProducts,
-      },
+    const product = new Product({
+      ...newProducts,
+      businessId: bid,
+      cityId: cid,
     });
+    await product.save();
 
     res.status(200).send(`product saves successfully`);
   } catch (e) {
@@ -40,15 +39,11 @@ router.post("/:bid", async(req, res) => {
 });
 
 //-----------------------------------------------> delete product
-router.delete("/:bid/:product_id", async(req, res) => {
+router.delete("/:bid/:_id", async(req, res) => {
   try {
-    const { bid, product_id } = req.params;
+    const { bid, _id } = req.params;
 
-    await Shop.updateOne({ _id: bid }, {
-      $pull: {
-        products: { _id: product_id },
-      },
-    });
+    await Product.deleteOne({ _id, businessId: bid });
 
     res.status(200).send(`product deleted successfully`);
   } catch (e) {

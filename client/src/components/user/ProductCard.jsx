@@ -3,16 +3,19 @@ import { makeStyles, Button } from "@material-ui/core";
 //-----------------------------------------------> custom components
 import { COLOR, FLEX_CENTER } from "../../constants";
 
-export default function Card({ state, onClickHandler }) {
+export default function ProductCard({ state, onClickHandler }) {
   const styles = useStyles();
   const { img, name, MRP, quantity, price, isAdded } = state;
 
   return (
     <div
-      style={{ display: quantity ? "flex" : "none" }}
       className={styles.container}
       onClick={() => {
-        onClickHandler({ ...state, avail: quantity }, !isAdded);
+        if (quantity > 0) {
+          onClickHandler({ ...state, avail: quantity }, !isAdded);
+        } else {
+          alert(`${name} is out of stock for now😟`);
+        }
       }}
     >
       <div className={styles.img}>
@@ -20,9 +23,9 @@ export default function Card({ state, onClickHandler }) {
       </div>
       <div className={styles.contentDiv}>
         <p>{name}</p>
-        <p>{price} ₹</p>
+        <p>${price} ₹</p>
         <p>
-          {MRP} {!MRP || "₹"}
+          {quantity > 0 ? `${MRP || ""} ${MRP ? "₹" : ""}` : `out of stock`}
         </p>
       </div>
       <Button
@@ -43,6 +46,7 @@ const useStyles = makeStyles({
     paddingLeft: 0,
     marginBlock: 10,
     cursor: "pointer",
+    display: "flex",
   },
   img: {
     "& img": {

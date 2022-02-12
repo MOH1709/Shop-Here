@@ -10,7 +10,6 @@ import { AlertBox } from "../../components";
 
 export default function OwnerInventory() {
   const styles = useStyles();
-  const bx = Cookies.get("bx");
   const [showBox, setShowBox] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
@@ -49,12 +48,15 @@ export default function OwnerInventory() {
   //-----------------------------------------------> addProduct
   const addProduct = async (data) => {
     try {
+      const ci = Cookies.get("ci");
+      const bx = Cookies.get("bx");
+
       setShowBox(false);
 
       if (!(data.name || data.price)) {
         alert("sorry to add new product, name and price required must!!");
       } else {
-        await axios.post(`/product/${bx}`, data);
+        await axios.post(`/product/${ci}/${bx}`, data);
         window.location.reload();
       }
     } catch (e) {
@@ -65,6 +67,8 @@ export default function OwnerInventory() {
   //-----------------------------------------------> edit added product
   const editProduct = async (data) => {
     try {
+      const bx = Cookies.get("bx");
+
       setShowBox(false);
 
       await axios.put(`/product/${bx}`, data);

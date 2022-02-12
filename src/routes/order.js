@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Order, User, Shop } from "../models/index.js";
+import { Order, User, Shop, Product } from "../models/index.js";
 
 const router = Router();
 
@@ -51,6 +51,12 @@ router.post("/:uxt", async(req, res) => {
           reciever: reciever.name,
         },
       },
+    });
+
+    products.forEach(async(data) => {
+      await Product.updateOne({ _id: data._id }, {
+        $inc: { quantity: -data.quantity },
+      });
     });
 
     res.status(200).send("order placed successfully");

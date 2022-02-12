@@ -18,37 +18,6 @@ const shopSchema = new mongoose.Schema({
       type: Number,
     },
   }, ],
-  products: [{
-    name: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    MRP: {
-      type: Number,
-    },
-    category: {
-      type: String,
-    },
-    img: {
-      type: String,
-    },
-    quantity: {
-      type: String,
-      default: "",
-    },
-    des: {
-      type: String,
-      default: "",
-    },
-    isAdded: {
-      type: Boolean,
-      default: false,
-    },
-  }, ],
   orders: [{
     address: {
       type: String,

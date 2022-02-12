@@ -49,7 +49,14 @@ export default function Product() {
             return 0;
           };
 
-          setProducts(response.products.sort(sortByCategory));
+          setProducts(
+            response.products.sort(sortByCategory).map((data) => {
+              return {
+                ...data,
+                isAdded: false,
+              };
+            })
+          );
         }
       } catch (e) {
         alert("error in getting products of this shop");

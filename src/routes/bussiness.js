@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Shop, Area, Order } from "../models/index.js";
+import { Shop, Area, Product } from "../models/index.js";
 
 const router = Router();
 
@@ -19,9 +19,10 @@ router.get("/:bid", async(req, res) => {
 router.get("/uservisible/:bid", async(req, res) => {
   try {
     const { bid } = req.params;
-    const shop = await Shop.findOne({ _id: bid }, { _id: 0, extras: 1, isOpen: 1, products: 1, canUrgent: 1 });
+    const { extras, isOpen, canUrgent } = await Shop.findOne({ _id: bid });
+    const products = (await Product.find({ businessId: bid })) || [];
 
-    res.status(200).send(shop);
+    res.status(200).send({ extras, isOpen, canUrgent, products });
   } catch (e) {
     res.status(500).send("error in getting products");
   }
