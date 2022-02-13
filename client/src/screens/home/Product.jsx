@@ -28,10 +28,10 @@ export default function Product() {
     // fetching and setting products of shop
     const getProducts = async () => {
       try {
-        const response = (await axios.get(`/bussiness/uservisible/${shop[1]}`))
-          .data;
-
         if (isMounted) {
+          const response = (
+            await axios.get(`/bussiness/uservisible/${shop[1]}`)
+          ).data;
           setShopData({
             phoneNumber: response.extras[0].phoneNumber,
             email: response.extras[1].email,
@@ -53,7 +53,7 @@ export default function Product() {
             response.products.sort(sortByCategory).map((data) => {
               return {
                 ...data,
-                isAdded: false,
+                isAdded: cart.find((val) => val._id === data._id),
               };
             })
           );
@@ -68,25 +68,15 @@ export default function Product() {
     return () => {
       isMounted = false;
     };
-  }, [shop]);
+  }, [shop, cart]);
 
   //-----------------------------------------------> edit Products according to cart
   const editProduct = (obj, isAdded) => {
-    setProducts(
-      products.map((data) => {
-        return data._id === obj._id ? { ...obj, isAdded } : data;
-      })
-    );
-
     if (isAdded) {
-      const inCart = cart.some((val) => val._id === obj._id);
-
-      if (inCart === false) {
-        setCart([
-          ...cart,
-          { ...obj, quantity: 1, canUrgent, address: shop[0], shopId: shop[1] },
-        ]);
-      }
+      setCart([
+        ...cart,
+        { ...obj, quantity: 1, canUrgent, address: shop[0], shopId: shop[1] },
+      ]);
     } else {
       setCart(cart.filter((val) => val._id !== obj._id));
     }

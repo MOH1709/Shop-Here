@@ -15,36 +15,46 @@ export default function InputBox({
   return (
     <div className={styles.container} style={Style}>
       <label htmlFor={title}>{title}</label>
-      <input
-        id={title}
-        type={type ?? "text"}
-        name={name}
-        maxLength="50"
-        value={value > 100000000000 ? 0 : value || ""}
-        // placeholder="type here"
-        onChange={onChangeHandler}
-      />
+      <div className={styles.inputDiv}>
+        <input
+          id={title}
+          type={type ?? "text"}
+          name={name}
+          maxLength="50"
+          value={value > 100000000000 ? 0 : value || ""}
+          // placeholder="type here"
+          onChange={onChangeHandler}
+        />
+        <img src="./icons/edit.svg" alt="img" />
+      </div>
     </div>
   );
 }
 
-//-----------------------------------------------> Styles
+//-----------------------------------------------> custom styles
 const useStyles = makeStyles({
   container: {
-    "& input": {
-      width: "100%",
-      border: "none",
-      outline: "none",
-      backgroundColor: "rgba(0,255,255,0.2)",
-      letterSpacing: 1,
-      paddingLeft: 3,
-      borderRadius: 3,
-    },
     "& label": {
       marginBottom: 5,
       fontWeight: "bold",
       color: COLOR.PRIMARY,
     },
     borderBottom: "2px solid rgba(0,0,0,0.5)",
+  },
+  inputDiv: {
+    "& input": {
+      flex: 1,
+      border: "none",
+      outline: "none",
+      letterSpacing: 1,
+      paddingLeft: 3,
+      borderRadius: 3,
+    },
+    "& img": {
+      height: 20,
+      opacity: 0.8,
+    },
+    display: "flex",
+    paddingBlock: 1,
   },
 });

@@ -145,8 +145,12 @@ const useStyles = makeStyles({
   },
   category: {
     fontWeight: "bold",
-    paddingLeft: 10,
-    marginBottom: 10,
+    width: "91%",
+    borderBottom: "2px solid rgba(0,0,0,0.5)",
+    marginLeft: "5%",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
     marginTop: 30,
   },
 });
