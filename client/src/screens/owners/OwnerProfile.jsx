@@ -1,17 +1,18 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { makeStyles, Button } from "@material-ui/core";
 import { useEffect, useRef, useState, useContext } from "react";
 
 //-----------------------------------------------> custom component
-import { InputBox, ToggleBtn } from "../../components";
+import { InputBox, OnSwipe, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 import imageUploader from "../../imageUploader";
 import { Context } from "../../contexts/SelectedAreas";
 
 export default function OwnerProfile() {
   const styles = useStyles();
+  const { pathname } = useLocation();
   const fileInput = useRef();
   const navigate = useNavigate();
   const { selectedAreas } = useContext(Context);
@@ -137,6 +138,13 @@ export default function OwnerProfile() {
 
   return (
     <div className={styles.container}>
+      {pathname === "/city/owner/profile" && (
+        <OnSwipe
+          onSwipeLeft={() => {
+            navigate("/city/owner/inventory");
+          }}
+        />
+      )}
       <div className={styles.main}>
         <input
           style={{ display: "none" }}

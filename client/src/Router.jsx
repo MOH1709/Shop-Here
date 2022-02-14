@@ -51,7 +51,7 @@ export default function Router() {
 
       {/* Owner Screen Routes */}
       <Route path="city/owner" element={<OwnerMain />}>
-        <Route index element={<OwnerMessages />} />
+        <Route path="messages" element={<OwnerMessages />} />
         <Route path="profile" element={<OwnerProfile />} />
         <Route path="inventory" element={<OwnerInventory />} />
         <Route path="setting" element={<OwnerSetting />} />

@@ -1,15 +1,14 @@
 import { makeStyles, Button } from "@material-ui/core";
 import { useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 //-----------------------------------------------> custom Componenets
 import { BTN_STYLE, COLOR } from "../../constants";
 import { Context } from "../../contexts/WidthProvider";
 
-export default function PrimaryHeader({ setLocation, location }) {
+export default function PrimaryHeader() {
   const styles = useStyles();
   const { width } = useContext(Context); // getting windows width dynamically
-  const { pathname } = useLocation();
 
   return (
     <div className={styles.container}>
@@ -25,37 +24,20 @@ export default function PrimaryHeader({ setLocation, location }) {
         </div>
       </div>
       <div className={styles.bottom}>
-        {width <= 700 && (
-          <Button
-            className={styles.navBtn}
-            component={NavLink}
-            to={`/city/owner/profile`}
-            style={({ isActive }) => {
-              return isActive
-                ? {
-                    color: COLOR.SECONDARY,
-                    borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
-                  }
-                : { color: "white" };
-            }}
-          >
-            Profile
-          </Button>
-        )}
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/city/owner`}
-          style={
-            pathname === "/city/owner"
+          to={width <= 700 ? `/city/owner/profile` : `/city/owner/messages`}
+          style={({ isActive }) => {
+            return isActive
               ? {
                   color: COLOR.SECONDARY,
                   borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
                 }
-              : { color: "white" }
-          }
+              : { color: "white" };
+          }}
         >
-          Messages
+          {width <= 700 ? "Profile" : "messages"}
         </Button>
         <Button
           className={styles.navBtn}

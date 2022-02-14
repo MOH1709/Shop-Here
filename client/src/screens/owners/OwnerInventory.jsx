@@ -2,14 +2,16 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { ProductCard, AddProductBox } from "../../components/owner";
 import { BTN_STYLE } from "../../constants";
-import { AlertBox } from "../../components";
+import { AlertBox, OnSwipe } from "../../components";
 
 export default function OwnerInventory() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const [showBox, setShowBox] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
@@ -80,6 +82,11 @@ export default function OwnerInventory() {
 
   return (
     <div className={styles.container}>
+      <OnSwipe
+        onSwipeRight={() => {
+          navigate("/city/owner/profile");
+        }}
+      />
       {products.map((data, index) => {
         return (
           <div key={data._id}>

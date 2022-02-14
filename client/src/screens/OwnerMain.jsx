@@ -1,11 +1,12 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import { useContext, useEffect } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { MiddleWare } from "../components";
+import { BTN_STYLE, SHADOW } from "../constants";
 import { PrimaryHeader } from "../components/owner";
 import { Context } from "../contexts/WidthProvider";
 import { OwnerProfile } from "./owners";
@@ -47,6 +48,10 @@ export default function OwnerMain() {
     if (width > 700 && pathname === "/city/owner/profile") {
       navigate("/city/owner");
     }
+
+    if (pathname === "/city/owner") {
+      navigate("/city/owner/messages");
+    }
   }, [width, pathname, navigate]);
 
   return (
@@ -56,6 +61,21 @@ export default function OwnerMain() {
         <>
           <div className={styles.primary}>
             <PrimaryHeader />
+            <Button
+              onClick={() => {
+                navigate("/city/owner/messages");
+              }}
+              className={styles.btn}
+              style={{
+                display:
+                  width > 700 || pathname === "/city/owner/messages"
+                    ? "none"
+                    : "flex",
+              }}
+            >
+              <img src="./icons/sms.svg" alt="messages" />
+            </Button>
+
             <Outlet />
           </div>
           <div
@@ -81,6 +101,17 @@ const useStyles = makeStyles({
     flexDirection: "column",
     minWidth: 280,
     overflowY: "auto",
+  },
+  btn: {
+    ...BTN_STYLE,
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    width: 65,
+    height: 65,
+    zIndex: 20,
+    boxShadow: SHADOW,
+    borderRadius: "50%",
   },
   secondary: {
     flex: 2,
