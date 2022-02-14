@@ -55,6 +55,7 @@ export default function Router() {
         <Route path="profile" element={<OwnerProfile />} />
         <Route path="inventory" element={<OwnerInventory />} />
         <Route path="setting" element={<OwnerSetting />} />
+        <Route path="messages/:oid" element={<ProductViewer />} />
         <Route path="areaSelection" element={<OwnerAreaSelection />} />
       </Route>
 

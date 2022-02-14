@@ -1,7 +1,7 @@
 import { Button, makeStyles } from "@material-ui/core";
 
 //-----------------------------------------------> custom Components
-import { COLOR } from "../constants";
+import { BTN_STYLE, COLOR, SHADOW } from "../constants";
 
 export default function ConsumerMessage({ pin, owners, onClickHandler }) {
   const styles = useStyles();
@@ -26,14 +26,14 @@ const useStyles = makeStyles({
   container: {
     position: "relative",
     margin: 10,
-    color: "white",
     padding: 10,
     flexDirection: "column",
     textAlign: "center",
     cursor: "pointer",
     marginBlock: 10,
     borderRadius: 5,
-    backgroundColor: COLOR.PRIMARY,
+    color: "black",
+    boxShadow: SHADOW,
   },
   orderPin: {
     "& span": {
@@ -44,17 +44,18 @@ const useStyles = makeStyles({
   shopNames: {
     "& span": {
       fontSize: 12,
-      color: "rgba(255,255,255,0.4)",
+      color: "rgba(0,0,0,0.4)",
     },
     marginTop: 10,
     overflow: "hidden",
   },
   btn: {
-    color: COLOR.SECONDARY,
+    ...BTN_STYLE,
     marginTop: 10,
     padding: 5,
     fontSize: 12,
     width: "100%",
-    border: `2px solid ${COLOR.SECONDARY}`,
+    // color: COLOR.PRIMARY,
+    // border: `2px solid ${COLOR.PRIMARY}`,
   },
 });

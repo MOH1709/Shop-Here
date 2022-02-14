@@ -1,25 +1,35 @@
 import "dotenv/config";
-import mongoose from "mongoose";
+import cors from "cors";
 import express from "express";
+import mongoose from "mongoose";
 import fileupload from "express-fileupload";
-// import { createServer } from "http";
-// import { Server } from "socket.io";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
-//-----------------------------------------------> custom components
+//-----------------------------------------------> custom
 import * as router from "./routes/index.js";
-
-//-----------------------------------------------> testing socket.io
-// const http = createServer(app);
-// const io = new Server(http);
-
-// io.on("connection", (socket) => {
-//   console.log("socket connected");
-// });
 
 //-----------------------------------------------> using imports
 const app = express();
 app.use(express.json()); // to convert all post request into json format
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(fileupload()); // to upload files i.e. images
+
+//-----------------------------------------------> testing socket.io
+const http = createServer(app);
+const io = new Server(http);
+
+io.on("connection", (socket) => {
+  console.log("socket connected");
+  socket.on("join_room", (data) => {
+    socket.join(data);
+  });
+
+  // data = {room: "to", name: "username", message: ""}
+  socket.on("send_msg", (data) => {
+    socket.to(data.room).emit("recieve_msg", data);
+  });
+});
 
 //-----------------------------------------------> using routes
 app.use("/utils", router.utils);

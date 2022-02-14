@@ -2,19 +2,20 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { send } from "../../utils/Push";
 import { CartCard } from "../../components/user";
-import { InputBox, ToggleBtn } from "../../components";
+import { InputBox, OnSwipe, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 import { Context } from "../../contexts/CartProvider";
 
 export default function Cart() {
   const styles = useStyles();
-  const { cart, setCart } = useContext(Context);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { cart, setCart } = useContext(Context);
   const [urgent, setUrgent] = useState([]);
   const [address, setAddress] = useState(Cookies.get("fa") || "");
   const [total, setTotal] = useState(0);
@@ -118,6 +119,13 @@ export default function Cart() {
   //-----------------------------------------------> returning component
   return (
     <div className={styles.container}>
+      {pathname === "/city/cart" && (
+        <OnSwipe
+          onSwipeRight={() => {
+            navigate("/city/home");
+          }}
+        />
+      )}
       {cart.map((data, index) => {
         return (
           <div className={styles.shopCart} key={data._id}>

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { useContext, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import { PrimaryHeader, SecondaryHeader } from "../components/user";
 import { MiddleWare } from "../components";
 import { Context } from "../contexts/WidthProvider";
 import { Cart } from "./primary";
+import { BTN_STYLE, SHADOW } from "../constants";
 
 export default function Main() {
   const styles = useStyles();
@@ -19,6 +20,10 @@ export default function Main() {
     if (width > 700 && pathname === "/city/cart") {
       navigate("/city/home");
     }
+
+    if (pathname === "/city") {
+      navigate("/city/home");
+    }
   }, [width, pathname, navigate]);
 
   return (
@@ -26,6 +31,18 @@ export default function Main() {
       <MiddleWare />
       <div className={styles.primary}>
         <PrimaryHeader />
+        <Button
+          onClick={() => {
+            navigate("/city/messages");
+          }}
+          className={styles.btn}
+          style={{
+            display:
+              width > 700 || pathname === "/city/messages" ? "none" : "flex",
+          }}
+        >
+          <img src="./icons/sms.svg" alt="messages" />
+        </Button>
         <Outlet />
       </div>
       <div
@@ -47,6 +64,17 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     minWidth: 280,
+  },
+  btn: {
+    ...BTN_STYLE,
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    width: 65,
+    height: 65,
+    zIndex: 20,
+    boxShadow: SHADOW,
+    borderRadius: "50%",
   },
   secondary: {
     flex: 2,

@@ -44,7 +44,7 @@ export default function PrimaryHeader() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/city/messages`}
+          to={width > 700 ? `/city/messages` : `/city/cart`}
           style={({ isActive }) => {
             return isActive
               ? {
@@ -54,34 +54,17 @@ export default function PrimaryHeader() {
               : { color: "white" };
           }}
         >
-          Messages
-        </Button>
-        {width <= 700 && (
-          <Button
-            className={styles.navBtn}
-            component={NavLink}
-            to={`/city/cart`}
-            style={({ isActive }) => {
-              return isActive
-                ? {
-                    color: COLOR.SECONDARY,
-                    borderBottom: `3.5px solid ${COLOR.SECONDARY}`,
-                  }
-                : { color: "white" };
+          <div
+            className={styles.badge}
+            style={{
+              display: cart.length ? "flex" : "none",
+              right: width > 400 ? 30 : 5,
             }}
           >
-            <div
-              className={styles.badge}
-              style={{
-                display: cart.length ? "flex" : "none",
-                right: width > 400 ? 30 : 5,
-              }}
-            >
-              {cart.length}
-            </div>
-            Cart
-          </Button>
-        )}
+            {cart.length}
+          </div>
+          {width > 700 ? "messages" : "cart"}
+        </Button>
       </div>
     </div>
   );

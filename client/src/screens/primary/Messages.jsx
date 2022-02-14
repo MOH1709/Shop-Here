@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
-import { ConsumerMessage } from "../../components";
+import { ConsumerMessage, OnSwipe } from "../../components";
 import { COLOR } from "../../constants";
 
 export default function Messages() {
@@ -38,6 +38,14 @@ export default function Messages() {
 
   return (
     <div className={styles.container}>
+      <OnSwipe
+        onSwipeRight={() => {
+          navigate("/city/home");
+        }}
+        onSwipeLeft={() => {
+          navigate("/city/cart");
+        }}
+      />
       <p className={styles.title}>
         Share the Code generated from order with Shop Owner's, To Confirm Your
         Order & recievr Bill :)

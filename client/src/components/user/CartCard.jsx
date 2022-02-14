@@ -128,8 +128,7 @@ const useStyles = makeStyles({
     padding: 10,
     maxWidth: "100%",
     minWidth: 200,
-    height: 100,
-    borderBottom: `2px solid rgba(0,0,0,0.5)`,
+    height: 90,
   },
   name: {
     fontSize: 15,
