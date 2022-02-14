@@ -137,7 +137,7 @@ export default function Cart() {
                 if (ic === false) {
                   setUrgent([...urgent, data.shopId]);
                   alert(
-                    `In urgent delivery product from this shop will be delivered before 1 hour 🕐 
+                    `In urgent delivery product from ${data.address} will be delivered before 1 hour 🕐 
                      with cost of only, 10₹ extra`
                   );
                 } else {
