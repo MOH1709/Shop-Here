@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, useContext } from "react";
 //-----------------------------------------------> custom component
 import { InputBox, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
-// import imageUploader from "../../imageUploader";
+import imageUploader from "../../imageUploader";
 import { Context } from "../../contexts/SelectedAreas";
 
 export default function OwnerProfile() {
@@ -19,6 +19,7 @@ export default function OwnerProfile() {
   const [isOpen, setIsOpen] = useState(true);
   const [canUrgent, setCanUrgent] = useState(false);
   const [img, setImg] = useState("");
+  const [prevImg, setPrevImg] = useState("");
   const [file, setFile] = useState(0);
   const [data, setData] = useState({
     name: "",
@@ -42,6 +43,7 @@ export default function OwnerProfile() {
             setCanUrgent(res.canUrgent);
             setShowBtn(true);
             setImg(res.img);
+            setPrevImg(res.img);
             setData({
               name: res.name,
               address: res.address,
@@ -77,7 +79,13 @@ export default function OwnerProfile() {
       const bx = Cookies.get("bx");
       const { name, address, phoneNumber, email } = data;
 
-      // const imgPath = file ? await imageUploader(file) : img;
+      let imgPath = "";
+      if (prevImg !== img) {
+        if (prevImg) {
+          await axios.delete(`/utils/image/${prevImg.split("?id=")[1]}`);
+        }
+        imgPath = file ? await imageUploader(file) : img;
+      }
 
       const res = await axios.put(`/bussiness/${bx}`, {
         isOpen,
@@ -88,13 +96,15 @@ export default function OwnerProfile() {
           : (
               await axios.get(`/bussiness/shopareas/${bx}`)
             ).data,
-        // img: imgPath,
+        img: imgPath,
         address,
         extras: [{ phoneNumber }, { email }],
       });
 
-      res.status && alert("updated succesfully");
+      res.status === 200 && alert("updated succesfully");
     } catch (e) {
+      console.log(e);
+
       alert("error in updating data");
     }
   };

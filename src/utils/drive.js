@@ -17,7 +17,49 @@ const drive = google.drive({
 });
 
 oauth2Client.setCredentials({
-  refresh_token: refreshToken,
+  access_token: process.env.AT,
 });
 
-export default drive;
+//-----------------------------------------------> return data of saved image on google drive
+async function uploadImage(file, mimeType, name) {
+  try {
+    const response = await drive.files.create({
+      requestBody: {
+        name, // name to which you want to save on drive
+        mimeType, // type of image i.e. image/png
+      },
+      media: {
+        mimeType,
+        body: file, // file
+      },
+    });
+
+    await drive.permissions.create({
+      fileId: response.data.id,
+      requestBody: {
+        role: "reader",
+        type: "anyone",
+      },
+    });
+
+    return response.data.id;
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
+// console.log(await uploadImage());
+
+async function deleteImage(fileId) {
+  try {
+    const response = await drive.files.delete({
+      fileId,
+    });
+
+    return response.status;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export { uploadImage, deleteImage };

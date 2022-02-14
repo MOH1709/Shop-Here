@@ -1,5 +1,7 @@
 import { Router } from "express";
 import webpush from "web-push";
+import { Readable } from "stream";
+import { uploadImage, deleteImage } from "../utils/drive.js";
 import mailTranspoter from "../MailText.js";
 
 const router = Router();
@@ -28,16 +30,30 @@ router.post("/notify", (req, res) => {
 //-----------------------------------------------> upload image
 router.post("/upload/image/:ui", async(req, res) => {
   try {
-    // const { ui } = req.params;
-    // const { img } = req.files;
-    // const imgName = `${ui}.${img.mimetype.split("/")[1]}`;
+    const { ui } = req.params;
+    const { img } = req.files;
+    const id = await uploadImage(Readable.from(img.data), img.mimetype, ui);
 
-    // img.mv(`${__dirname}/../../client/public/uploads/${imgName}`, (e) => {
-    //   e && console.log("error in saving image : ", e);
-    // });
-
-    res.status(200).send({ filePath: `./uploads/test` });
+    res.status(200).send({
+      filePath: `https://docs.google.com/uc?id=${id}`,
+    });
   } catch (e) {
+    console.log(e);
+
+    res.status(400).send("error in uploading photos");
+  }
+});
+
+router.delete("/image/:id", async(req, res) => {
+  try {
+    const { id } = req.params;
+
+    await deleteImage(id);
+
+    res.status(200).send("deleted photo successfully");
+  } catch (e) {
+    console.log(e);
+
     res.status(400).send("error in uploading photos");
   }
 });
