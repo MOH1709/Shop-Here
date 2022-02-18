@@ -17,11 +17,15 @@ app.use(fileupload()); // to upload files i.e. images
 
 //-----------------------------------------------> testing socket.io
 const http = createServer(app);
-const io = new Server(http);
+const io = new Server(http, {
+  cors: {
+    origin: "*",
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("socket connected");
-  socket.on("join_room", (data) => {
+  socket.on("order", (data) => {
     socket.join(data);
   });
 

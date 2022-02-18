@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom Componenets
-import { BTN_STYLE, COLOR } from "../../constants";
+import { BTN_STYLE, COLOR, SHADOW } from "../../constants";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -72,20 +72,25 @@ const useStyles = makeStyles({
     cursor: "pointer",
     marginBlock: 10,
     borderRadius: 5,
-    backgroundColor: COLOR.PRIMARY,
+    boxShadow: SHADOW,
+    backgroundColor: "white",
   },
   name: {
     "& span": {
       fontWeight: "bold",
-      color: COLOR.SECONDARY,
+      color: COLOR.PRIMARY,
     },
     paddingLeft: 10,
+    color: COLOR.PRIMARY,
   },
   address: {
     "& span": {
       fontSize: 12,
-      color: "rgba(255,255,255,0.4)",
+      color: COLOR.PRIMARY,
+      opacity: 0.4,
     },
+    color: COLOR.PRIMARY,
+
     paddingLeft: 10,
     overflow: "hidden",
   },
@@ -98,26 +103,24 @@ const useStyles = makeStyles({
     "& Button": {
       ...BTN_STYLE,
       fontSize: 12,
-      color: COLOR.PRIMARY,
-      backgroundColor: COLOR.SECONDARY,
     },
     "& input": {
       flex: 1,
       minWidth: 10,
       paddingInline: 10,
-      border: "none",
       outline: "none",
       borderRadius: 3,
+      border: `2px solid ${COLOR.PRIMARY}`,
     },
     display: "flex",
     marginBlock: 20,
   },
   btn: {
-    color: COLOR.SECONDARY,
+    ...BTN_STYLE,
     marginTop: 10,
     padding: 5,
+    height: 40,
     fontSize: 12,
     width: "100%",
-    border: `2px solid ${COLOR.SECONDARY}`,
   },
 });

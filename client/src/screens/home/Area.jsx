@@ -87,7 +87,7 @@ const useStyles = makeStyles({
       height: 30,
       marginInline: 20,
     },
-    fontSize: 20,
+    fontSize: 15,
     textAlign: "center",
     display: "flex",
     alignItems: "center",

@@ -96,7 +96,7 @@ export default function Profile() {
           Style={{ marginBlock: 20 }}
           name="fa"
           value={data.fa}
-          title={"Dilivery Address"}
+          title={"Delivery Address"}
           onChangeHandler={changeHandler}
         />
 

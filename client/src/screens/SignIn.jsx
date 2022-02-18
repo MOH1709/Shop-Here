@@ -3,15 +3,21 @@ import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
 
 //-----------------------------------------------> custom component
+import app from "../utils/firebase";
 import { InputBox, MiddleWare } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
 
 export default function SignIn() {
   const styles = useStyles();
   const navigate = useNavigate();
-  // const [isEmail, setIsEmail] = useState(false);
+  const auth = getAuth(app);
   const [input, setInput] = useState({
     phoneNumber: "",
     password: "",
@@ -41,7 +47,7 @@ export default function SignIn() {
   };
 
   //-----------------------------------------------> onClick Signin
-  const signIn = async () => {
+  const signIn = () => {
     try {
       // check if both field are filled
       if (!(input.phoneNumber || input.password)) {
@@ -54,18 +60,32 @@ export default function SignIn() {
         return;
       }
 
-      await axios.post(`/user/signin`, {
-        cid: Cookies.get("ci"),
-        aid: Cookies.get("ai"),
-        name: Cookies.get("un"),
-        userId: input.phoneNumber,
-        password: input.password,
-        address: Cookies.get("fa"),
-      });
+      let recaptcha = new RecaptchaVerifier("recaptcha", {}, auth);
+      let number = "+91" + input.phoneNumber;
+      signInWithPhoneNumber(auth, number, recaptcha).then((e) => {
+        let code = prompt("Enter Your Otp", "");
 
-      navigate(-1);
+        if (code === null) return;
+
+        e.confirm(code)
+          .then(async () => {
+            await axios.post(`/user/signin`, {
+              cid: Cookies.get("ci"),
+              aid: Cookies.get("ai"),
+              name: Cookies.get("un"),
+              userId: input.phoneNumber,
+              password: input.password,
+              address: Cookies.get("fa"),
+            });
+            navigate(-1);
+          })
+          .catch((err) => {
+            alert("otp is incorrect");
+            window.location.reload();
+          });
+      });
     } catch (e) {
-      alert("account already exist");
+      alert("error in signing in");
     }
   };
 
@@ -83,6 +103,7 @@ export default function SignIn() {
   return (
     <div className={styles.container}>
       <MiddleWare />
+
       <div className={styles.logoDiv}>
         <img src="./logo.png" alt="logo" height="50" />
         <p>Clean City</p>
@@ -93,8 +114,8 @@ export default function SignIn() {
       </p>
       <form className={styles.form}>
         <InputBox
-          title={"Email ID"}
-          type={"text"}
+          title={"Phone Number"}
+          type={"number"}
           value={input.phoneNumber}
           onChangeHandler={onChangeHandler}
           name="phoneNumber"
@@ -106,9 +127,10 @@ export default function SignIn() {
           type="password"
           value={input.password}
         />
-        <Button className={styles.create} onClick={signIn}>
-          create
+        <Button className={styles.create} onClick={signIn} id="sign-in-button">
+          get otp
         </Button>
+        <div id="recaptcha"></div>
         {/* <div className={styles.api}>
           <p> OR </p>
           <Button onClick={googleLogin}>

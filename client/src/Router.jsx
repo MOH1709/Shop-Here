@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 //-----------------------------------------------> custom components
-import { LogIn, SignIn, Main, OwnerMain, Start, Error } from "./screens";
+import { LogIn, SignIn, Main, OwnerMain, Start, Error, Otp } from "./screens";
 import {
   Setting,
   Home,
@@ -46,6 +46,7 @@ export default function Router() {
       <Route path={`admin/${adminId}`} element={<AdminLogin />} />
 
       <Route path="login" element={<LogIn />} />
+      <Route path="otp" element={<Otp />} />
       <Route path="city/signin" element={<SignIn />} />
       <Route path="*" element={<Error />} />
 

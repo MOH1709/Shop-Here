@@ -140,7 +140,7 @@ export default function Cart() {
                     ? "flex"
                     : "none",
               }}
-              title={"Urgent Order"}
+              title={"Fast Delivery"}
               onClickHandler={(ic) => {
                 if (ic === false) {
                   setUrgent([...urgent, data.shopId]);

@@ -86,7 +86,7 @@ export default function LogIn() {
             type="password"
             value={input.password}
           />
-          <NavLink className={styles.fp} to="/">
+          <NavLink className={styles.fp} to="/otp">
             forgot password ?
           </NavLink>
         </div>

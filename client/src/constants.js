@@ -5,8 +5,8 @@ const FLEX_CENTER = {
 };
 
 const COLOR = {
-  PRIMARY: "#032e45",
-  SECONDARY: "#7DD893",
+  PRIMARY: "#03045e",
+  SECONDARY: "#00b4d8",
   GREEN: "#12CD3F",
   RED: "#FF0C0C",
   BLACK: "#222327",
