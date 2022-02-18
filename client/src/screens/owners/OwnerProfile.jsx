@@ -203,7 +203,7 @@ export default function OwnerProfile() {
             />
             <ToggleBtn
               Style={{ marginBlock: 20 }}
-              title={"Urgent Dilivery"}
+              title={"Fast Delivery"}
               initialState={canUrgent}
               onClickHandler={() => {
                 setCanUrgent(!canUrgent);
