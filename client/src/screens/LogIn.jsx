@@ -1,4 +1,7 @@
 import axios from "axios";
+import validator from "validator";
+import { GoogleLogin } from "react-google-login";
+
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -11,7 +14,7 @@ export default function LogIn() {
   const styles = useStyles();
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    phoneNumber: "",
+    email: "",
     password: "",
   });
 
@@ -28,18 +31,18 @@ export default function LogIn() {
   //-----------------------------------------------> onClick login
   const login = async () => {
     try {
-      const { phoneNumber, password } = input;
+      const { email, password } = input;
 
       // check if both inputs are filled
-      if (phoneNumber && password) {
+      if (email && password) {
         // check custom validation of mobile number
-        if (phoneNumber.length < 10) {
+        if (validator.isEmail(email)) {
           alert("please, enter a valid phone number :)");
           return;
         }
 
         // getting data of user from backend
-        const res = await axios.put(`/user/login/${phoneNumber}/${password}`);
+        const res = await axios.put(`/user/login/${email}/${password}`);
 
         // checking user authentication
         if (res.status === 200) {
@@ -53,7 +56,7 @@ export default function LogIn() {
     } catch (e) {
       alert("invalid credintials");
       setInput({
-        phoneNumber: "",
+        email: "",
         password: "",
       });
     }
@@ -72,11 +75,10 @@ export default function LogIn() {
       </p>
       <div className={styles.form}>
         <InputBox
-          title={"Mobile Number"}
+          title={"Email Id"}
           onChangeHandler={onChangeHandler}
-          name="phoneNumber"
-          value={input.phoneNumber}
-          type={"number"}
+          name="email"
+          value={input.email}
         />
         <div>
           <InputBox
@@ -93,6 +95,14 @@ export default function LogIn() {
         <Button onClick={login} className={styles.login}>
           Log in
         </Button>
+        <div className={styles.api}>
+          <p> OR </p>
+          <GoogleLogin
+            className={styles.login}
+            clientId={process.env.REACT_APP_CLIENTID}
+            // onSuccess={onLoginSuccess}
+          />
+        </div>
       </div>
     </form>
   );
@@ -160,5 +170,12 @@ const useStyles = makeStyles({
     color: "white",
     padding: 10,
     marginInline: "auto",
+  },
+  api: {
+    "& p": {
+      fontWeight: "bold",
+      marginBottom: 10,
+    },
+    textAlign: "center",
   },
 });

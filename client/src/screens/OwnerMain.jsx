@@ -6,7 +6,7 @@ import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { MiddleWare } from "../components";
-import { BTN_STYLE, SHADOW } from "../constants";
+import { BTN_STYLE, SHADOW, COLOR } from "../constants";
 import { PrimaryHeader } from "../components/owner";
 import { Context } from "../contexts/WidthProvider";
 import { OwnerProfile } from "./owners";
@@ -104,6 +104,7 @@ const useStyles = makeStyles({
   },
   btn: {
     ...BTN_STYLE,
+    backgroundColor: COLOR.SECONDARY,
     position: "absolute",
     bottom: 20,
     right: 20,

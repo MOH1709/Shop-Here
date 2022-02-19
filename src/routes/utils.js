@@ -2,7 +2,7 @@ import { Router } from "express";
 import webpush from "web-push";
 import { Readable } from "stream";
 import { uploadImage, deleteImage } from "../utils/drive.js";
-import mailTranspoter from "../MailText.js";
+import mail from "../MailText.js";
 
 const router = Router();
 
@@ -62,15 +62,12 @@ router.delete("/image/:id", async(req, res) => {
 router.post("/mail", async(req, res) => {
   try {
     const { text, to, subject } = req.body;
-    await mailTranspoter.sendMail({
-      from: process.env.EMAIL,
-      to,
-      subject,
-      text,
-    });
+    mail({ text, to, subject });
 
     res.status(200).send("message send succesfully");
   } catch (e) {
+    console.log(e);
+
     res.status(400).send("error in updating user details");
   }
 });

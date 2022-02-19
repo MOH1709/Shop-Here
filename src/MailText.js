@@ -1,12 +1,27 @@
 import nodemailer from "nodemailer";
-import "dotenv/config";
 
 const mailTranspoter = nodemailer.createTransport({
   service: "gmail",
+  secure: false,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS,
   },
 });
 
-export default mailTranspoter;
+function mail({ to, subject, text }) {
+  mailTranspoter.sendMail({
+      from: "test1234@gmail.com",
+      to,
+      subject,
+      text: text.toString(),
+    },
+    (e, i) => {
+      if (e) {
+        console.log(e);
+      }
+    }
+  );
+}
+
+export default mail;

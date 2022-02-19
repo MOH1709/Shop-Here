@@ -6,7 +6,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 
 //-----------------------------------------------> Custom Components
 import { InputBox } from "../components";
-import { BTN_STYLE, COLOR, FLEX_CENTER, SHADOW } from "../constants";
+import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
 
 export default function Start() {
   const styles = useStyles();
@@ -170,8 +170,6 @@ const useStyles = makeStyles({
   logoDiv: {
     "& img": {
       marginInline: 10,
-      boxShadow: SHADOW,
-      borderRadius: "50%",
     },
     ...FLEX_CENTER,
     flexDirection: "column",

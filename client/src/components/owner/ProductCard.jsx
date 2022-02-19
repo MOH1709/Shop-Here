@@ -68,6 +68,7 @@ const useStyles = makeStyles({
     },
     "& :nth-child(3)": {
       color: COLOR.RED,
+      marginTop: -10,
       fontSize: 13,
       textDecoration: "line-through",
     },

@@ -38,7 +38,7 @@ const useStyles = makeStyles({
       height: 60,
       objectFit: "cover",
       borderRadius: "50%",
-      border: `10px solid ${COLOR.SECONDARY}`,
+      border: `10px solid ${COLOR.GREEN}`,
     },
     ...FLEX_CENTER,
     width: "30%",

@@ -3,7 +3,7 @@ import { google } from "googleapis";
 const clientId = process.env.CID;
 const clientSecret = process.env.CSK;
 const redirectUri = process.env.RUI;
-const refreshToken = process.env.RTK;
+// const refreshToken = process.env.RTK;
 
 const oauth2Client = new google.auth.OAuth2(
   clientId,
@@ -16,9 +16,7 @@ const drive = google.drive({
   auth: oauth2Client,
 });
 
-oauth2Client.setCredentials({
-  access_token: process.env.AT,
-});
+oauth2Client.setCredentials({});
 
 //-----------------------------------------------> return data of saved image on google drive
 async function uploadImage(file, mimeType, name) {

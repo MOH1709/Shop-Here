@@ -1,25 +1,20 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import validator from "validator";
+import { GoogleLogin } from "react-google-login";
 import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
 
 //-----------------------------------------------> custom component
-import app from "../utils/firebase";
 import { InputBox, MiddleWare } from "../components";
 import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
 
 export default function SignIn() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const auth = getAuth(app);
   const [input, setInput] = useState({
-    phoneNumber: "",
+    email: "",
     password: "",
   });
 
@@ -34,12 +29,6 @@ export default function SignIn() {
   //-----------------------------------------------> set inputs
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
-
-    // deduce restriction for valid phone number
-    if (name === "phoneNumber" && value.length > 10) {
-      return;
-    }
-
     setInput({
       ...input,
       [name]: value,
@@ -47,11 +36,16 @@ export default function SignIn() {
   };
 
   //-----------------------------------------------> onClick Signin
-  const signIn = () => {
+  const signIn = async () => {
     try {
       // check if both field are filled
-      if (!(input.phoneNumber || input.password)) {
+      if (!(input.email || input.password)) {
         alert("please fill all field");
+        return;
+      }
+
+      if (!validator.isEmail(input.email)) {
+        alert("fill correct email id");
         return;
       }
 
@@ -60,44 +54,39 @@ export default function SignIn() {
         return;
       }
 
-      let recaptcha = new RecaptchaVerifier("recaptcha", {}, auth);
-      let number = "+91" + input.phoneNumber;
-      signInWithPhoneNumber(auth, number, recaptcha).then((e) => {
-        let code = prompt("Enter Your Otp", "");
-
-        if (code === null) return;
-
-        e.confirm(code)
-          .then(async () => {
-            await axios.post(`/user/signin`, {
-              cid: Cookies.get("ci"),
-              aid: Cookies.get("ai"),
-              name: Cookies.get("un"),
-              userId: input.phoneNumber,
-              password: input.password,
-              address: Cookies.get("fa"),
-            });
-            navigate(-1);
-          })
-          .catch((err) => {
-            alert("otp is incorrect");
-            window.location.reload();
-          });
+      const { status } = await axios.post("/utils/mail", {
+        to: input.email,
+        subject: "SHOP HERE OTP CONFIRMATION CODE",
+        text: Math.floor(Math.random() * 8500 + 1000),
       });
+
+      // if (status === 200) {
+      //   await axios.post(`/user/signin`, {
+      //     cid: Cookies.get("ci"),
+      //     aid: Cookies.get("ai"),
+      //     name: Cookies.get("un"),
+      //     userId: input.email,
+      //     password: input.password,
+      //     address: Cookies.get("fa"),
+      //   });
+      // }
+
+      if (status === 200) {
+        navigate(-1);
+      } else {
+        alert("no such gmail exists");
+      }
+      window.location.reload();
     } catch (e) {
+      console.log(e);
+
       alert("error in signing in");
+      window.location.reload();
     }
   };
 
   //-----------------------------------------------> onLcick google Btn
-  // const googleLogin = () => {
-  //   // check for confirmation of google
-  //   // autofill email input
-  //   // alert set password for your gmail
-  //   // save pasword and email to database
-  //   // add a new use in db
-  //   setIsEmail(!isEmail);
-  // };
+  const onLoginSuccess = () => {};
 
   //-----------------------------------------------> return component
   return (
@@ -114,11 +103,10 @@ export default function SignIn() {
       </p>
       <form className={styles.form}>
         <InputBox
-          title={"Phone Number"}
-          type={"number"}
-          value={input.phoneNumber}
+          title={"Email Id"}
+          value={input.email}
           onChangeHandler={onChangeHandler}
-          name="phoneNumber"
+          name="email"
         />
         <InputBox
           title={"New Password"}
@@ -127,17 +115,18 @@ export default function SignIn() {
           type="password"
           value={input.password}
         />
+
         <Button className={styles.create} onClick={signIn} id="sign-in-button">
           get otp
         </Button>
-        <div id="recaptcha"></div>
-        {/* <div className={styles.api}>
+        <div className={styles.api}>
           <p> OR </p>
-          <Button onClick={googleLogin}>
-            <img src="./google.png" alt="logo" height="30" />
-            Sign In with Google
-          </Button>
-        </div> */}
+          <GoogleLogin
+            className={styles.create}
+            clientId={process.env.REACT_APP_CLIENTID}
+            onSuccess={onLoginSuccess}
+          />
+        </div>
       </form>
     </div>
   );
@@ -163,8 +152,9 @@ const useStyles = makeStyles({
       marginInline: 10,
     },
     ...FLEX_CENTER,
+    flexDirection: "column",
     fontWeight: "bold",
-    color: COLOR.SECONDARY,
+    color: COLOR.PRIMARY,
   },
   title: {
     marginTop: 40,
@@ -175,11 +165,11 @@ const useStyles = makeStyles({
   link: {
     "& :first-child": {
       marginLeft: 10,
-      color: COLOR.PRIMARY,
+      color: COLOR.SECONDARY,
       fontWeight: "bold",
     },
     fontSize: 12,
-    color: COLOR.PRIMARY,
+    color: COLOR.SECONDARY,
   },
   form: {
     minHeight: 400,
@@ -192,6 +182,7 @@ const useStyles = makeStyles({
 
   create: {
     ...BTN_STYLE,
+    cursor: "pointer",
     width: "100%",
     color: "white",
     padding: 10,
@@ -201,16 +192,6 @@ const useStyles = makeStyles({
     "& p": {
       fontWeight: "bold",
       marginBottom: 10,
-    },
-    "& Button": {
-      "& img": {
-        marginInline: 10,
-      },
-      color: COLOR.PRIMARY,
-      fontSize: 12,
-      fontWeight: "bold",
-      width: "100%",
-      border: `2px solid ${COLOR.PRIMARY}`,
     },
     textAlign: "center",
   },

@@ -7,7 +7,7 @@ import { PrimaryHeader, SecondaryHeader } from "../components/user";
 import { MiddleWare } from "../components";
 import { Context } from "../contexts/WidthProvider";
 import { Cart } from "./primary";
-import { BTN_STYLE, SHADOW } from "../constants";
+import { BTN_STYLE, SHADOW, COLOR } from "../constants";
 
 export default function Main() {
   const styles = useStyles();
@@ -67,6 +67,7 @@ const useStyles = makeStyles({
   },
   btn: {
     ...BTN_STYLE,
+    backgroundColor: COLOR.SECONDARY,
     position: "absolute",
     bottom: 20,
     right: 20,
