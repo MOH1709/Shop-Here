@@ -64,7 +64,7 @@ export default function LogIn() {
     <form className={styles.container}>
       <div className={styles.logoDiv}>
         <img src="./logo.png" alt="logo" height="50" />
-        <p>Clean City</p>
+        <p>Shop Here</p>
       </div>
       <p className={styles.title}>Log In</p>
       <p className={styles.link}>
@@ -118,8 +118,9 @@ const useStyles = makeStyles({
       marginInline: 10,
     },
     ...FLEX_CENTER,
+    flexDirection: "column",
     fontWeight: "bold",
-    color: COLOR.SECONDARY,
+    color: COLOR.PRIMARY,
   },
   title: {
     marginTop: 40,
@@ -130,11 +131,11 @@ const useStyles = makeStyles({
   link: {
     "& :first-child": {
       marginLeft: 10,
-      color: COLOR.PRIMARY,
+      color: COLOR.SECONDARY,
       fontWeight: "bold",
     },
     fontSize: 12,
-    color: COLOR.PRIMARY,
+    color: COLOR.SECONDARY,
   },
   form: {
     minHeight: 400,

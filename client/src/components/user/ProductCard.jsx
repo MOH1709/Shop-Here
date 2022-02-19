@@ -23,7 +23,7 @@ export default function ProductCard({ state, onClickHandler }) {
       </div>
       <div className={styles.contentDiv}>
         <p>{name}</p>
-        <p>${price} ₹</p>
+        <p>{price} ₹</p>
         <p>
           {quantity > 0 ? `${MRP || ""} ${MRP ? "₹" : ""}` : `out of stock`}
         </p>

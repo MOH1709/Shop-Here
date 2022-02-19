@@ -6,7 +6,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 
 //-----------------------------------------------> Custom Components
 import { InputBox } from "../components";
-import { BTN_STYLE, COLOR, FLEX_CENTER } from "../constants";
+import { BTN_STYLE, COLOR, FLEX_CENTER, SHADOW } from "../constants";
 
 export default function Start() {
   const styles = useStyles();
@@ -98,9 +98,9 @@ export default function Start() {
     <form className={styles.container}>
       <div className={styles.logoDiv}>
         <img src="./logo.png" alt="logo" height="50" />
-        <p>Clean City</p>
+        <p>Shop Here</p>
       </div>
-      <p className={styles.title}>Clean City</p>
+      <p className={styles.title}>Shop Here</p>
       <p className={styles.link}>
         already have an account ?<NavLink to="/login">Log In</NavLink>
       </p>
@@ -170,10 +170,13 @@ const useStyles = makeStyles({
   logoDiv: {
     "& img": {
       marginInline: 10,
+      boxShadow: SHADOW,
+      borderRadius: "50%",
     },
     ...FLEX_CENTER,
+    flexDirection: "column",
     fontWeight: "bold",
-    color: COLOR.SECONDARY,
+    color: COLOR.PRIMARY,
   },
   title: {
     marginTop: 40,
@@ -184,11 +187,11 @@ const useStyles = makeStyles({
   link: {
     "& :first-child": {
       marginLeft: 10,
-      color: COLOR.PRIMARY,
+      color: COLOR.SECONDARY,
       fontWeight: "bold",
     },
     fontSize: 12,
-    color: COLOR.PRIMARY,
+    color: COLOR.SECONDARY,
   },
   form: {
     flex: 1,

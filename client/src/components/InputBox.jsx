@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     "& label": {
       marginBottom: 5,
       fontWeight: "bold",
-      color: COLOR.PRIMARY,
+      color: COLOR.SECONDARY,
     },
     borderBottom: "2px solid rgba(0,0,0,0.5)",
   },
@@ -46,7 +46,6 @@ const useStyles = makeStyles({
       flex: 1,
       border: "none",
       outline: "none",
-      letterSpacing: 1,
       paddingLeft: 3,
       borderRadius: 3,
     },

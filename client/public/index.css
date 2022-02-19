@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: system-ui;
+  font-family: "Baloo Bhaijaan 2", cursive;
   /* font-family: 'IBM Plex Sans Thai', sans-serif; */
   /* For removing Blue Screen Effect on Mobile */
   -webkit-tap-highlight-color: transparent;

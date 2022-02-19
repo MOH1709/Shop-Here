@@ -15,7 +15,8 @@ export default function PrimaryHeader() {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <img src="./logo.png" alt="logo" height="50" className={styles.logo} />
+        <p className={styles.logo}>SHOP HERE</p>
+        {/* <img src="./logo.png" alt="logo" height="50" className={styles.logo} /> */}
         <div className={styles.right}>
           {/* <Button component={NavLink} to={`/city/search`}>
             <img src="./icons/search.svg" alt="search" />
@@ -57,7 +58,7 @@ export default function PrimaryHeader() {
           <div
             className={styles.badge}
             style={{
-              display: cart.length ? "flex" : "none",
+              display: cart.length && width < 700 ? "flex" : "none",
               right: width > 400 ? 30 : 5,
             }}
           >
@@ -89,6 +90,11 @@ const useStyles = makeStyles({
   },
   logo: {
     marginTop: 10,
+    marginLeft: 20,
+    fontFamily: "Baloo Bhaijaan 2",
+    color: COLOR.SECONDARY,
+    fontWeight: "bold",
+    fontSize: 20,
   },
   right: {
     "& NavLink": {

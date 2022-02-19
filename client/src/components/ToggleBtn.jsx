@@ -25,7 +25,7 @@ export default function ToggleBtn({
         onClick={clickHandler}
         style={{
           justifyContent: isClicked ? "flex-end" : "flex-start",
-          backgroundColor: isClicked ? COLOR.SECONDARY : COLOR.PRIMARY,
+          backgroundColor: isClicked ? COLOR.GREEN : COLOR.SECONDARY,
         }}
       >
         <div className={styles.btn}></div>
