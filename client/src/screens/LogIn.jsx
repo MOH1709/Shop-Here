@@ -1,6 +1,5 @@
 import axios from "axios";
 import validator from "validator";
-import { GoogleLogin } from "react-google-login";
 
 import { useState } from "react";
 import { Button, makeStyles } from "@material-ui/core";
@@ -42,7 +41,10 @@ export default function LogIn() {
         }
 
         // getting data of user from backend
-        const res = await axios.put(`/user/login/${email}/${password}`);
+        const res = await axios.put(`/user/login`, {
+          userId: email,
+          password,
+        });
 
         // checking user authentication
         if (res.status === 200) {
@@ -76,6 +78,7 @@ export default function LogIn() {
       <div className={styles.form}>
         <InputBox
           title={"Email Id"}
+          autoFocus={true}
           onChangeHandler={onChangeHandler}
           name="email"
           value={input.email}
@@ -95,14 +98,6 @@ export default function LogIn() {
         <Button onClick={login} className={styles.login}>
           Log in
         </Button>
-        <div className={styles.api}>
-          <p> OR </p>
-          <GoogleLogin
-            className={styles.login}
-            clientId={process.env.REACT_APP_CLIENTID}
-            // onSuccess={onLoginSuccess}
-          />
-        </div>
       </div>
     </form>
   );

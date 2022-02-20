@@ -36,7 +36,7 @@ export default function SignIn() {
   };
 
   //-----------------------------------------------> onClick Signin
-  const signIn = async () => {
+  const signIn = async (e) => {
     try {
       // check if both field are filled
       if (!(input.email || input.password)) {
@@ -54,34 +54,41 @@ export default function SignIn() {
         return;
       }
 
+      const udfx = Math.floor(Math.random() * 900000 + 10000);
+
       const { status } = await axios.post("/utils/mail", {
         to: input.email,
         subject: "SHOP HERE OTP CONFIRMATION CODE",
-        text: Math.floor(Math.random() * 8500 + 1000),
+        text: udfx,
       });
 
-      // if (status === 200) {
-      //   await axios.post(`/user/signin`, {
-      //     cid: Cookies.get("ci"),
-      //     aid: Cookies.get("ai"),
-      //     name: Cookies.get("un"),
-      //     userId: input.email,
-      //     password: input.password,
-      //     address: Cookies.get("fa"),
-      //   });
-      // }
-
       if (status === 200) {
-        navigate(-1);
+        console.log("ok");
+
+        navigate("/otp", {
+          state: {
+            callback: async () => {
+              console.log("ok");
+
+              // await axios.post(`/user/signin`, {
+              //   cid: Cookies.get("ci"),
+              //   aid: Cookies.get("ai"),
+              //   name: Cookies.get("un"),
+              //   userId: input.email,
+              //   password: input.password,
+              //   address: Cookies.get("fa"),
+              // });
+            },
+          },
+        });
       } else {
         alert("no such gmail exists");
       }
-      window.location.reload();
     } catch (e) {
       console.log(e);
 
-      alert("error in signing in");
-      window.location.reload();
+      // alert("error in signing in");
+      // window.location.reload();
     }
   };
 
@@ -95,7 +102,7 @@ export default function SignIn() {
 
       <div className={styles.logoDiv}>
         <img src="./logo.png" alt="logo" height="50" />
-        <p>Clean City</p>
+        <p>Shop Here</p>
       </div>
       <p className={styles.title}>Sign In</p>
       <p className={styles.link}>
@@ -116,7 +123,7 @@ export default function SignIn() {
           value={input.password}
         />
 
-        <Button className={styles.create} onClick={signIn} id="sign-in-button">
+        <Button className={styles.create} onClick={signIn}>
           get otp
         </Button>
         <div className={styles.api}>

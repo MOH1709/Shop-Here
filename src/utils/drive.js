@@ -8,7 +8,7 @@ const redirectUri = process.env.RUI;
 const oauth2Client = new google.auth.OAuth2(
   clientId,
   clientSecret,
-  redirectUri
+  "http://localhost:5000"
 );
 
 const drive = google.drive({

@@ -30,9 +30,9 @@ router.get("/orders/:ujwt", async(req, res) => {
 });
 
 //-----------------------------------------------> login in user
-router.put("/login/:userId/:password", async(req, res) => {
+router.put("/login", async(req, res) => {
   try {
-    const { userId, password } = req.params;
+    const { userId, password } = req.body;
     const user = await User.findOne({ userId });
     const isMatch = await bcrypt.compare(password, user.password);
 

@@ -9,6 +9,7 @@ export default function InputBox({
   name,
   type,
   value,
+  autoFocus,
 }) {
   const styles = useStyles();
 
@@ -17,6 +18,7 @@ export default function InputBox({
       <label htmlFor={title}>{title}</label>
       <div className={styles.inputDiv}>
         <input
+          autoFocus={autoFocus || false}
           id={title}
           type={type ?? "text"}
           name={name}
