@@ -54,7 +54,7 @@ export default function OwnerProfile() {
           }
         }
       } catch (e) {
-        alert("error in fetching data");
+        alert("Hello Sir");
       }
     };
 

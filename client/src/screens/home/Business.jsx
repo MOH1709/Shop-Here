@@ -32,7 +32,8 @@ export default function Business() {
           navigate("/city/home/areas");
         }
       } catch (e) {
-        alert("shop is removed");
+        Cookies.remove("ai");
+        navigate("/city/home");
       }
     };
 

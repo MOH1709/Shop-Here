@@ -6,5 +6,6 @@ import order from "./order.js";
 import product from "./product.js";
 import utils from "./utils.js";
 import admin from "./admin.js";
+import otp from "./otp.js";
 
-export { city, area, bussiness, user, order, product, utils, admin };
+export { city, otp, area, bussiness, user, order, product, utils, admin };

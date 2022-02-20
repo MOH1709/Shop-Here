@@ -54,30 +54,18 @@ export default function SignIn() {
         return;
       }
 
-      const udfx = Math.floor(Math.random() * 900000 + 10000);
-
-      const { status } = await axios.post("/utils/mail", {
-        to: input.email,
-        subject: "SHOP HERE OTP CONFIRMATION CODE",
-        text: udfx,
+      const userId = input.email.split("@")[0];
+      const { status } = await axios.post(`/otp`, {
+        userId,
       });
 
       if (status === 200) {
-        console.log("ok");
-
         navigate("/otp", {
           state: {
-            callback: async () => {
-              console.log("ok");
-
-              // await axios.post(`/user/signin`, {
-              //   cid: Cookies.get("ci"),
-              //   aid: Cookies.get("ai"),
-              //   name: Cookies.get("un"),
-              //   userId: input.email,
-              //   password: input.password,
-              //   address: Cookies.get("fa"),
-              // });
+            user: "save",
+            data: {
+              userId,
+              password: input.password,
             },
           },
         });
@@ -93,7 +81,27 @@ export default function SignIn() {
   };
 
   //-----------------------------------------------> onLcick google Btn
-  const onLoginSuccess = () => {};
+  const onLoginSuccess = async (e) => {
+    try {
+      let password = "";
+      do {
+        password = prompt("Enter a new 8 digit password");
+      } while (password.length < 8);
+
+      await axios.post(`/user/signin`, {
+        cid: Cookies.get("ci"),
+        aid: Cookies.get("ai"),
+        name: Cookies.get("un"),
+        userId: e.profileObj.email.split("@")[0],
+        password,
+        address: Cookies.get("fa"),
+      });
+
+      navigate(-1);
+    } catch (error) {
+      alert("account already exist");
+    }
+  };
 
   //-----------------------------------------------> return component
   return (
@@ -132,6 +140,7 @@ export default function SignIn() {
             className={styles.create}
             clientId={process.env.REACT_APP_CLIENTID}
             onSuccess={onLoginSuccess}
+            cookiePolicy={"single_host_origin"}
           />
         </div>
       </form>

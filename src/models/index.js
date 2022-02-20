@@ -6,5 +6,6 @@ import Provider from "./providerSchema.js";
 import Area from "./areaSchema.js";
 import Issue from "./issueSchema.js";
 import Product from "./productSchema.js";
+import Otp from "./otpSchema.js";
 
-export { User, Shop, Provider, Order, City, Area, Issue, Product };
+export { User, Shop, Provider, Order, City, Area, Issue, Product, Otp };

@@ -36,8 +36,9 @@ io.on("connection", (socket) => {
 });
 
 //-----------------------------------------------> using routes
-app.use("/utils", router.utils);
 app.use("/admin", router.admin); // comment this line
+app.use("/utils", router.utils);
+app.use("/otp", router.otp);
 app.use("/cities", router.city);
 app.use("/area", router.area);
 app.use("/bussiness", router.bussiness);

@@ -35,14 +35,14 @@ export default function LogIn() {
       // check if both inputs are filled
       if (email && password) {
         // check custom validation of mobile number
-        if (validator.isEmail(email)) {
-          alert("please, enter a valid phone number :)");
+        if (!validator.isEmail(email)) {
+          alert("please, enter a valid email address :)");
           return;
         }
 
         // getting data of user from backend
         const res = await axios.put(`/user/login`, {
-          userId: email,
+          userId: email.split("@")[0],
           password,
         });
 
