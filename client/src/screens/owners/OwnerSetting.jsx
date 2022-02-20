@@ -45,9 +45,9 @@ export default function OwnerSetting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/city/owner/orders`}
+          to={`/city/owner/setting/orders`}
         >
-          Orders
+          My Orders
         </Button>
         <Button className={styles.navBtn} component={NavLink} to={`/city/home`}>
           Switch As Consumer
@@ -55,7 +55,7 @@ export default function OwnerSetting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/city/setting/updates`}
+          to={`/city/owner/setting/updates`}
         >
           Update & Info
         </Button>
@@ -69,7 +69,7 @@ export default function OwnerSetting() {
         <Button
           className={styles.navBtn}
           component={NavLink}
-          to={`/city/setting/report`}
+          to={`/city/owner/setting/report`}
         >
           Report An Issue
         </Button>

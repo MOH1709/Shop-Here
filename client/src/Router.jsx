@@ -9,7 +9,7 @@ import {
   Cart,
   ProductViewer,
 } from "./screens/primary";
-import { Bills, Profile, Updates, ReportBug } from "./screens/settings";
+import { Profile, Updates, ReportBug } from "./screens/settings";
 import { Business, Area, Product } from "./screens/home";
 import {
   OwnerInventory,
@@ -17,33 +17,14 @@ import {
   OwnerSetting,
   OwnerMessages,
   OwnerAreaSelection,
+  OwnerOrders,
+  OrderDetails,
 } from "./screens/owners";
-import AdminMain from "./admin/AdminMain";
-import {
-  Admins,
-  AdminAreas,
-  AdminCities,
-  AdminBussiness,
-  AdminLogin,
-  AdminUser,
-} from "./admin/screens";
 
 export default function Router() {
-  const adminId = process.env.REACT_APP_ADMINID;
-
   return (
     <Routes>
       <Route path="/" element={<Start />} />
-
-      {/* for admins */}
-      <Route path={`admin/${adminId}/home`} element={<AdminMain />}>
-        <Route path="williamzavier" element={<Admins />} />
-        <Route path="cities" element={<AdminCities />} />
-        <Route path="areas" element={<AdminAreas />} />
-        <Route path="users" element={<AdminUser />} />
-        <Route index element={<AdminBussiness />} />
-      </Route>
-      <Route path={`admin/${adminId}`} element={<AdminLogin />} />
 
       <Route path="login" element={<LogIn />} />
       <Route path="otp" element={<Otp />} />
@@ -55,7 +36,12 @@ export default function Router() {
         <Route path="messages" element={<OwnerMessages />} />
         <Route path="profile" element={<OwnerProfile />} />
         <Route path="inventory" element={<OwnerInventory />} />
-        <Route path="setting" element={<OwnerSetting />} />
+        <Route path="setting" element={<OwnerSetting />}>
+          <Route path="updates" element={<Updates />} />
+          <Route path="report" element={<ReportBug />} />
+          <Route path="orders" element={<OwnerOrders />} />
+          <Route path="orders/:oid" element={<OrderDetails />} />
+        </Route>
         <Route path="messages/:oid" element={<ProductViewer />} />
         <Route path="areaSelection" element={<OwnerAreaSelection />} />
       </Route>
@@ -72,7 +58,6 @@ export default function Router() {
         <Route path="cart" element={<Cart />} />
         {/* <Route path="search" element={<Search />} /> */}
         <Route path="setting" element={<Setting />}>
-          <Route path="userbills" element={<Bills />} />
           <Route path="userprofile" element={<Profile />} />
           <Route path="updates" element={<Updates />} />
           <Route path="report" element={<ReportBug />} />

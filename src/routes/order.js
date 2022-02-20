@@ -16,6 +16,19 @@ router.get("/:oid", async(req, res) => {
   }
 });
 
+//-----------------------------------------------> get orders of particular shop
+router.get("/shop/:sid", async(req, res) => {
+  try {
+    const { sid } = req.params;
+
+    const orders = await Order.find({ ownerId: sid });
+
+    res.status(200).send(orders);
+  } catch (e) {
+    res.status(400).send(details);
+  }
+});
+
 //----------------------------------------------->  place order
 router.post("/:uxt", async(req, res) => {
   try {
