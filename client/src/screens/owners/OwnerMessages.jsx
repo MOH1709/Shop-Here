@@ -63,10 +63,9 @@ const useStyles = makeStyles({
   },
   title: {
     padding: 10,
-    fontWeight: "bold",
     fontSize: 12,
     textAlign: "center",
-    backgroundColor: COLOR.SECONDARY,
-    color: COLOR.PRIMARY,
+    backgroundColor: COLOR.GREEN,
+    color: "white",
   },
 });

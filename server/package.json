@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "server": "nodemon ./src/app.js",
-    "client": "npm start --prefix client",
+    "client": "npm start --prefix ../client",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
