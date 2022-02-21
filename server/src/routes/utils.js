@@ -9,12 +9,15 @@ const router = Router();
 //-----------------------------------------------> display notification
 const publicVapidKey = process.env.PUBLIC_KEY;
 const privateVapidKey = process.env.PRIVATE_KEY;
-
-webpush.setVapidDetails(
-  "mailto:test@test.com",
-  publicVapidKey,
-  privateVapidKey
-);
+try {
+  webpush.setVapidDetails(
+    "mailto:test@test.com",
+    publicVapidKey,
+    privateVapidKey
+  );
+} catch (e) {
+  console.log("error in utils notifier initialization");
+}
 
 router.post("/notify", (req, res) => {
   const { subscription, title, message } = req.body;

@@ -2,12 +2,9 @@
   "name": "cleancity",
   "version": "1.0.0",
   "description": "app for online business",
-  "main": "./src/app.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon ./src/app.js",
-    "client": "npm start --prefix ../client",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "start": "nodemon ./src/app.js"
   },
   "repository": {
     "type": "git",
@@ -32,8 +29,5 @@
     "nodemailer": "^6.7.2",
     "socket.io": "^4.4.1",
     "web-push": "^3.4.5"
-  },
-  "devDependencies": {
-    "concurrently": "^7.0.0"
   }
 }

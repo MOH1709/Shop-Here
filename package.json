@@ -1,0 +1,21 @@
+{
+  "name": "cleancity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon ./server/src/app.js",
+    "client": "npm start --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MOH1709/cleancity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MOH1709/cleancity/issues"
+  },
+  "homepage": "https://github.com/MOH1709/cleancity#readme"
+}

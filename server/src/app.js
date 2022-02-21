@@ -32,7 +32,7 @@ mongoose
     console.log("database connection successful");
   })
   .catch((e) => {
-    console.log("error in connecting to database !!\n", e);
+    console.log("error in connecting to database !!\n");
   });
 
 //-----------------------------------------------> adding listener
