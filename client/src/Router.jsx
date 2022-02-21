@@ -7,6 +7,7 @@ import {
   Home,
   Messages,
   Cart,
+  Search,
   ProductViewer,
 } from "./screens/primary";
 import { Profile, Updates, ReportBug } from "./screens/settings";
@@ -31,6 +32,24 @@ export default function Router() {
       <Route path="city/signin" element={<SignIn />} />
       <Route path="*" element={<Error />} />
 
+      {/* User Screen Routes */}
+      <Route path="city" element={<Main />}>
+        <Route path="home" element={<Home />}>
+          <Route path="areas" element={<Area />} />
+          <Route path=":bid" element={<Product />} />
+          <Route path="businesses" element={<Business />} />
+        </Route>
+        <Route path="messages" element={<Messages />} />
+        <Route path="messages/:oid" element={<ProductViewer />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="search" element={<Search />} />
+        <Route path="setting" element={<Setting />}>
+          <Route path="userprofile" element={<Profile />} />
+          <Route path="updates" element={<Updates />} />
+          <Route path="report" element={<ReportBug />} />
+        </Route>
+      </Route>
+
       {/* Owner Screen Routes */}
       <Route path="city/owner" element={<OwnerMain />}>
         <Route path="messages" element={<OwnerMessages />} />
@@ -44,24 +63,6 @@ export default function Router() {
         </Route>
         <Route path="messages/:oid" element={<ProductViewer />} />
         <Route path="areaSelection" element={<OwnerAreaSelection />} />
-      </Route>
-
-      {/* User Screen Routes */}
-      <Route path="city" element={<Main />}>
-        <Route path="home" element={<Home />}>
-          <Route path="areas" element={<Area />} />
-          <Route path=":bid" element={<Product />} />
-          <Route path="businesses" element={<Business />} />
-        </Route>
-        <Route path="messages" element={<Messages />} />
-        <Route path="messages/:oid" element={<ProductViewer />} />
-        <Route path="cart" element={<Cart />} />
-        {/* <Route path="search" element={<Search />} /> */}
-        <Route path="setting" element={<Setting />}>
-          <Route path="userprofile" element={<Profile />} />
-          <Route path="updates" element={<Updates />} />
-          <Route path="report" element={<ReportBug />} />
-        </Route>
       </Route>
     </Routes>
   );

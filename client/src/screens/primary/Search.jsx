@@ -12,19 +12,18 @@ export default function Search() {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.inputDiv}>
-          <input type="text" placeholder="product name" />
+          <span
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <img src="./icons/backArrow.svg" alt="back" />
+          </span>
+          <input type="text" placeholder="product name" autoFocus={true} />
           <span className={styles.icon}>
             <img src="./icons/search.svg" alt="search" height="20" />
           </span>
         </div>
-        <span
-          onClick={() => {
-            navigate(-1);
-          }}
-          className={styles.backBtn}
-        >
-          <img src="./icons/backArrow.svg" alt="back" />
-        </span>
       </div>
     </div>
   );
@@ -46,8 +45,8 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     width: "100%",
-    padding: 20,
-    paddingLeft: 10,
+    padding: 10,
+    paddingBlock: 20,
     backgroundColor: COLOR.PRIMARY,
     color: COLOR.SECONDARY,
   },
@@ -55,6 +54,7 @@ const useStyles = makeStyles({
     "& input": {
       flex: 1,
       width: 50,
+      letterSpacing: 0.5,
       paddingInline: 5,
       border: "none",
       outline: "none",
@@ -62,23 +62,17 @@ const useStyles = makeStyles({
     "& span": {
       ...FLEX_CENTER,
       width: 40,
+      height: 40,
       borderRadius: 5,
       backgroundColor: COLOR.PRIMARY,
       cursor: "pointer",
     },
     flex: 1,
     display: "flex",
-    padding: 2,
+    alignItems: "center",
+    padding: 3,
     height: 46,
+    borderRadius: 5,
     backgroundColor: "white",
-    marginRight: 10,
-  },
-  backBtn: {
-    ...FLEX_CENTER,
-    minWidth: 40,
-    minHeight: 40,
-    borderRadius: "50%",
-    border: "2px solid white",
-    cursor: "pointer",
   },
 });

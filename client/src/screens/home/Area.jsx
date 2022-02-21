@@ -56,7 +56,7 @@ export default function Area() {
     <>
       <div className={styles.title}>
         <img src="./icons/location.svg" alt="location" />
-        select your belonging area
+        select a location to see product availability
       </div>
       {areas.map((data) => (
         <Card
@@ -93,7 +93,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     color: "white",
     padding: 15,
-    backgroundColor: COLOR.SECONDARY,
+    backgroundColor: COLOR.GREEN,
   },
   btn: {
     ...BTN_STYLE,

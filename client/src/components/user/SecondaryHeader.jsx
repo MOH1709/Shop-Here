@@ -53,6 +53,7 @@ const useStyles = makeStyles({
   },
   shops: {
     opacity: 0.5,
+    color: COLOR.SECONDARY,
     height: "1.5em",
     overflow: "hidden",
     whiteSpace: "nowrap",
