@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import axios from "axios";
+import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useState } from "react";

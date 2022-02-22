@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./utils/axios";
 import Cookies from "js-cookie";
 
 const imageUploader = async(file) => {

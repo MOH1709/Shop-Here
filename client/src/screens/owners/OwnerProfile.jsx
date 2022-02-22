@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../utils/axios";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 import { makeStyles, Button } from "@material-ui/core";
