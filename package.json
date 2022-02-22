@@ -2,7 +2,6 @@
   "name": "cleancity",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "server": "nodemon ./server/src/app.js",
     "client": "npm start --prefix client"

@@ -12,7 +12,7 @@ import * as router from "./routes/index.js";
 //-----------------------------------------------> using imports
 const app = express();
 app.use(express.json()); // to convert all post request into json format
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "https://youthful-noyce-159740.netlify.app" }));
 app.use(fileupload()); // to upload files i.e. images
 
 //-----------------------------------------------> using routes
@@ -27,7 +27,7 @@ app.use("/product", router.product);
 
 //-----------------------------------------------> connect to database
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO_LOCAL)
   .then(() => {
     console.log("database connection successful");
   })
