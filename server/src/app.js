@@ -12,7 +12,7 @@ import * as router from "./routes/index.js";
 //-----------------------------------------------> using imports
 const app = express();
 app.use(express.json()); // to convert all post request into json format
-app.use(cors({ origin: "https://youthful-noyce-159740.netlify.app" }));
+app.use(cors());
 app.use(fileupload()); // to upload files i.e. images
 
 //-----------------------------------------------> using routes
