@@ -27,13 +27,18 @@ app.use("/product", router.product);
 
 //-----------------------------------------------> connect to database
 mongoose
-  .connect(process.env.MONGO_LOCAL)
+  .connect(process.env.MONGO)
   .then(() => {
     console.log("database connection successful");
   })
   .catch((e) => {
     console.log("error in connecting to database !!\n");
   });
+
+//-----------------------------------------------> check for heroku
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static("client/build"));
+}
 
 //-----------------------------------------------> adding listener
 const port = process.env.PORT || 5000;
