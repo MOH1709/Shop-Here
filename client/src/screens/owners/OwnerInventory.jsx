@@ -1,4 +1,4 @@
-import axios from "../../utils/axios";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { makeStyles, Button } from "@material-ui/core";

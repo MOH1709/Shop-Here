@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import axios from "../../utils/axios";
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import axios from "../../utils/axios";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";

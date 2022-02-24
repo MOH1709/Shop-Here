@@ -1,4 +1,4 @@
-import axios from "../utils/axios";
+import axios from "axios";
 import Cookies from "js-cookie";
 import validator from "validator";
 import { GoogleLogin } from "react-google-login";

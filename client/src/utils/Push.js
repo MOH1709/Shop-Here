@@ -1,4 +1,4 @@
-import axios from "../utils/axios";
+import axios from "axios";
 
 const publicVapidKey = process.env.REACT_APP_PUBLIC_KEY;
 

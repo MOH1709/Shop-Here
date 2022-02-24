@@ -1,4 +1,4 @@
-import axios from "../utils/axios";
+import axios from "axios";
 import validator from "validator";
 
 import { useState } from "react";

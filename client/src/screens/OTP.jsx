@@ -2,7 +2,7 @@ import { makeStyles, Button } from "@material-ui/core";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import axios from "../utils/axios";
+import axios from "axios";
 import Cookies from "js-cookie";
 
 import { SHADOW, BTN_STYLE } from "../constants";
