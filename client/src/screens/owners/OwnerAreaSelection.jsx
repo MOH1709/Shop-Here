@@ -28,6 +28,8 @@ export default function OwnerAreaSelection() {
         const bx = Cookies.get("bx");
 
         const { data, status } = await axios.get(`/cities/areas/${ci}`);
+        console.log(data);
+
         const resSelAreas = (await axios.get(`/bussiness/shopareas/${bx}`))
           .data;
 

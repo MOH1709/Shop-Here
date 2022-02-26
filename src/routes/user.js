@@ -39,8 +39,7 @@ router.put("/login", async(req, res) => {
     if (isMatch) {
       const token = await user.generateAuthToken();
       res.cookie("ux", token);
-      res.cookie("ci", user.currentLocation[0]);
-      res.cookie("ai", user.currentLocation[1]);
+      res.cookie("ci", user.cityId);
       res.cookie("un", user.name);
       res.cookie("fa", user.address);
       user.bussinessId && res.cookie("bx", user.bussinessId);
@@ -78,7 +77,7 @@ router.put("/:ujwt", async(req, res) => {
 //-----------------------------------------------> add new user
 router.post("/signin", async(req, res) => {
   try {
-    const { name, phoneNumber, address, password, userId, aid, cid } = req.body;
+    const { name, phoneNumber, address, password, userId, cid } = req.body;
 
     const isExist = await User.findOne({ userId }, { _id: 1 });
 
@@ -91,7 +90,7 @@ router.post("/signin", async(req, res) => {
       name,
       password,
       phoneNumber,
-      currentLocation: [cid, aid],
+      cityId: cid,
       address,
     });
     // info: schema.pre is used to deal with password hashing

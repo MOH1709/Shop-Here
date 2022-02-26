@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { City } from "../models/index.js";
+import { City, Area } from "../models/index.js";
 
 const router = Router();
 
@@ -18,7 +18,7 @@ router.get("/", async(req, res) => {
 router.get("/areas/:cid", async(req, res) => {
   try {
     const { cid } = req.params;
-    const { areas } = await City.findOne({ _id: cid }, { areas: 1 });
+    const areas = await Area.find({ cityId: cid }, { img: 1, name: 1, address: 1 });
 
     res.status(200).send(areas);
   } catch (e) {

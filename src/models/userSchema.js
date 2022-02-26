@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   }, ],
-  currentLocation: {
-    type: Array,
+  cityId: {
+    type: String,
   },
   address: {
     type: String,

@@ -21,11 +21,11 @@ oauth2Client.setCredentials({
 });
 
 //-----------------------------------------------> return data of saved image on google drive
-async function uploadImage(file, mimeType, name) {
+async function uploadImage(file, mimeType) {
   try {
     const response = await drive.files.create({
       requestBody: {
-        name, // name to which you want to save on drive
+        name: "cards", // name to which you want to save on drive
         mimeType, // type of image i.e. image/png
       },
       media: {
