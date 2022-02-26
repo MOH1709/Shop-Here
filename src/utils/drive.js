@@ -25,7 +25,7 @@ async function uploadImage(file, mimeType) {
   try {
     const response = await drive.files.create({
       requestBody: {
-        name: "cards", // name to which you want to save on drive
+        name: "shop here", // name to which you want to save on drive
         mimeType, // type of image i.e. image/png
       },
       media: {

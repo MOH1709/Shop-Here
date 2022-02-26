@@ -1,10 +1,13 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useState } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom components
 import { InputBox } from "..";
+import imageUploader from "../../imageUploader";
 import { BTN_STYLE, COLOR } from "../../constants";
+import { useRef } from "react";
 
 export default function AddProductBox({
   Style,
@@ -14,6 +17,10 @@ export default function AddProductBox({
   showDelete,
 }) {
   const styles = useStyles();
+  const fileInput = useRef();
+  const [prevImage] = useState(input.img);
+  const [img, setImg] = useState(input.img);
+  const [file, setFile] = useState("");
 
   //-----------------------------------------------> storing inputs
   const changeHandler = (e) => {
@@ -25,14 +32,35 @@ export default function AddProductBox({
     });
   };
 
+  //----------------------------------------------->
+  const selectImage = () => {
+    fileInput.current.click();
+  };
+
   //-----------------------------------------------> add Image of Product
-  const addImage = () => {};
+  const addImage = (e) => {
+    try {
+      setFile(e.target.files[0]);
+      if (e.target.files && e.target.files[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          setImg(e.target.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    } catch (e) {
+      alert("error in uploading image");
+    }
+  };
 
   //----------------------------------------------->
   const deleteProduct = async () => {
     try {
       const bx = Cookies.get("bx");
       await axios.delete(`/product/${bx}/${input._id}`);
+      if (input.img) {
+        await axios.delete(`/utils/image/${input.img.split("?id=")[1]}`);
+      }
       window.location.reload();
     } catch (e) {
       alert("error in editing products");
@@ -41,9 +69,19 @@ export default function AddProductBox({
 
   return (
     <div className={styles.container} style={Style}>
-      <div className={styles.imgDiv} onClick={addImage}>
+      <input
+        style={{ display: "none" }}
+        onChange={addImage}
+        ref={fileInput}
+        type="file"
+      />
+      <div className={styles.imgDiv} onClick={selectImage}>
         <Button className={styles.imgInput}>
-          <img src="./icons/image.svg" alt="add img" />
+          <img
+            src={img || input.img || "./icons/image.svg"}
+            alt="add img"
+            className={styles.ppImg}
+          />
         </Button>
         <p>Add Image</p>
       </div>
@@ -88,8 +126,12 @@ export default function AddProductBox({
       />
       <Button
         className={styles.save}
-        onClick={() => {
-          onSave(input);
+        onClick={async () => {
+          if (prevImage) {
+            await axios.delete(`/utils/image/${prevImage?.split("?id=")[1]}`);
+          }
+
+          onSave({ ...input, img: await imageUploader(file) });
         }}
       >
         save
@@ -125,13 +167,20 @@ const useStyles = makeStyles({
     textAlign: "center",
     cursor: "pointer",
   },
+
   imgInput: {
     position: "realative",
     ...BTN_STYLE,
-    fontSize: 10,
+    width: 65,
     height: 65,
+    overflow: "hidden",
     marginInline: "auto",
     borderRadius: "50%",
+  },
+  ppImg: {
+    minWidth: 65,
+    minHeight: 65,
+    objectFit: "cover",
   },
   save: {
     ...BTN_STYLE,

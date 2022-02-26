@@ -2,7 +2,6 @@ import OwnerMessage from "./OwnerMessage";
 import PrimaryHeader from "./PrimaryHeader";
 import ProductCard from "./ProductCard";
 import AddProductBox from "./AddProductBox";
-import EditProductBox from "./EditProductBox";
 import AreaSelectionCard from "./AreaSelectionCard";
 import OwnerOrderCard from "./OwnerOrderCard";
 
@@ -13,5 +12,4 @@ export {
   PrimaryHeader,
   ProductCard,
   AddProductBox,
-  EditProductBox,
 };

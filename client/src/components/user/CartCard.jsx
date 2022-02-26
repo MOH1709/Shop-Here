@@ -101,6 +101,8 @@ const useStyles = makeStyles({
     marginLeft: 10,
     borderRadius: 5,
     height: 100,
+    width: 100,
+    objectFit: "contain",
   },
   qDiv: {
     "& Button": {

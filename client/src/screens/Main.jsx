@@ -67,7 +67,7 @@ const useStyles = makeStyles({
   },
   btn: {
     ...BTN_STYLE,
-    backgroundColor: COLOR.SECONDARY,
+    backgroundColor: COLOR.PRIMARY,
     position: "absolute",
     bottom: 20,
     right: 20,

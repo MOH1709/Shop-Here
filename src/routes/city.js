@@ -18,6 +18,7 @@ router.get("/", async(req, res) => {
 router.get("/areas/:cid", async(req, res) => {
   try {
     const { cid } = req.params;
+
     const areas = await Area.find({ cityId: cid }, { img: 1, name: 1, address: 1 });
 
     res.status(200).send(areas);

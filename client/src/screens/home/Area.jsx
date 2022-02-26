@@ -92,7 +92,7 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     color: "white",
-    padding: 15,
+    padding: 10,
     backgroundColor: COLOR.GREEN,
   },
   btn: {

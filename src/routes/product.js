@@ -32,7 +32,7 @@ router.post("/:cid/:bid", async(req, res) => {
     });
     await product.save();
 
-    res.status(200).send(`product saves successfully`);
+    res.status(200).send({ _id: product._id });
   } catch (e) {
     res.status(500).send("error in adding products");
   }
