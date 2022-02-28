@@ -87,9 +87,8 @@ export default function Start() {
       return;
     }
     //save input in Cookies
-    document.cookie("ci", cityId);
-    // Cookies.set("ci", cityId, { expires: Infinity });
-    document.cookie("un", `${fname}+${lname}`, { expires: Infinity });
+    Cookies.set("ci", cityId, { expires: 3000 });
+    Cookies.set("un", `${fname}+${lname}`, { expires: 3000 });
 
     navigate(`/city/home/areas`);
   };
