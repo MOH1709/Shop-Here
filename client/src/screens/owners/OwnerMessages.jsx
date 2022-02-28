@@ -47,6 +47,9 @@ export default function OwnerMessages() {
           name={data.reciever.split("+").join(" ")}
           address={data.address}
           id={data._id}
+          onConfirmPin={() => {
+            setMsg(msg.filter((val) => val._id !== data._id).reverse());
+          }}
         />
       ))}
     </div>

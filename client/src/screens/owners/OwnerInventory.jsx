@@ -16,6 +16,17 @@ export default function OwnerInventory() {
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
 
+  //-----------------------------------------------> sort products
+  const sortByCategory = (a, b) => {
+    if (a.category < b.category) {
+      return -1;
+    }
+    if (a.category > b.category) {
+      return 1;
+    }
+    return 0;
+  };
+
   //-----------------------------------------------> on load
   useEffect(() => {
     let isMounted = true;
@@ -24,16 +35,6 @@ export default function OwnerInventory() {
       try {
         const bx = Cookies.get("bx");
         const res = await axios.get(`/bussiness/uservisible/${bx}`);
-
-        const sortByCategory = (a, b) => {
-          if (a.category < b.category) {
-            return -1;
-          }
-          if (a.category > b.category) {
-            return 1;
-          }
-          return 0;
-        };
 
         isMounted && setProducts(res.data.products.sort(sortByCategory));
       } catch (e) {
@@ -58,8 +59,10 @@ export default function OwnerInventory() {
       if (!(data.name || data.price)) {
         alert("sorry to add new product, name and price required must!!");
       } else {
-        await axios.post(`/product/${ci}/${bx}`, data);
-        window.location.reload();
+        const res = await axios.post(`/product/${ci}/${bx}`, data);
+        setProducts(
+          [...products, { _id: res.data._id, ...data }].sort(sortByCategory)
+        );
       }
     } catch (e) {
       alert("error in adding products");
@@ -74,7 +77,11 @@ export default function OwnerInventory() {
       setShowBox(false);
 
       await axios.put(`/product/${bx}`, data);
-      window.location.reload();
+      setProducts(
+        [...products.filter((val) => val._id !== data._id), data].sort(
+          sortByCategory
+        )
+      );
     } catch (e) {
       alert("error in editing products");
     }
@@ -113,7 +120,7 @@ export default function OwnerInventory() {
         );
       })}
       <Button
-        style={{ display: products.length > 200 ? "none" : "flex" }}
+        style={{ display: products.length > 100 ? "none" : "flex" }}
         className={styles.btn}
         onClick={() => {
           setProduct({});
@@ -122,12 +129,22 @@ export default function OwnerInventory() {
       >
         ADD
       </Button>
+
+      {/* add or edit product form */}
       <AlertBox
         Style={{ display: showBox ? "flex" : "none" }}
         box={
           <AddProductBox
             onSave={product._id ? editProduct : addProduct}
             input={product}
+            onDelete={() => {
+              setProducts(
+                [...products.filter((val) => val._id !== product._id)].sort(
+                  sortByCategory
+                )
+              );
+              setShowBox(false);
+            }}
             setInput={setProduct}
             showDelete={product._id ? true : false}
           />

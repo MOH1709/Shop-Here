@@ -13,6 +13,7 @@ export default function AddProductBox({
   Style,
   onSave,
   input,
+  onDelete,
   setInput,
   showDelete,
 }) {
@@ -61,7 +62,7 @@ export default function AddProductBox({
       if (input.img) {
         await axios.delete(`/utils/image/${input.img.split("?id=")[1]}`);
       }
-      window.location.reload();
+      onDelete();
     } catch (e) {
       alert("error in editing products");
     }
@@ -131,7 +132,10 @@ export default function AddProductBox({
             await axios.delete(`/utils/image/${prevImage?.split("?id=")[1]}`);
           }
 
-          onSave({ ...input, img: await imageUploader(file) });
+          onSave({
+            ...input,
+            img: file ? await imageUploader(file) : input.img,
+          });
         }}
       >
         save

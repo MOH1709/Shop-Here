@@ -7,7 +7,13 @@ import { BTN_STYLE, COLOR, SHADOW } from "../../constants";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function OwnerMessage({ name, address, id, isUrgent }) {
+export default function OwnerMessage({
+  name,
+  address,
+  id,
+  isUrgent,
+  onConfirmPin,
+}) {
   const styles = useStyles();
   const navigate = useNavigate();
   const [pin, setPin] = useState(0);
@@ -21,7 +27,7 @@ export default function OwnerMessage({ name, address, id, isUrgent }) {
         await axios.put(`/order/setorderDelivered/${id}/${Cookies.get("bx")}`);
 
         alert("dilivered succesfully 🥳");
-        window.location.reload();
+        onConfirmPin();
       } else {
         alert("Wrong pin");
       }

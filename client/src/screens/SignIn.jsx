@@ -73,10 +73,7 @@ export default function SignIn() {
         alert("no such gmail exists");
       }
     } catch (e) {
-      console.log(e);
-
-      // alert("error in signing in");
-      // window.location.reload();
+      alert("error in signing in");
     }
   };
 
