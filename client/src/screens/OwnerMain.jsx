@@ -25,7 +25,7 @@ export default function OwnerMain() {
       return;
     }
 
-    const sendRequest = async () => {
+    const checkIsShopOwner = async () => {
       try {
         const res = (await axios.get(`/user/${ux}`)).data;
 
@@ -34,13 +34,13 @@ export default function OwnerMain() {
           Cookies.set("bx", res.bussinessId, { expires: 30 });
         } else {
           //-- send request
-          navigate("/city/messages");
+          navigate("/404");
         }
       } catch (e) {
-        navigate("/city/messages");
+        navigate("/404");
       }
     };
-    sendRequest();
+    checkIsShopOwner();
   }, [navigate]);
 
   //-----------------------------------------------> check width
@@ -86,7 +86,7 @@ export default function OwnerMain() {
           </div>
         </>
       ) : (
-        <Navigate to="/city/messages" />
+        <Navigate to="/404" />
       )}
     </>
   );

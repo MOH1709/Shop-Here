@@ -22,7 +22,7 @@ export default function OwnerSetting() {
       Cookiess.forEach((data) => {
         Cookies.remove(data.split("=")[0]);
       });
-
+      navigate("/");
       window.location.reload();
     } catch (e) {
       alert("error in logging out");
