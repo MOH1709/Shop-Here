@@ -80,9 +80,9 @@ export default function OwnerProfile() {
       const bx = Cookies.get("bx");
       const { name, address, phoneNumber, email } = data;
 
-      let imgPath = "";
+      let imgPath = img;
       if (prevImg !== img) {
-        if (prevImg) {
+        if (prevImg && img) {
           await axios.delete(`/utils/image/${prevImg.split("?id=")[1]}`);
         }
         imgPath = file ? await imageUploader(file) : img;

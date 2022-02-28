@@ -27,7 +27,7 @@ app.use("/product", router.product);
 
 //-----------------------------------------------> connect to database
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO_LOCAL)
   .then(() => {
     console.log("database connection successful");
   })
