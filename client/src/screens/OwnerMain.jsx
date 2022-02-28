@@ -31,7 +31,7 @@ export default function OwnerMain() {
 
         // check if user is allowed for bussiness or not
         if (res?.bussinessId) {
-          Cookies.set("bx", res.bussinessId);
+          Cookies.set("bx", res.bussinessId, { expires: 30 });
         } else {
           //-- send request
           navigate("/city/messages");

@@ -63,8 +63,8 @@ export default function Profile() {
       });
 
       if (res.status === 200) {
-        Cookies.set("un", `${fname}+${lname}`);
-        Cookies.set("fa", fa);
+        Cookies.set("un", `${fname}+${lname}`, { expires: 30 });
+        Cookies.set("fa", fa, { expires: 30 });
         // Cookies.set("sm", saveMsg ? "hxg_?" : "");
         alert("updated successfully :)");
         navigate("/city/home");

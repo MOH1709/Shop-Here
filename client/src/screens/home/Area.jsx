@@ -47,7 +47,7 @@ export default function Area() {
   //-----------------------------------------------> onClick area
   const selectArea = (id) => {
     // save area id in Cookies as ai
-    Cookies.set("ai", id);
+    Cookies.set("ai", id, { expires: 30 });
 
     navigate(`/city/home/businesses`);
   };
