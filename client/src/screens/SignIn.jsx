@@ -131,15 +131,18 @@ export default function SignIn() {
         <Button className={styles.create} onClick={signIn}>
           get otp
         </Button>
-        <div className={styles.api}>
+        {/* <div className={styles.api}>
           <p> OR </p>
           <GoogleLogin
             className={styles.create}
             clientId={process.env.REACT_APP_CLIENTID}
             onSuccess={onLoginSuccess}
+            onFailure={(e) => {
+              alert("google login failed", e);
+            }}
             cookiePolicy={"single_host_origin"}
           />
-        </div>
+        </div> */}
       </form>
     </div>
   );
