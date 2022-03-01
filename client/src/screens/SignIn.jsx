@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import validator from "validator";
-import { GoogleLogin } from "react-google-login";
+// import { GoogleLogin } from "react-google-login";
 import { useState, useEffect } from "react";
 import { Button, makeStyles } from "@material-ui/core";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -78,27 +78,27 @@ export default function SignIn() {
   };
 
   //-----------------------------------------------> onLcick google Btn
-  const onLoginSuccess = async (e) => {
-    try {
-      let password = "";
-      do {
-        password = prompt("Enter a new 8 digit password");
-      } while (password.length < 8);
+  // const onLoginSuccess = async (e) => {
+  //   try {
+  //     let password = "";
+  //     do {
+  //       password = prompt("Enter a new 8 digit password");
+  //     } while (password.length < 8);
 
-      await axios.post(`/user/signin`, {
-        cid: Cookies.get("ci"),
-        aid: Cookies.get("ai"),
-        name: Cookies.get("un"),
-        userId: e.profileObj.email.split("@")[0],
-        password,
-        address: Cookies.get("fa"),
-      });
+  //     await axios.post(`/user/signin`, {
+  //       cid: Cookies.get("ci"),
+  //       aid: Cookies.get("ai"),
+  //       name: Cookies.get("un"),
+  //       userId: e.profileObj.email.split("@")[0],
+  //       password,
+  //       address: Cookies.get("fa"),
+  //     });
 
-      navigate(-1);
-    } catch (error) {
-      alert("account already exist");
-    }
-  };
+  //     navigate(-1);
+  //   } catch (error) {
+  //     alert("account already exist");
+  //   }
+  // };
 
   //-----------------------------------------------> return component
   return (

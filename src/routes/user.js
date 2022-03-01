@@ -16,6 +16,18 @@ router.get("/:ujwt", async(req, res) => {
   }
 });
 
+//-----------------------------------------------> check if such user exist
+router.get("/isUserExist/:userId", async(req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findOne({ userId }, { _id: 1 });
+
+    res.status(200).send({ isUserExist: !!user });
+  } catch (e) {
+    res.status(500).send("error in getting user data");
+  }
+});
+
 //-----------------------------------------------> get orders of users
 router.get("/orders/:ujwt", async(req, res) => {
   try {
@@ -38,11 +50,13 @@ router.put("/login", async(req, res) => {
 
     if (isMatch) {
       const token = await user.generateAuthToken();
-      res.cookie("ux", token);
-      res.cookie("ci", user.cityId);
-      res.cookie("un", user.name);
-      res.cookie("fa", user.address);
-      user.bussinessId && res.cookie("bx", user.bussinessId);
+      const expireTime = 108000000; // 30 days in milliseconds
+      res.cookie("ux", token, { maxAge: expireTime });
+      res.cookie("ci", user.cityId, { maxAge: expireTime });
+      res.cookie("un", user.name, { maxAge: expireTime });
+      res.cookie("fa", user.address, { maxAge: expireTime });
+      user.bussinessId &&
+        res.cookie("bx", user.bussinessId, { maxAge: expireTime });
 
       return res.status(200).send("logging in successfull");
     } else {
@@ -66,6 +80,25 @@ router.put("/:ujwt", async(req, res) => {
 
     await User.updateOne({ _id: user._id }, {
       $set: state,
+    });
+
+    res.status(200).send("user updated");
+  } catch (e) {
+    res.status(400).send("error in updating user details");
+  }
+});
+
+//----------------------------------------------->
+router.put("/changePass/:userId", async(req, res) => {
+  try {
+    const { state } = req.body;
+    const { userId } = req.params;
+
+    await User.updateOne({ userId }, {
+      $set: {
+        ...state,
+        password: await bcrypt.hash(state.password.toString(), 12),
+      },
     });
 
     res.status(200).send("user updated");
@@ -98,7 +131,9 @@ router.post("/signin", async(req, res) => {
     await user.save();
 
     const token = await user.generateAuthToken();
-    res.cookie("ux", token);
+    const expireTime = 108000000; // 30 days in milliseconds
+
+    res.cookie("ux", token, { maxAge: expireTime });
 
     res.status(200).send("user added successfully");
   } catch (e) {

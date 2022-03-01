@@ -27,6 +27,52 @@ export default function LogIn() {
     });
   };
 
+  //-----------------------------------------------> forgot password
+  const onForgotPassword = async () => {
+    try {
+      const email = prompt("Enter your email Id");
+
+      if (validator.isEmail(email) === false) {
+        alert("invalid email");
+        return;
+      }
+
+      const userId = email.split("@")[0];
+      const { isUserExist } = (await axios.get(`/user/isUserExist/${userId}`))
+        .data;
+
+      if (isUserExist) {
+        let password = "";
+
+        do {
+          password = prompt("Enter Your new Password, minimum 8 requied");
+        } while (password.length < 8);
+
+        const { status } = await axios.post(`/otp`, {
+          userId,
+        });
+
+        if (status === 200) {
+          navigate("/otp", {
+            state: {
+              user: "login",
+              data: {
+                userId,
+                password,
+              },
+            },
+          });
+        } else {
+          alert("no such gmail exists");
+        }
+      } else {
+        alert("invalid email");
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   //-----------------------------------------------> onClick login
   const login = async () => {
     try {
@@ -91,7 +137,7 @@ export default function LogIn() {
             type="password"
             value={input.password}
           />
-          <div className={styles.fp} to="/otp">
+          <div className={styles.fp} onClick={onForgotPassword}>
             forgot password ?
           </div>
         </div>

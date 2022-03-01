@@ -12,13 +12,31 @@ export default function OTP() {
   const styles = useStyles();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [timer, setTimer] = useState(30);
   const [otp, setOtp] = useState("");
 
   useEffect(() => {
     if (!state) {
       navigate(-1);
     }
-  }, [state, navigate]);
+
+    let isMounted = true;
+
+    const updateTimer = () => {
+      if (timer) {
+        isMounted && setTimer(timer - 1);
+      } else {
+        navigate(-1);
+      }
+    };
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => {
+      clearInterval(interval);
+
+      isMounted = false;
+    };
+  }, [state, navigate, timer]);
 
   //-----------------------------------------------> check otp
   const checkOtp = async () => {
@@ -37,6 +55,15 @@ export default function OTP() {
             password: state.data.password,
             address: Cookies.get("fa"),
           });
+        } else if (state.user === "login") {
+          const res = await axios.put(`/user/changePass/${userId}`, {
+            state: {
+              password: state.data.password,
+            },
+          });
+          res?.data
+            ? alert("password changed succesfully")
+            : alert("error in changing password");
         }
 
         await axios.delete(`/otp/${userId}`);
@@ -51,7 +78,7 @@ export default function OTP() {
 
   return (
     <form className={styles.container}>
-      <h2>ENTER OTP</h2>
+      <h2>ENTER OTP {timer}</h2>
       <input
         type="number"
         value={otp}
