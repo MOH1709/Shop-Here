@@ -3,6 +3,25 @@ import { Product } from "../models/index.js";
 
 const router = Router();
 
+//-----------------------------------------------> search in city
+router.post("/:cid", async(req, res) => {
+  try {
+    const { cid } = req.params;
+    const { text } = req.body;
+
+    const products = await Product.find({
+      name: { $regex: text, $options: "i" },
+      cityId: cid,
+    });
+
+    res.status(200).send(products);
+  } catch (e) {
+    console.log(e);
+
+    res.status(500).send("error in searching product");
+  }
+});
+
 //----------------------------------------------->  edit product
 router.put("/:bid", async(req, res) => {
   try {
