@@ -5,7 +5,7 @@ import { makeStyles, Button } from "@material-ui/core";
 import { useEffect, useRef, useState, useContext } from "react";
 
 //-----------------------------------------------> custom component
-import { InputBox, OnSwipe, ToggleBtn } from "../../components";
+import { InputBox, LoadingDisplay, OnSwipe, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 import imageUploader from "../../imageUploader";
 import { Context } from "../../contexts/SelectedAreas";
@@ -15,6 +15,7 @@ export default function OwnerProfile() {
   const { pathname } = useLocation();
   const fileInput = useRef();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { selectedAreas } = useContext(Context);
   const [showBtn, setShowBtn] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
@@ -77,6 +78,7 @@ export default function OwnerProfile() {
   //-----------------------------------------------> save data
   const updateOwnerData = async () => {
     try {
+      setIsLoading(true);
       const bx = Cookies.get("bx");
       const { name, address, phoneNumber, email } = data;
 
@@ -102,10 +104,14 @@ export default function OwnerProfile() {
         extras: [{ phoneNumber }, { email }],
       });
 
-      res.status === 200 && alert("updated succesfully");
+      if (res.status === 200) {
+        setIsLoading(false);
+        alert("updated succesfully");
+      } else {
+        setIsLoading(false);
+      }
     } catch (e) {
-      console.log(e);
-
+      setIsLoading(false);
       alert("error in updating data");
     }
   };
@@ -138,6 +144,7 @@ export default function OwnerProfile() {
 
   return (
     <div className={styles.container}>
+      <LoadingDisplay isLoading={isLoading} />
       {pathname === "/city/owner/profile" && (
         <OnSwipe
           onSwipeLeft={() => {

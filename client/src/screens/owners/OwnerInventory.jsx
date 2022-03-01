@@ -5,7 +5,7 @@ import { makeStyles, Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
-import { ProductCard, AddProductBox } from "../../components/owner";
+import { ProductCard, AddProductForm } from "../../components/owner";
 import { BTN_STYLE } from "../../constants";
 import { AlertBox, OnSwipe } from "../../components";
 
@@ -67,6 +67,7 @@ export default function OwnerInventory() {
     } catch (e) {
       alert("error in adding products");
     }
+    return true;
   };
 
   //-----------------------------------------------> edit added product
@@ -134,7 +135,7 @@ export default function OwnerInventory() {
       <AlertBox
         Style={{ display: showBox ? "flex" : "none" }}
         box={
-          <AddProductBox
+          <AddProductForm
             onSave={product._id ? editProduct : addProduct}
             input={product}
             onDelete={() => {

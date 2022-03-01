@@ -199,6 +199,7 @@ const useStyles = makeStyles({
 
   fp: {
     float: "right",
+    cursor: "pointer",
     marginTop: 10,
     letterSpacing: -0.3,
     fontSize: 15,

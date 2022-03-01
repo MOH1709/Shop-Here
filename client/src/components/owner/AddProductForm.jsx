@@ -1,15 +1,14 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom components
-import { InputBox } from "..";
+import { InputBox, LoadingDisplay } from "..";
 import imageUploader from "../../imageUploader";
 import { BTN_STYLE, COLOR } from "../../constants";
-import { useRef } from "react";
 
-export default function AddProductBox({
+export default function AddProductForm({
   Style,
   onSave,
   input,
@@ -19,6 +18,7 @@ export default function AddProductBox({
 }) {
   const styles = useStyles();
   const fileInput = useRef();
+  const [isLoading, setIsLoading] = useState(false);
   const [prevImage] = useState(input.img);
   const [img, setImg] = useState(input.img);
   const [file, setFile] = useState("");
@@ -58,10 +58,14 @@ export default function AddProductBox({
   const deleteProduct = async () => {
     try {
       const bx = Cookies.get("bx");
+      setIsLoading(true);
+      let res = false;
       await axios.delete(`/product/${bx}/${input._id}`);
       if (input.img) {
-        await axios.delete(`/utils/image/${input.img.split("?id=")[1]}`);
+        res = await axios.delete(`/utils/image/${input.img.split("?id=")[1]}`);
       }
+
+      res ? setIsLoading(false) : setIsLoading(false);
       onDelete();
     } catch (e) {
       alert("error in editing products");
@@ -70,6 +74,7 @@ export default function AddProductBox({
 
   return (
     <div className={styles.container} style={Style}>
+      <LoadingDisplay isLoading={isLoading} />
       <input
         style={{ display: "none" }}
         onChange={addImage}
@@ -128,14 +133,17 @@ export default function AddProductBox({
       <Button
         className={styles.save}
         onClick={async () => {
+          setIsLoading(true);
           if (prevImage) {
             await axios.delete(`/utils/image/${prevImage?.split("?id=")[1]}`);
           }
 
-          onSave({
+          const res = await onSave({
             ...input,
             img: file ? await imageUploader(file) : input.img,
           });
+
+          res ? setIsLoading(false) : setIsLoading(false);
         }}
       >
         save

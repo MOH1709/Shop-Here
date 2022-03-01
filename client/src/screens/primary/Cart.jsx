@@ -5,9 +5,8 @@ import { useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
-import { send } from "../../utils/Push";
 import { CartCard } from "../../components/user";
-import { InputBox, OnSwipe, ToggleBtn } from "../../components";
+import { InputBox, LoadingDisplay, OnSwipe, ToggleBtn } from "../../components";
 import { BTN_STYLE, COLOR } from "../../constants";
 import { Context } from "../../contexts/CartProvider";
 
@@ -16,6 +15,7 @@ export default function Cart() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { cart, setCart } = useContext(Context);
+  const [isLoading, setIsLoading] = useState(false);
   const [urgent, setUrgent] = useState([]);
   const [address, setAddress] = useState(Cookies.get("fa") || "");
   const [total, setTotal] = useState(0);
@@ -67,6 +67,7 @@ export default function Cart() {
         return;
       }
 
+      setIsLoading(true);
       let tempArr = [[]];
       cart.forEach((data, index) => {
         tempArr[tempArr.length - 1].push(data);
@@ -94,14 +95,15 @@ export default function Cart() {
         });
 
         if (res.status === 200) {
-          send(
-            "SocSho",
+          setIsLoading(false);
+          alert(
             `hurray, your order placed successfully to ${data[0].address} 🥳,
             will be delivered to you before ${
               urgent.includes(data[0].shopId) ? "1 hour 🕐" : "10 P.M. 🕙"
             }`
           );
         } else {
+          setIsLoading(false);
           alert(
             `something wrong while placing order with ${data[0].address} ☹`
           );
@@ -112,6 +114,7 @@ export default function Cart() {
         navigate("/city/messages");
       });
     } catch (e) {
+      setIsLoading(false);
       alert("error in placing order");
     }
   };
@@ -119,6 +122,7 @@ export default function Cart() {
   //-----------------------------------------------> returning component
   return (
     <div className={styles.container}>
+      <LoadingDisplay isLoading={isLoading} />
       {pathname === "/city/cart" && (
         <OnSwipe
           onSwipeRight={() => {

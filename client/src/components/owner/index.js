@@ -1,7 +1,7 @@
 import OwnerMessage from "./OwnerMessage";
 import PrimaryHeader from "./PrimaryHeader";
 import ProductCard from "./ProductCard";
-import AddProductBox from "./AddProductBox";
+import AddProductForm from "./AddProductForm";
 import AreaSelectionCard from "./AreaSelectionCard";
 import OwnerOrderCard from "./OwnerOrderCard";
 
@@ -11,5 +11,5 @@ export {
   OwnerMessage,
   PrimaryHeader,
   ProductCard,
-  AddProductBox,
+  AddProductForm,
 };
