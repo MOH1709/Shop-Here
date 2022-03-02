@@ -78,7 +78,8 @@ export default function Start() {
   };
 
   //-----------------------------------------------> onClick start Button
-  const start = () => {
+  const start = (e) => {
+    e.preventDefault();
     const { fname, lname, cityId } = input;
 
     // checking if all fields are field
@@ -95,7 +96,7 @@ export default function Start() {
 
   //-----------------------------------------------> Return Component
   return (
-    <form className={styles.container}>
+    <form className={styles.container} onSubmit={start}>
       <div className={styles.logoDiv}>
         <img src="./logo.png" alt="logo" height="50" />
         <p>Shop Here</p>
@@ -143,7 +144,7 @@ export default function Start() {
             ))}
           </div>
         </div>
-        <Button className={styles.start} onClick={start}>
+        <Button className={styles.start} type="submit">
           start
         </Button>
       </div>

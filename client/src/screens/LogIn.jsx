@@ -74,8 +74,9 @@ export default function LogIn() {
   };
 
   //-----------------------------------------------> onClick login
-  const login = async () => {
+  const login = async (e) => {
     try {
+      e.preventDefault();
       const { email, password } = input;
 
       // check if both inputs are filled
@@ -112,7 +113,7 @@ export default function LogIn() {
 
   //-----------------------------------------------> return component
   return (
-    <form className={styles.container}>
+    <form className={styles.container} onSubmit={login}>
       <div className={styles.logoDiv}>
         <img src="./logo.png" alt="logo" height="50" />
         <p>Shop Here</p>
@@ -141,7 +142,7 @@ export default function LogIn() {
             forgot password ?
           </div>
         </div>
-        <Button onClick={login} className={styles.login}>
+        <Button type="submit" className={styles.login}>
           Log in
         </Button>
       </div>

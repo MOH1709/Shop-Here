@@ -38,6 +38,7 @@ export default function SignIn() {
   //-----------------------------------------------> onClick Signin
   const signIn = async (e) => {
     try {
+      e.preventDefault();
       // check if both field are filled
       if (!(input.email || input.password)) {
         alert("please fill all field");
@@ -113,7 +114,7 @@ export default function SignIn() {
       <p className={styles.link}>
         already have an account ?<NavLink to="/login">Log In</NavLink>
       </p>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={signIn}>
         <InputBox
           title={"Email Id"}
           value={input.email}
@@ -128,7 +129,7 @@ export default function SignIn() {
           value={input.password}
         />
 
-        <Button className={styles.create} onClick={signIn}>
+        <Button className={styles.create} type="submit">
           get otp
         </Button>
         {/* <div className={styles.api}>

@@ -39,8 +39,9 @@ export default function OTP() {
   }, [state, navigate, timer]);
 
   //-----------------------------------------------> check otp
-  const checkOtp = async () => {
+  const checkOtp = async (e) => {
     try {
+      e.preventDefault();
       const userId = state.data.userId;
 
       const res = await axios.get(`/otp/${userId}/${otp}`);
@@ -77,7 +78,7 @@ export default function OTP() {
   };
 
   return (
-    <form className={styles.container}>
+    <form className={styles.container} onSubmit={checkOtp}>
       <h2>ENTER OTP {timer}</h2>
       <input
         type="number"
@@ -89,7 +90,7 @@ export default function OTP() {
         placeholder="Enter otp here..."
         className={styles.input}
       />
-      <Button className={styles.btn} onClick={checkOtp}>
+      <Button className={styles.btn} type="submit">
         confirm
       </Button>
     </form>
