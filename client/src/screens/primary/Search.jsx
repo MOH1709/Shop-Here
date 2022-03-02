@@ -29,8 +29,9 @@ export default function Search() {
   };
 
   //-----------------------------------------------> get search result
-  const searchProduct = async () => {
+  const searchProduct = async (e) => {
     try {
+      e.preventDefault();
       const ci = Cookies.get("ci");
       const res = await axios.post(`/product/${ci}`, {
         text,
@@ -43,7 +44,7 @@ export default function Search() {
   };
 
   return (
-    <div className={styles.container}>
+    <form className={styles.container} onSubmit={searchProduct}>
       <div className={styles.header}>
         <div className={styles.inputDiv}>
           <span
@@ -61,7 +62,7 @@ export default function Search() {
               setText(e.target.value);
             }}
           />
-          <span className={styles.icon} onClick={searchProduct}>
+          <span className={styles.icon} type="submit">
             <img src="./icons/search.svg" alt="search" height="20" />
           </span>
         </div>
@@ -102,7 +103,7 @@ export default function Search() {
         setToShow={setShowDetail}
         state={product}
       />
-    </div>
+    </form>
   );
 }
 
