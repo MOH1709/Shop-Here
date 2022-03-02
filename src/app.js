@@ -3,17 +3,28 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import fileupload from "express-fileupload";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 // import { createServer } from "http";
 // import { Server } from "socket.io";
 
 //-----------------------------------------------> custom
 import * as router from "./routes/index.js";
 
+//-----------------------------------------------> using dirname
+const __dirname = dirname(fileURLToPath(
+  import.meta.url));
+
 //-----------------------------------------------> using imports
 const app = express();
 app.use(cors());
 app.use(express.json()); // to convert all post request into json format
 app.use(fileupload()); // to upload files i.e. images
+
+//-----------------------------------------------> load react on reload
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
 
 //-----------------------------------------------> using routes
 app.use("/utils", router.utils);

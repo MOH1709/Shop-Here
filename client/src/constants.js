@@ -22,6 +22,7 @@ const BTN_STYLE = {
   position: "relative",
   ...FLEX_CENTER,
 
+  cursor: "pointer",
   border: "none",
   borderRadius: 5,
   color: "white",
