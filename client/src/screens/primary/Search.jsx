@@ -116,6 +116,7 @@ const useStyles = makeStyles({
     height: "100vh",
     width: "100%",
     backgroundColor: "white",
+    overflow: "auto",
     zIndex: 999,
   },
   header: {

@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BTN_STYLE, FLEX_CENTER, SHADOW } from "../constants";
+import { BTN_STYLE, COLOR, FLEX_CENTER, SHADOW } from "../constants";
 
 export default function ShopDetailBox({ toShow, state, setToShow }) {
   const styles = useStyles();
@@ -35,12 +35,19 @@ export default function ShopDetailBox({ toShow, state, setToShow }) {
         <span className={styles.shopImg}>
           <img src={shop.img} alt="shop" />
         </span>
-        <p>shop Name: {shop.name}</p>
-        <p>shop Adderess: {shop.address}</p>
         <p>
-          shop owner Contact Number: {shop.extras && shop.extras[0].phoneNumber}
+          <span> Shop Name</span> <br /> {shop.name}
         </p>
-        <p>shop owner Email Id: {shop.extras && shop.extras[1].email}</p>
+        <p>
+          <span>Shop Address</span> <br /> {shop.address}
+        </p>
+        <p>
+          <span> Contact Number</span> <br />
+          {shop.extras && shop.extras[0].phoneNumber}
+        </p>
+        <p>
+          <span> Email</span> <br /> {shop.extras && shop.extras[1].email}
+        </p>
 
         <button
           className={styles.btn}
@@ -68,11 +75,19 @@ const useStyles = makeStyles({
   },
   box: {
     "& p": {
-      marginBlock: 10,
+      "& span": {
+        color: COLOR.SECONDARY,
+        fontWeight: "normal",
+      },
+      color: COLOR.PRIMARY,
+      marginBlock: 15,
+      fontWeight: "bold",
+      fontSize: 14,
+      lineHeight: 1.1,
     },
-
     boxShadow: SHADOW,
     padding: 20,
+    textAlign: "center",
     borderRadius: 5,
     width: "80%",
   },
