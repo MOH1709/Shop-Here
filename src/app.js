@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import fileupload from "express-fileupload";
+import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 // import { createServer } from "http";
@@ -20,11 +21,6 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // to convert all post request into json format
 app.use(fileupload()); // to upload files i.e. images
-
-//-----------------------------------------------> load react on reload
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
 
 //-----------------------------------------------> using routes
 app.use("/utils", router.utils);
@@ -49,6 +45,9 @@ mongoose
 //-----------------------------------------------> check for heroku
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  });
 }
 
 //-----------------------------------------------> adding listener
