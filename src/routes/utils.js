@@ -1,8 +1,7 @@
 import { Router } from "express";
 import webpush from "web-push";
 import { Readable } from "stream";
-import { uploadImage, deleteImage } from "../utils/drive.js";
-import mail from "../MailText.js";
+import { uploadImage, deleteImage, sendMail } from "../utils/google.js";
 
 const router = Router();
 
@@ -65,7 +64,7 @@ router.delete("/image/:id", async(req, res) => {
 router.post("/mail", async(req, res) => {
   try {
     const { text, to, subject } = req.body;
-    mail({ text, to, subject });
+    await sendMail({ text, to, subject });
 
     res.status(200).send("message send succesfully");
   } catch (e) {

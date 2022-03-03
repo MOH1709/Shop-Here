@@ -1,16 +1,13 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useContext } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { COLOR } from "../../constants";
-import { Context } from "../../contexts/CartProvider";
 
 export default function Setting() {
   const styles = useStyles();
-  const { setCart } = useContext(Context);
   const navigate = useNavigate();
 
   //-----------------------------------------------> logout
@@ -31,13 +28,6 @@ export default function Setting() {
     } catch (e) {
       alert("error in logging out");
     }
-  };
-
-  //-----------------------------------------------> select areas
-  const selectArea = () => {
-    Cookies.remove("ai");
-    setCart([]);
-    navigate("/city/home/areas");
   };
 
   return (
@@ -89,9 +79,7 @@ export default function Setting() {
         >
           Want A Product
         </Button> */}
-        <Button className={styles.navBtn} onClick={selectArea}>
-          change area
-        </Button>
+
         <Button
           className={styles.navBtn}
           component={NavLink}

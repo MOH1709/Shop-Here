@@ -1,4 +1,5 @@
 import { google } from "googleapis";
+import nodemailer from "nodemailer";
 
 const clientId = process.env.CID;
 const clientSecret = process.env.CSK;
@@ -19,6 +20,35 @@ const drive = google.drive({
 oauth2Client.setCredentials({
   refresh_token: refreshToken,
 });
+
+//-----------------------------------------------> sending mail using gmail
+async function sendMail(mailContent = {}) {
+  try {
+    const accessToken = await oauth2Client.getAccessToken();
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "cleancity1507@gmail.com",
+        clientId,
+        clientSecret,
+        refreshToken,
+        accessToken: accessToken.token,
+      },
+    });
+
+    const mailOptions = {
+      from: "Shop Here 📫",
+      ...mailContent,
+      text: mailContent.text.toString(),
+    };
+
+    return await transporter.sendMail(mailOptions);
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 //-----------------------------------------------> return data of saved image on google drive
 async function uploadImage(file, mimeType) {
@@ -62,4 +92,4 @@ async function deleteImage(fileId) {
   }
 }
 
-export { uploadImage, deleteImage };
+export { uploadImage, deleteImage, sendMail };

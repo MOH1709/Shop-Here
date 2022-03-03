@@ -1,13 +1,18 @@
+import { Button, makeStyles } from "@material-ui/core";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { Card } from "../../components";
+import { BTN_STYLE } from "../../constants";
+import { Context } from "../../contexts/CartProvider";
 
 export default function Business() {
+  const styles = useStyles();
   const navigate = useNavigate();
+  const { setCart } = useContext(Context);
   const [businesses, setBusinesses] = useState([]);
 
   //-----------------------------------------------> onLoad
@@ -44,8 +49,18 @@ export default function Business() {
     };
   }, [navigate]);
 
+  //-----------------------------------------------> select areas
+  const selectArea = () => {
+    Cookies.remove("ai");
+    setCart([]);
+    navigate("/city/home/areas");
+  };
+
   return (
     <>
+      <Button onClick={selectArea} className={styles.btn}>
+        change area
+      </Button>
       {businesses.map((data) => {
         return (
           data.name &&
@@ -67,3 +82,13 @@ export default function Business() {
     </>
   );
 }
+
+//-----------------------------------------------> custom styles
+const useStyles = makeStyles({
+  btn: {
+    ...BTN_STYLE,
+    width: "90%",
+    marginBlock: 20,
+    marginInline: "auto",
+  },
+});

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Otp } from "../models/index.js";
-import mail from "../MailText.js";
+import { sendMail } from "../utils/google.js";
 
 const router = Router();
 
@@ -34,7 +34,7 @@ router.post("/", async(req, res) => {
     const { userId } = req.body;
     const otp = Math.floor(Math.random() * 900000 + 10000);
 
-    mail({
+    await sendMail({
       text: otp,
       to: userId + "@gmail.com",
       subject: "SHOP HERE OTP CONFIRMATION CODE",
