@@ -30,7 +30,7 @@ export default function LogIn() {
   //-----------------------------------------------> forgot password
   const onForgotPassword = async () => {
     try {
-      const email = prompt("Enter your email Id");
+      const email = prompt("Enter your email Id") || "";
 
       if (validator.isEmail(email) === false) {
         alert("invalid email");
