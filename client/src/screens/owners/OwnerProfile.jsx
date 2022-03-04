@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import validator from "validator";
 import { useLocation, useNavigate } from "react-router-dom";
 import { makeStyles, Button } from "@material-ui/core";
 import { useEffect, useRef, useState, useContext } from "react";
@@ -17,13 +18,17 @@ export default function OwnerProfile() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { selectedAreas } = useContext(Context);
-  const [showBtn, setShowBtn] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
-  const [canUrgent, setCanUrgent] = useState(false);
+
+  // for profile pic
   const [img, setImg] = useState("");
   const [prevImg, setPrevImg] = useState("");
   const [file, setFile] = useState(0);
-  const [data, setData] = useState({
+
+  // for shop input
+  const [showBtn, setShowBtn] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+  const [canUrgent, setCanUrgent] = useState(false);
+  const [input, setInput] = useState({
     name: "",
     address: "",
     phoneNumber: null,
@@ -46,7 +51,7 @@ export default function OwnerProfile() {
             setShowBtn(true);
             setImg(res.img);
             setPrevImg(res.img);
-            setData({
+            setInput({
               name: res.name,
               address: res.address,
               phoneNumber: res.extras[0].phoneNumber,
@@ -69,18 +74,23 @@ export default function OwnerProfile() {
   const changeHandler = (e) => {
     const { value, name } = e.target;
 
-    setData({
-      ...data,
+    setInput({
+      ...input,
       [name]: value,
     });
   };
 
-  //-----------------------------------------------> save data
+  //-----------------------------------------------> save input
   const updateOwnerData = async () => {
     try {
+      const { name, address, phoneNumber, email } = input;
+      if (!validator.isEmail(email) || email.split("@")[1] !== "gmail.com") {
+        alert("please enter valid email id");
+        return;
+      }
+
       setIsLoading(true);
       const bx = Cookies.get("bx");
-      const { name, address, phoneNumber, email } = data;
 
       let imgPath = img;
       if (prevImg !== img) {
@@ -95,10 +105,10 @@ export default function OwnerProfile() {
         canUrgent,
         name,
         areas: selectedAreas.length
-          ? selectedAreas.map((data) => data._id)
+          ? selectedAreas.map((input) => input._id)
           : (
               await axios.get(`/bussiness/shopareas/${bx}`)
-            ).data,
+            ).input,
         img: imgPath,
         address,
         extras: [{ phoneNumber }, { email }],
@@ -112,7 +122,7 @@ export default function OwnerProfile() {
       }
     } catch (e) {
       setIsLoading(false);
-      alert("error in updating data");
+      alert("error in updating input");
     }
   };
 
@@ -173,28 +183,28 @@ export default function OwnerProfile() {
           Style={{ marginBlock: 20 }}
           title="Shop Name"
           name="name"
-          value={data.name}
+          value={input.name}
           onChangeHandler={changeHandler}
         />
         <InputBox
           Style={{ marginBlock: 20 }}
           title="Shop Address Without Name"
           name="address"
-          value={data.address}
+          value={input.address}
           onChangeHandler={changeHandler}
         />
         <InputBox
           Style={{ marginBlock: 20 }}
           title="Email"
           name="email"
-          value={data.email}
+          value={input.email}
           onChangeHandler={changeHandler}
         />
         <InputBox
           Style={{ marginBlock: 20 }}
           title="Business Number"
           name="phoneNumber"
-          value={data.phoneNumber}
+          value={input.phoneNumber}
           onChangeHandler={changeHandler}
           type={"number"}
         />

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { sendMail } from "../utils/google.js";
 import { Order, User, Shop, Product } from "../models/index.js";
 
 const router = Router();
@@ -36,6 +37,19 @@ router.post("/:uxt", async(req, res) => {
     const { products, owner, ownerId, recievedAddress, isUrgent } = req.body;
 
     const reciever = await User.findOne({ tokens: { $in: uxt } }, { _id: 1, name: 1 });
+    const { extras } = await Shop.findOne({ _id: ownerId }, { _id: 1, extras: 1 });
+
+    sendMail({
+        to: extras[1].email,
+        subject: `You Got An Order from ${reciever.name}`,
+        text: "click this link to check https://powerful-atoll-15577.herokuapp.com/city/owner/messages",
+      })
+      .then((res) => {
+        console.log("response", res);
+      })
+      .catch((e) => {
+        console.log("error n sending mail of order", e);
+      });
 
     const order = new Order({
       products,
