@@ -50,7 +50,7 @@ async function sendMail(mailContent = {}) {
   }
 }
 
-//-----------------------------------------------> return data of saved image on google drive
+//-----------------------------------------------> save image on google drive
 async function uploadImage(file, mimeType) {
   try {
     const response = await drive.files.create({

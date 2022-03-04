@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
 
@@ -9,6 +10,28 @@ import { COLOR } from "../../constants";
 export default function Setting() {
   const styles = useStyles();
   const navigate = useNavigate();
+  const [isOwner, setIsOwner] = useState(false);
+
+  //-----------------------------------------------> on load
+  useEffect(() => {
+    let isMounted = true;
+
+    const checkIsOwner = async () => {
+      try {
+        const ux = Cookies.get("ux");
+        const { data } = await axios.get(`/user/${ux}`);
+
+        isMounted && setIsOwner(!!data?.bussinessId || false);
+      } catch (e) {
+        console.log("error in checking is business man");
+      }
+    };
+    checkIsOwner();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   //-----------------------------------------------> logout
   const logOut = async () => {
@@ -50,18 +73,11 @@ export default function Setting() {
         >
           My Profile
         </Button>
-        {/* <Button
-          className={styles.navBtn}
-          component={NavLink}
-          to={`/city/setting/userbills`}
-        >
-          My Orders
-        </Button> */}
         <Button
           className={styles.navBtn}
           component={NavLink}
           to={`/city/owner`}
-          style={{ display: Cookies.get("bx") ? "flex" : "none" }}
+          style={{ display: isOwner ? "flex" : "none" }}
         >
           Use For Bussiness
         </Button>
