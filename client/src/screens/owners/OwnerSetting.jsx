@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import validator from "validator";
 import { makeStyles, Button } from "@material-ui/core";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
 
@@ -9,6 +10,27 @@ import { COLOR } from "../../constants";
 export default function OwnerSetting() {
   const styles = useStyles();
   const navigate = useNavigate();
+
+  //-----------------------------------------------> mailing link
+  const mailLink = async () => {
+    try {
+      const email = prompt("enter email for sending link") || "";
+
+      if (validator.isEmail(email) && email.split("@")[1] === "gmail.com") {
+        const res = await axios.post("/utils/mail", {
+          to: email,
+          subject: "Welcome to Shop Here🤗",
+          text: "https://powerful-atoll-15577.herokuapp.com",
+        });
+
+        res.status === 200 && alert("link shared succesfully");
+      } else {
+        alert("gmail is invalid");
+      }
+    } catch (e) {
+      alert("error in sending mail");
+    }
+  };
 
   //-----------------------------------------------> logout
   const logOut = async () => {
@@ -52,13 +74,16 @@ export default function OwnerSetting() {
         <Button className={styles.navBtn} component={NavLink} to={`/city/home`}>
           Switch As Consumer
         </Button>
-        <Button
+        <Button className={styles.navBtn} onClick={mailLink}>
+          share app
+        </Button>
+        {/* <Button
           className={styles.navBtn}
           component={NavLink}
           to={`/city/owner/setting/updates`}
         >
           Update & Info
-        </Button>
+        </Button> */}
         {/* <Button
           className={styles.navBtn}
           component={NavLink}
