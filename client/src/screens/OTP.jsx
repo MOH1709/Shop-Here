@@ -12,7 +12,7 @@ export default function OTP() {
   const styles = useStyles();
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const [otp, setOtp] = useState("");
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function OTP() {
 
   return (
     <form className={styles.container} onSubmit={checkOtp}>
-      <h2>ENTER OTP {timer}</h2>
+      <h2>ENTER OTP in {timer}</h2>
       <input
         type="number"
         value={otp}
