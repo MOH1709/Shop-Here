@@ -20,7 +20,7 @@ export default function Main() {
   useEffect(() => {
     const bx = Cookies.get("bx");
 
-    if (bx) {
+    if (bx && pathname === "/city/home/areas") {
       navigate("/city/owner");
     }
 
