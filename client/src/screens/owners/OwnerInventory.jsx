@@ -95,6 +95,16 @@ export default function OwnerInventory() {
           navigate("/city/owner/profile");
         }}
       />
+      <Button
+        style={{ display: products.length > 100 ? "none" : "flex" }}
+        className={styles.btn}
+        onClick={() => {
+          setProduct({});
+          setShowBox(true);
+        }}
+      >
+        ADD
+      </Button>
       {products.map((data, index) => {
         return (
           <div key={data._id}>
@@ -120,16 +130,6 @@ export default function OwnerInventory() {
           </div>
         );
       })}
-      <Button
-        style={{ display: products.length > 100 ? "none" : "flex" }}
-        className={styles.btn}
-        onClick={() => {
-          setProduct({});
-          setShowBox(true);
-        }}
-      >
-        ADD
-      </Button>
 
       {/* add or edit product form */}
       <AlertBox
