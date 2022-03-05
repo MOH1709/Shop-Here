@@ -71,7 +71,14 @@ export default function OwnerSetting() {
         >
           My Orders
         </Button>
-        <Button className={styles.navBtn} component={NavLink} to={`/city/home`}>
+        <Button
+          className={styles.navBtn}
+          component={NavLink}
+          to={`/city/home`}
+          onClick={() => {
+            Cookies.remove("bx");
+          }}
+        >
           Switch As Consumer
         </Button>
         <Button className={styles.navBtn} onClick={mailLink}>

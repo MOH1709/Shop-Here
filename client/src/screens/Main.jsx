@@ -8,6 +8,7 @@ import { MiddleWare } from "../components";
 import { Context } from "../contexts/WidthProvider";
 import { Cart } from "./primary";
 import { BTN_STYLE, SHADOW, COLOR } from "../constants";
+import Cookies from "js-cookie";
 
 export default function Main() {
   const styles = useStyles();
@@ -17,6 +18,12 @@ export default function Main() {
 
   //-----------------------------------------------> on load
   useEffect(() => {
+    const bx = Cookies.get("bx");
+
+    if (bx) {
+      navigate("/city/owner");
+    }
+
     if (width > 700 && pathname === "/city/cart") {
       navigate("/city/home");
     }

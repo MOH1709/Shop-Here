@@ -22,6 +22,7 @@ export default function Setting() {
         const ux = Cookies.get("ux");
         const { data } = await axios.get(`/user/${ux}`);
 
+        data?.bussinessId && Cookies.set("bx", data?.bussinessId);
         isMounted && setIsOwner(!!data?.bussinessId || false);
       } catch (e) {
         console.log("error in checking is business man");
