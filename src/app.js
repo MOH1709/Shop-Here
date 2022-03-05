@@ -6,8 +6,6 @@ import fileupload from "express-fileupload";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-// import { createServer } from "http";
-// import { Server } from "socket.io";
 
 //-----------------------------------------------> custom
 import * as router from "./routes/index.js";
@@ -55,23 +53,3 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`connection successful at port ${port}`);
 });
-
-//-----------------------------------------------> testing socket.io
-// const http = createServer(app);
-// const io = new Server(http, {
-//   cors: {
-//     origin: "*",
-//   },
-// });
-
-// io.on("connection", (socket) => {
-//   console.log("socket connected");
-//   socket.on("order", (data) => {
-//     socket.join(data);
-//   });
-
-//   // data = {room: "to", name: "username", message: ""}
-//   socket.on("send_msg", (data) => {
-//     socket.to(data.room).emit("recieve_msg", data);
-//   });
-// });
