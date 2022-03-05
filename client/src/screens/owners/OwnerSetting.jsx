@@ -20,7 +20,7 @@ export default function OwnerSetting() {
         const res = await axios.post("/utils/mail", {
           to: email,
           subject: "Welcome to Shop Here🤗",
-          text: "https://powerful-atoll-15577.herokuapp.com",
+          text: "https://shophereapp.herokuapp.com",
         });
 
         res.status === 200 && alert("link shared succesfully");

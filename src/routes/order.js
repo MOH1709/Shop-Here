@@ -42,7 +42,7 @@ router.post("/:uxt", async(req, res) => {
     sendMail({
         to: extras[1].email,
         subject: `You Got An Order from ${reciever.name}`,
-        text: "click this link to check https://powerful-atoll-15577.herokuapp.com/city/owner/messages",
+        text: "click this link to check https://shophereapp.herokuapp.com/city/owner/messages",
       })
       .then((res) => {
         console.log("response", res);
