@@ -1,18 +1,38 @@
+import { useState, useContext } from "react";
 import { makeStyles, Button } from "@material-ui/core";
 
 //-----------------------------------------------> custom components
+import { Context } from "../../contexts/CartProvider";
 import { COLOR, FLEX_CENTER } from "../../constants";
 
-export default function ProductCard({ state, onClickHandler }) {
+export default function ProductCard({ state, isAdded, canUrgent, shop }) {
   const styles = useStyles();
-  const { img, name, MRP, quantity, price, isAdded } = state;
+  const { cart, setCart } = useContext(Context);
+  const [inCart, setInCart] = useState(isAdded ?? false);
+  const { img, name, MRP, quantity, price } = state;
 
   return (
     <div
       className={styles.container}
       onClick={() => {
         if (quantity > 0) {
-          onClickHandler({ ...state, avail: quantity }, !isAdded);
+          if (inCart === false) {
+            setCart([
+              ...cart,
+              {
+                ...state,
+                avail: quantity,
+                quantity: 1,
+                canUrgent,
+                address: shop[0],
+                shopId: shop[1],
+              },
+            ]);
+          } else {
+            setCart(cart.filter((val) => val._id !== state._id));
+          }
+
+          setInCart(!inCart);
         } else {
           alert(`${name} is out of stock for now😟`);
         }
@@ -30,9 +50,9 @@ export default function ProductCard({ state, onClickHandler }) {
       </div>
       <Button
         className={styles.btn}
-        style={{ color: isAdded ? COLOR.RED : COLOR.GREEN }}
+        style={{ color: inCart ? COLOR.RED : COLOR.GREEN }}
       >
-        {isAdded ? "Remove" : "Add To Cart"}
+        {inCart ? "Remove" : "Add To Cart"}
       </Button>
     </div>
   );

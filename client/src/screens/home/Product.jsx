@@ -12,7 +12,7 @@ export default function Product() {
   const styles = useStyles();
   const { bid } = useParams();
   const [shop] = useState(bid.split("+"));
-  const { cart, setCart } = useContext(Context);
+  const { cart } = useContext(Context);
   const [canUrgent, setCanUrgent] = useState(false);
   const [products, setProducts] = useState([]);
   const [shopData, setShopData] = useState({
@@ -49,14 +49,7 @@ export default function Product() {
             return 0;
           };
 
-          setProducts(
-            response.products.sort(sortByCategory).map((data) => {
-              return {
-                ...data,
-                isAdded: cart.find((val) => val._id === data._id),
-              };
-            })
-          );
+          setProducts(response.products.sort(sortByCategory));
         }
       } catch (e) {
         alert("error in getting products of this shop");
@@ -69,18 +62,6 @@ export default function Product() {
       isMounted = false;
     };
   }, [shop, cart]);
-
-  //-----------------------------------------------> edit Products according to cart
-  const editProduct = (obj, isAdded) => {
-    if (isAdded) {
-      setCart([
-        ...cart,
-        { ...obj, quantity: 1, canUrgent, address: shop[0], shopId: shop[1] },
-      ]);
-    } else {
-      setCart(cart.filter((val) => val._id !== obj._id));
-    }
-  };
 
   //-----------------------------------------------> returning component
   return (
@@ -112,7 +93,12 @@ export default function Product() {
               >
                 {data.category || "Extras"}
               </p>
-              <ProductCard state={data} onClickHandler={editProduct} />
+              <ProductCard
+                state={data}
+                canUrgent={canUrgent}
+                shop={shop}
+                isAdded={cart.find((val) => val._id === data._id)}
+              />
             </div>
           );
         })}
