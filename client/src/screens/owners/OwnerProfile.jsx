@@ -33,6 +33,7 @@ export default function OwnerProfile() {
     address: "",
     phoneNumber: null,
     email: "",
+    MOV: 10,
   });
 
   //-----------------------------------------------> on load
@@ -56,6 +57,7 @@ export default function OwnerProfile() {
               address: res.address,
               phoneNumber: res.extras[0].phoneNumber,
               email: res.extras[1].email,
+              MOV: res.minOrderValue,
             });
           }
         }
@@ -83,7 +85,7 @@ export default function OwnerProfile() {
   //-----------------------------------------------> save input
   const updateOwnerData = async () => {
     try {
-      const { name, address, phoneNumber, email } = input;
+      const { name, address, phoneNumber, email, MOV } = input;
       if (!validator.isEmail(email) || email.split("@")[1] !== "gmail.com") {
         alert("please enter valid email id");
         return;
@@ -108,9 +110,10 @@ export default function OwnerProfile() {
           ? selectedAreas.map((input) => input._id)
           : (
               await axios.get(`/bussiness/shopareas/${bx}`)
-            ).input,
+            ).data,
         img: imgPath,
         address,
+        minOrderValue: MOV,
         extras: [{ phoneNumber }, { email }],
       });
 
@@ -205,6 +208,14 @@ export default function OwnerProfile() {
           title="Business Number"
           name="phoneNumber"
           value={input.phoneNumber}
+          onChangeHandler={changeHandler}
+          type={"number"}
+        />
+        <InputBox
+          Style={{ marginBlock: 20 }}
+          title="Minimum Order Value"
+          name="MOV"
+          value={input.MOV}
           onChangeHandler={changeHandler}
           type={"number"}
         />

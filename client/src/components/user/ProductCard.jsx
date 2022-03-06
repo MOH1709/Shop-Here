@@ -5,11 +5,12 @@ import { makeStyles, Button } from "@material-ui/core";
 import { Context } from "../../contexts/CartProvider";
 import { COLOR, FLEX_CENTER } from "../../constants";
 
-export default function ProductCard({ state, isAdded, canUrgent, shop }) {
+export default function ProductCard({ MOV, shop, state, isAdded, canUrgent }) {
   const styles = useStyles();
   const { cart, setCart } = useContext(Context);
-  const [inCart, setInCart] = useState(isAdded ?? false);
   const { img, name, MRP, quantity, price } = state;
+
+  const [inCart, setInCart] = useState(isAdded ?? false);
 
   return (
     <div
@@ -26,6 +27,7 @@ export default function ProductCard({ state, isAdded, canUrgent, shop }) {
                 canUrgent,
                 address: shop[0],
                 shopId: shop[1],
+                MOV,
               },
             ]);
           } else {

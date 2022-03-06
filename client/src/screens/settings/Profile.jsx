@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Button, makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 //-----------------------------------------------> custom components
 import { InputBox } from "../../components";
@@ -11,8 +11,8 @@ import { BTN_STYLE, SHADOW } from "../../constants";
 export default function Profile() {
   const styles = useStyles();
   const navigate = useNavigate();
-  // const [saveMsg, setSaveMsg] = useState(Cookies.get("sm"));
-  const [data, setData] = useState({
+  const ux = Cookies.get("ux");
+  const [input, setInput] = useState({
     fname: "",
     lname: "",
     fa: "",
@@ -20,17 +20,10 @@ export default function Profile() {
 
   //-----------------------------------------------> on load
   useEffect(() => {
-    const ux = Cookies.get("ux");
-
-    if (!ux) {
-      navigate(`/city/signin`);
-      return;
-    }
-
     try {
       const fullname = Cookies.get("un").split("+");
 
-      setData({
+      setInput({
         fname: fullname[0],
         lname: fullname[1],
         fa: Cookies.get("fa") || "",
@@ -44,8 +37,8 @@ export default function Profile() {
   const changeHandler = (e) => {
     const { value, name } = e.target;
 
-    setData({
-      ...data,
+    setInput({
+      ...input,
       [name]: value,
     });
   };
@@ -53,7 +46,7 @@ export default function Profile() {
   //-----------------------------------------------> on change name or address
   const updateUserDetails = async () => {
     try {
-      const { fname, lname, fa } = data;
+      const { fname, lname, fa } = input;
 
       const res = await axios.put(`/user/${Cookies.get("ux")}`, {
         state: {
@@ -65,7 +58,6 @@ export default function Profile() {
       if (res.status === 200) {
         Cookies.set("un", `${fname}+${lname}`, { expires: 30 });
         Cookies.set("fa", fa, { expires: 30 });
-        // Cookies.set("sm", saveMsg ? "hxg_?" : "");
         alert("updated successfully :)");
         navigate("/city/home");
       }
@@ -74,20 +66,20 @@ export default function Profile() {
     }
   };
 
-  return (
+  return ux ? (
     <div className={styles.container}>
       <div className={styles.nameDiv}>
         <InputBox
           Style={{ marginBlock: 20 }}
           name="fname"
-          value={data.fname}
+          value={input.fname}
           title={"First Name"}
           onChangeHandler={changeHandler}
         />
         <InputBox
           Style={{ marginBlock: 20 }}
           name="lname"
-          value={data.lname}
+          value={input.lname}
           title={"Last Name"}
           onChangeHandler={changeHandler}
         />
@@ -95,27 +87,18 @@ export default function Profile() {
         <InputBox
           Style={{ marginBlock: 20 }}
           name="fa"
-          value={data.fa}
+          value={input.fa}
           title={"Delivery Address"}
           onChangeHandler={changeHandler}
         />
-
-        {/* <ToggleBtn
-          title={"save messages"}
-          initialState={saveMsg}
-          onClickHandler={() => {
-            setSaveMsg(!saveMsg);
-          }}
-          Style={{
-            marginBlock: 30,
-          }}
-        /> */}
 
         <Button className={styles.btn} onClick={updateUserDetails}>
           update
         </Button>
       </div>
     </div>
+  ) : (
+    <Navigate to="/city/signin" />
   );
 }
 

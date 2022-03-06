@@ -16,6 +16,7 @@ export default function Cart() {
   const { pathname } = useLocation();
   const { cart, setCart } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
+  const [MOV, setMOV] = useState({});
   const [urgent, setUrgent] = useState([]);
   const [address, setAddress] = useState(Cookies.get("fa") || "");
   const [total, setTotal] = useState(0);
@@ -23,18 +24,31 @@ export default function Cart() {
   //----------------------------------------------->
   useEffect(() => {
     let isMounted = true;
-    if (isMounted) {
-      const compareShopId = (a, b) => {
-        if (a.shopId < b.shopId) {
-          return -1;
-        }
-        if (a.shopId > b.shopId) {
-          return 1;
-        }
-        return 0;
-      };
 
-      isMounted && setCart(cart.sort(compareShopId));
+    const compareShopId = (a, b) => {
+      if (a.shopId < b.shopId) {
+        return -1;
+      }
+      if (a.shopId > b.shopId) {
+        return 1;
+      }
+      return 0;
+    };
+
+    if (isMounted) {
+      setCart(cart.sort(compareShopId));
+
+      let obj = {};
+      cart.forEach((data) => {
+        obj[data.shopId] = {
+          st: obj[data.shopId]?.st
+            ? obj[data.shopId].st + data.price * data.quantity
+            : data.price * data.quantity,
+          mov: data.MOV,
+          shop: data.address,
+        };
+      });
+      setMOV(obj);
 
       setTotal(
         cart.reduce((pv, cv) => {
@@ -65,6 +79,14 @@ export default function Cart() {
       if (!ux) {
         navigate(`/city/SignIn`);
         return;
+      }
+
+      for (let data in MOV) {
+        if (MOV[data].st < MOV[data].mov) {
+          alert(`please match "minimun order value" of ${MOV[data].shop} to place order,
+           or remove all product of this shop❌`);
+          return;
+        }
       }
 
       setIsLoading(true);
@@ -109,13 +131,26 @@ export default function Cart() {
           );
         }
 
+        setMOV({});
         setCart([]);
         setUrgent([]);
         navigate("/city/messages");
       });
     } catch (e) {
       setIsLoading(false);
-      alert("error in placing order");
+      alert(e);
+    }
+  };
+
+  //-----------------------------------------------> Toggle fast
+  const toggleFastDilevery = (isClicked, data) => {
+    if (isClicked === false) {
+      setUrgent([...urgent, data.shopId]);
+      alert(
+        `In Fast delivery, your Order from ${data.address} will be delivered before 1 hour 🕐😳`
+      );
+    } else {
+      setUrgent(urgent.filter((val) => val !== data.shopId));
     }
   };
 
@@ -135,28 +170,36 @@ export default function Cart() {
           <div className={styles.shopCart} key={data._id}>
             <CartCard state={data} />
 
-            <ToggleBtn
-              Style={{
-                marginBlock: 20,
+            <div
+              className={styles.seperator}
+              style={{
                 display:
-                  cart[index].shopId !== cart[index + 1]?.shopId &&
-                  data.canUrgent
-                    ? "flex"
+                  cart[index].shopId !== cart[index + 1]?.shopId
+                    ? "block"
                     : "none",
               }}
-              title={"Fast Delivery"}
-              onClickHandler={(ic) => {
-                if (ic === false) {
-                  setUrgent([...urgent, data.shopId]);
-                  alert(
-                    `In urgent delivery product from ${data.address} will be delivered before 1 hour 🕐 
-                     with cost of only, 10₹ extra`
-                  );
-                } else {
-                  setUrgent(urgent.filter((val) => val !== data.shopId));
-                }
-              }}
-            />
+            >
+              <ToggleBtn
+                Style={{
+                  marginBlock: 20,
+                  display: data.canUrgent ? "flex" : "none",
+                }}
+                title={"Fast Delivery"}
+                onClickHandler={(isClicked) => {
+                  toggleFastDilevery(isClicked, data);
+                }}
+              />
+              <p className={styles.seperatorP}>
+                Sub Total :
+                <span>
+                  {" ₹"}
+                  {MOV[data.shopId]?.st}
+                </span>
+              </p>
+              <p className={styles.seperatorP}>
+                minimum order value : <span>{data.MOV} ₹</span>
+              </p>
+            </div>
           </div>
         );
       })}
@@ -172,10 +215,7 @@ export default function Cart() {
         />
         <div className={styles.total}>
           <p className={styles.price}>
-            TOTAL :
-            <span style={{ marginInline: 5 }}>
-              ₹{total} {urgent.length ? ` + ${urgent.length * 10}₹` : ""}
-            </span>
+            TOTAL :<span style={{ marginInline: 5 }}>₹{total}</span>
           </p>
         </div>
         <Button onClick={order} className={styles.orderBtn}>
@@ -205,6 +245,17 @@ const useStyles = makeStyles({
     marginBlock: 30,
     marginInline: "auto",
     borderBottom: "2px solid rgba(0,0,0,0.5)",
+  },
+  seperator: {
+    borderBottom: `7px solid ${COLOR.PRIMARY}`,
+  },
+  seperatorP: {
+    "& span": {
+      color: COLOR.GREEN,
+      fontWeight: "bold",
+    },
+    lineHeight: 1.2,
+    color: COLOR.PRIMARY,
   },
   order: {
     flexDirection: "column",

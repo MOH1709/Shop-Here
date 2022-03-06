@@ -11,14 +11,16 @@ import { COLOR, SHADOW } from "../../constants";
 export default function Product() {
   const styles = useStyles();
   const { bid } = useParams();
-  const [shop] = useState(bid.split("+"));
   const { cart } = useContext(Context);
-  const [canUrgent, setCanUrgent] = useState(false);
+
+  const [shop] = useState(bid.split("+"));
   const [products, setProducts] = useState([]);
   const [shopData, setShopData] = useState({
     phoneNumber: "",
     email: "",
     isOpen: true,
+    MOV: "",
+    canUrgent: false,
   });
 
   //-----------------------------------------------> onLoad
@@ -36,8 +38,9 @@ export default function Product() {
             phoneNumber: response.extras[0].phoneNumber,
             email: response.extras[1].email,
             isOpen: response.isOpen,
+            canUrgent: response.canUrgent,
+            MOV: response.minOrderValue,
           });
-          setCanUrgent(response.canUrgent);
 
           const sortByCategory = (a, b) => {
             if (a.category < b.category) {
@@ -61,7 +64,7 @@ export default function Product() {
     return () => {
       isMounted = false;
     };
-  }, [shop, cart]);
+  }, [shop]);
 
   //-----------------------------------------------> returning component
   return (
@@ -75,6 +78,9 @@ export default function Product() {
         </p>
         <p>
           Contact : <span> {shopData.phoneNumber || "not available"}</span>
+        </p>
+        <p>
+          Minimum order value : <span> {shopData.MOV || 10} ₹</span>
         </p>
       </div>
 
@@ -95,8 +101,9 @@ export default function Product() {
               </p>
               <ProductCard
                 state={data}
-                canUrgent={canUrgent}
+                canUrgent={shopData.canUrgent}
                 shop={shop}
+                MOV={shopData.MOV}
                 isAdded={cart.find((val) => val._id === data._id)}
               />
             </div>
@@ -111,7 +118,7 @@ export default function Product() {
 const useStyles = makeStyles({
   shopDetails: {
     "& p": {
-      marginBlock: 10,
+      lineHeight: 1.3,
       fontWeight: "bold",
       color: COLOR.SECONDARY,
     },
@@ -119,7 +126,7 @@ const useStyles = makeStyles({
       color: COLOR.PRIMARY,
     },
     paddingLeft: 10,
-    paddingBlock: 5,
+    paddingBlock: 20,
     borderRadius: 5,
     overflow: "hidden",
 
