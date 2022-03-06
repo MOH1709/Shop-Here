@@ -19,10 +19,14 @@ router.get("/:bid", async(req, res) => {
 router.get("/uservisible/:bid", async(req, res) => {
   try {
     const { bid } = req.params;
-    const { extras, isOpen, canUrgent } = await Shop.findOne({ _id: bid });
+    const { extras, isOpen, canUrgent, minOrderValue } = await Shop.findOne({
+      _id: bid,
+    });
     const products = (await Product.find({ businessId: bid })) || [];
 
-    res.status(200).send({ extras, isOpen, canUrgent, products });
+    res
+      .status(200)
+      .send({ extras, isOpen, canUrgent, products, minOrderValue });
   } catch (e) {
     res.status(500).send("error in getting products");
   }

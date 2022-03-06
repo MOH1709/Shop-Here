@@ -18,6 +18,10 @@ const shopSchema = new mongoose.Schema({
       type: Number,
     },
   }, ],
+  minOrderValue: {
+    type: Number,
+    default: 10,
+  },
   orders: [{
     address: {
       type: String,
