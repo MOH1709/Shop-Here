@@ -39,23 +39,26 @@ export default function SignIn() {
   const signIn = async (e) => {
     try {
       e.preventDefault();
+      let { email, password } = input;
+      email = email.trim();
+
       // check if both field are filled
-      if (!(input.email || input.password)) {
+      if (!(email || password)) {
         alert("please fill all field");
         return;
       }
 
-      if (!validator.isEmail(input.email)) {
+      if (!validator.isEmail(email)) {
         alert("fill correct email id");
         return;
       }
 
-      if (input.password.length < 8) {
+      if (password.length < 8) {
         alert("password should be minimum 8 character long");
         return;
       }
 
-      const userId = input.email.split("@")[0];
+      const userId = email.split("@")[0];
       const { status } = await axios.post(`/otp`, {
         userId,
       });
@@ -66,7 +69,7 @@ export default function SignIn() {
             user: "save",
             data: {
               userId,
-              password: input.password,
+              password: password,
             },
           },
         });

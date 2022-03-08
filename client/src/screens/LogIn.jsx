@@ -30,7 +30,7 @@ export default function LogIn() {
   //-----------------------------------------------> forgot password
   const onForgotPassword = async () => {
     try {
-      const email = prompt("Enter your email Id") || "";
+      const email = prompt("Enter your email Id").trim() || "";
 
       if (validator.isEmail(email) === false) {
         alert("invalid email");
@@ -45,7 +45,7 @@ export default function LogIn() {
         let password = "";
 
         do {
-          password = prompt("Enter Your new Password, minimum 8 requied");
+          password = prompt("Enter Your new Password, minimum 8 requied") || "";
         } while (password.length < 8);
 
         const { status } = await axios.post(`/otp`, {
@@ -77,7 +77,8 @@ export default function LogIn() {
   const login = async (e) => {
     try {
       e.preventDefault();
-      const { email, password } = input;
+      let { email, password } = input;
+      email = email.trim();
 
       // check if both inputs are filled
       if (email && password) {
