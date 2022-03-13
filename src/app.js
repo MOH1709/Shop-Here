@@ -3,8 +3,7 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import fileupload from "express-fileupload";
-import path from "path";
-import { dirname } from "path";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
 //-----------------------------------------------> custom
